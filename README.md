@@ -1,5 +1,7 @@
 # Neovim Configuration
 
+![Nvim Screenshot](./nvim-screenshot.png)
+
 This repository contains my personal Neovim configuration.
 
 ## Keybindings
