@@ -7,3 +7,6 @@ foo.*
 *.log
 data
 .ltex-dictionary
+.luarc.json
+lazy-lock.json
+
