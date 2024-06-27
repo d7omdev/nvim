@@ -4,6 +4,11 @@
 
 local map = vim.keymap.set
 
+-- Remove default keymaps
+vim.keymap.del("n", "<leader>gg")
+map("n", "<leader>gg", "<cmd>LazyGit<cr>", { desc = "Lazygit" })
+
+--
 -- Select the whole file with Ctrl + a in normal mode
 map("n", "<C-a>", "ggVG", { noremap = true, silent = true })
 
