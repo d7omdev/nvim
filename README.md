@@ -41,3 +41,5 @@ _This configuration is using LazyVim under the hood._
 - Git Integration using lazygit `<leader>gg` and fugitive.
 - Advanced text objects using `nvim-treesitter-textobject`.
 - Markdown Preview Command `<leader>mb`.
+- Image previewing and pasting support.
+  - `<leader>v` to paste image from clipboard.
