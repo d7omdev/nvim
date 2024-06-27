@@ -18,3 +18,6 @@ map("n", "qq", ":q<CR>", { noremap = true, silent = true })
 
 -- Delete without copying to register in visual mode
 map("v", "<Del>", '"_d', { noremap = true, silent = true })
+
+-- Makdown preview
+map("n", "<leader>mb", ":MarkdownPreview<CR>", { noremap = true, silent = true })

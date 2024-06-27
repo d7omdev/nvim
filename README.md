@@ -38,6 +38,6 @@ _This configuration is using LazyVim under the hood._
 
 - Multi Cursor Support `<leader>m`.
 - Spell Checking Support.
-- Git Integration using lazygit`<leader>gg` and fugitive.
+- Git Integration using lazygit `<leader>gg` and fugitive.
 - Advanced text objects using `nvim-treesitter-textobject`.
-- Markdown Preview Command → `:MarkdownPreview`.
+- Markdown Preview Command `<leader>mb`.
