@@ -43,3 +43,4 @@ _This configuration is using LazyVim under the hood._
 - Markdown Preview Command `<leader>mb`.
 - Image previewing and pasting support.
   - `<leader>v` to paste image from clipboard.
+- DB ui for managing databases `<leader>uD`.
