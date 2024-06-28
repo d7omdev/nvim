@@ -42,5 +42,6 @@ _This configuration is using LazyVim under the hood._
 - Advanced text objects using `nvim-treesitter-textobject`.
 - Markdown Preview Command `<leader>mb`.
 - Image previewing and pasting support.
+  - image preview is disabled for now!
   - `<leader>v` to paste image from clipboard.
-- DB ui for managing databases `<leader>uD`.
+- DB ui for managing databases `<leader>D`.
