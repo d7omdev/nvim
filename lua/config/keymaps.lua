@@ -29,3 +29,9 @@ map("n", "<leader>mb", ":MarkdownPreview<CR>", { noremap = true, silent = true }
 
 -- DBui
 map("n", "<leader>uD", ":tabnew | DBUI<CR>", { noremap = true, silent = true })
+
+-- Lspsaga keymaps
+map("n", "<leader>r", "<cmd>Lspsaga hover_doc<CR>", { desc = "show hover doc" })
+map("n", "<leader>ol", "<cmd>Lspsaga outline<CR>", { desc = "show outline" })
+-- map("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", { desc = "code action" })
+map("n", "<C-c>d", "<cmd>Lspsaga peek_definition<CR>", { desc = "peek definition" })
