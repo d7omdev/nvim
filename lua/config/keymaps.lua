@@ -35,3 +35,10 @@ map("n", "<leader>r", "<cmd>Lspsaga hover_doc<CR>", { desc = "show hover doc" })
 map("n", "<leader>ol", "<cmd>Lspsaga outline<CR>", { desc = "show outline" })
 -- map("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", { desc = "code action" })
 map("n", "<C-c>d", "<cmd>Lspsaga peek_definition<CR>", { desc = "peek definition" })
+
+-- Auto save toggle
+-- vim.api.nvim_set_keymap("n", "<leader>AST", ":ASToggle<CR>", {})
+map("n", "<leader>AST", ":ASToggle<CR>", { noremap = true, silent = true })
+
+-- Cheat.sh
+map("n", "<leader>ch", "<cmd>Cheat<CR>", { noremap = true, silent = true, desc = "Cheat Sheet" })
