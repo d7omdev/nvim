@@ -1,6 +1,22 @@
 return {
   "barreiroleo/ltex_extra.nvim",
-  ft = { "markdown", "tex" },
+  ft = {
+    "markdown",
+    "tex",
+    "lua",
+    "lspconfig",
+    "vim",
+    "yaml",
+    "json",
+    "typescript",
+    "javascript",
+    "html",
+    "css",
+    "scss",
+    "tsx",
+    "jsx",
+    "tailwindcss",
+  },
   dependencies = { "neovim/nvim-lspconfig" },
   config = function()
     -- Load ltex_extra and configure it

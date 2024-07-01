@@ -6,7 +6,7 @@ return {
         enable = false,
         sign = false,
       },
-      code_action = { extend_gitsigns = true },
+      code_action = { extend_gitsigns = true, num_shortcut = true },
     })
   end,
   dependencies = {

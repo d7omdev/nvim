@@ -42,3 +42,17 @@ map("n", "<leader>AST", ":ASToggle<CR>", { noremap = true, silent = true })
 
 -- Cheat.sh
 map("n", "<leader>ch", "<cmd>Cheat<CR>", { noremap = true, silent = true, desc = "Cheat Sheet" })
+
+-- LSP saga
+map("n", "]D", "<cmd>Lspsaga diagnostic_jump_next<CR>", { noremap = true, silent = true, desc = "Next diagnostic" })
+map("n", "[D", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { noremap = true, silent = true, desc = "Previous diagnostic" })
+map("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", { noremap = true, silent = true, desc = "Code action" })
+-- map Lspsaga peek_definition
+-- map("n", "<C-c>d", "<cmd>Lspsaga peek_definition<CR>", { noremap = true, silent = true, desc = "Peek definition" })
+-- now Lspsaga peek_type_definition
+map(
+  "n",
+  "<C-c>t",
+  "<cmd>Lspsaga peek_type_definition<CR>",
+  { noremap = true, silent = true, desc = "Peek type definition" }
+)
