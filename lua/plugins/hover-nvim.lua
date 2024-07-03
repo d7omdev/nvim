@@ -24,7 +24,7 @@ return {
       mouse_providers = {
         "LSP",
       },
-      mouse_delay = 100,
+      mouse_delay = 1000,
     })
 
     -- Setup keymaps
