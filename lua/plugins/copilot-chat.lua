@@ -25,12 +25,27 @@ return {
       function()
         local input = vim.fn.input("Quick Chat: ")
         if input ~= "" then
+          require("CopilotChat").setup({
+            auto_insert_mode = true,
+            show_help = false,
+            auto_follow_cursor = true,
+            show_folds = false,
+            question_header = "  D7OM ",
+            answer_header = "  Copilot ",
+            window = {
+              layout = "float",
+              width = 0.4,
+              height = 0.7,
+              border = "rounded",
+            },
+          })
           require("CopilotChat").ask(input)
         end
       end,
       desc = "Quick Chat (CopilotChat)",
       mode = { "n", "v" },
     },
+
     {
       "<leader>ac",
       ":CopilotChatCommit<cr>",
@@ -51,13 +66,14 @@ return {
     require("CopilotChat").setup({
       model = "gpt-4",
       auto_insert_mode = true,
-      show_help = false,
+      show_help = true,
+      auto_follow_cursor = true,
       show_folds = false,
       question_header = "  D7OM ",
       answer_header = "  Copilot ",
       window = {
-        layout = "float",
-        width = 0.6,
+        -- layout = "float",
+        width = 0.4,
         height = 0.7,
         border = "rounded",
       },

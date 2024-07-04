@@ -9,6 +9,7 @@ return {
         auto_trigger = true,
         keymap = {
           accept_word = "<C-Right>",
+          accept_line = "<Tab>",
         },
       },
       panel = { enabled = false },
