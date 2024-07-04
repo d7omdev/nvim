@@ -8,8 +8,9 @@ return {
       suggestion = {
         auto_trigger = true,
         keymap = {
+          accept = "<Tab>",
           accept_word = "<C-Right>",
-          accept_line = "<Tab>",
+          accept_line = "<C-Tab>",
         },
       },
       panel = { enabled = false },
