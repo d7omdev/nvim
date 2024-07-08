@@ -10,9 +10,6 @@ return {
       backend = "kitty",
       kitty_method = "normal",
       lua_version = "5.4",
-      rocks = {
-        hererocks = true,
-      },
       integrations = {
         -- Notice these are the settings for markdown files
         markdown = {

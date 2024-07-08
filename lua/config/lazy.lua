@@ -13,9 +13,11 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+  rocks = {
+    hererocks = true,
+  },
   spec = {
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    { import = "lazyvim.plugins.extras.lang.markdown" },
     { import = "plugins" },
   },
   defaults = {
