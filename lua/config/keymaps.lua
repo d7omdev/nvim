@@ -13,9 +13,6 @@ map("n", "<leader>gg", "<cmd>LazyGit<cr>", { desc = "Lazygit" })
 -- Exit insert mode with 'jj' in insert mode
 map("i", "jj", "<Esc>", { noremap = true, silent = true })
 
--- search and replace using regex
-map("n", "zz", ":'<,'>s//<Left>", { noremap = true, silent = true })
-
 -- Exit with 'qq' in normal mode
 map("n", "qq", ":q<CR>", { noremap = true, silent = true })
 
