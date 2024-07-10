@@ -41,3 +41,36 @@ map("n", "<leader>ch", "<cmd>Cheat<CR>", { noremap = true, silent = true, desc =
 -- LSP saga
 map("n", "]D", "<cmd>Lspsaga diagnostic_jump_next<CR>", { noremap = true, silent = true, desc = "Next diagnostic" })
 map("n", "[D", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { noremap = true, silent = true, desc = "Previous diagnostic" })
+
+-- Obsidian
+
+map("n", "<leader>O", "", { desc = "+Obsidian" })
+map(
+  "n",
+  "<leader>On",
+  ":execute 'ObsidianNew ' . input('Enter a name: ')<CR>",
+  { noremap = true, silent = true, desc = "New note" }
+)
+map("n", "<leader>Os", ":ObsidianQuickSwitch<CR>", { noremap = true, silent = true, desc = "Quick switch" })
+map(
+  "n",
+  "<leader>Of",
+  ":lua local user_input = vim.fn.input('Enter v for vsplit, h for hsplit or leave empty: ') if user_input == 'v' then vim.cmd('ObsidianFollowLink vsplit') elseif user_input == 'h' then vim.cmd('ObsidianFollowLink hsplit') else vim.cmd('ObsidianFollowLink') end<CR>",
+  { noremap = true, silent = true, desc = "Follow link" }
+)
+map("n", "<leader>Ob", ":ObsidianBacklinks<CR>", { noremap = true, silent = true, desc = "Backlinks" })
+map("n", "<leader>Od", ":ObsidianDailies<CR>", { noremap = true, silent = true, desc = "Dailies" })
+map(
+  "n",
+  "<leader>Ot",
+  ":execute '<cmd>ObsidianTemplate<CR>",
+  { noremap = true, silent = true, desc = "Insert template" }
+)
+map("n", "<leader>sO", "<cmd>ObsidianSearch<CR>", { noremap = true, silent = true, desc = "Obsidian search" })
+map(
+  "n",
+  "<leader>Or",
+  ":execute 'ObsidianRename ' . input('Enter new name: ')<CR>",
+  { noremap = true, silent = true, desc = "Rename note" }
+)
+map("n", "<leader>Oc", ":ObsidianToggleCheckbox<CR>", { noremap = true, silent = true, desc = "Toggle checkbox" })
