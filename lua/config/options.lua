@@ -16,4 +16,3 @@ opt.linebreak = true
 opt.tabstop = 4
 opt.shiftwidth = 4
 opt.autoindent = true
-opt.expandtab = true
