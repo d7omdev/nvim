@@ -74,3 +74,4 @@ map(
   { noremap = true, silent = true, desc = "Rename note" }
 )
 map("n", "<leader>Oc", ":ObsidianToggleCheckbox<CR>", { noremap = true, silent = true, desc = "Toggle checkbox" })
+map("n", "<leader>OT", "<cmd>ObsidianTags<CR>", { desc = "Search tags" })
