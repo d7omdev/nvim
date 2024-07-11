@@ -67,6 +67,14 @@ do
     {
       -- "DaikyXendo/nvim-material-icon",
     },
+    {
+      -- Cursor color based on mode
+      "mvllow/modes.nvim",
+      tag = "v0.2.0",
+      config = function()
+        require("modes").setup()
+      end,
+    },
   }
 end
 vim.cmd.colorscheme("catppuccin")
