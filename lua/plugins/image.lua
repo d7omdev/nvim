@@ -14,7 +14,7 @@ return {
         -- Notice these are the settings for markdown files
         markdown = {
           enabled = true,
-          clear_in_insert_mode = false,
+          clear_in_insert_mode = true,
           -- Set this to false if you don't want to render images coming from
           -- a URL
           download_remote_images = true,
@@ -28,7 +28,7 @@ return {
         },
         neorg = {
           enabled = true,
-          clear_in_insert_mode = false,
+          clear_in_insert_mode = true,
           download_remote_images = true,
           only_render_image_at_cursor = false,
           filetypes = { "norg" },
