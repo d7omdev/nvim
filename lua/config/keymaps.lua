@@ -26,13 +26,13 @@ map("n", "qq", ":q<CR>", { noremap = true, silent = true })
 map("v", "<Del>", '"_d', { noremap = true, silent = true })
 
 -- Makdown preview
-map("n", "<leader>mb", ":MarkdownPreview<CR>", { noremap = true, silent = true })
+map("n", "<leader>mp", ":MarkdownPreview<CR>", { noremap = true, silent = true })
 
 -- DBui
 map("n", "<leader>uD", ":tabnew | DBUI<CR>", { noremap = true, silent = true })
 
 -- Lspsaga keymaps
-map("n", "<leader>r", "<cmd>Lspsaga hover_doc<CR>", { desc = "show hover doc" })
+map("n", "<S-r>", "<cmd>Lspsaga hover_doc<CR>", { desc = "show hover doc" })
 map("n", "<leader>ol", "<cmd>Lspsaga outline<CR>", { desc = "show outline" })
 map("n", "<C-a>", "<cmd>Lspsaga code_action<CR>", { desc = "code action" })
 map("n", "<C-c>d", "<cmd>Lspsaga peek_definition<CR>", { desc = "peek definition" })
