@@ -7,9 +7,10 @@ local map = vim.keymap.set
 -- Remove default keymaps
 vim.keymap.del("n", "<leader>gg")
 
--- Define your mappings using the map function
 map("n", "<A-Up>", "<cmd>m .-2<CR>==", { desc = "Move line up" })
 map("n", "<A-Down>", "<cmd>m .+1<CR>==", { desc = "Move line down" })
+map("n", "<S-A-Up>", "yykP", { noremap = true, silent = true, desc = "Duplicate line up" })
+map("n", "<S-A-Down>", "yyp", { noremap = true, silent = true, desc = "Duplicate line down" })
 -- map("v", "<A-Up>", ":<C-u>move '<-2<CR>gv-gv", { desc = "Move selection up" })
 -- map("v", "<A-Down>", ":<C-u>move '>+1<CR>gv-gv", { desc = "Move selection down" })
 
