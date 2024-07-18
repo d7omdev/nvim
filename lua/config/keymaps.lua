@@ -82,3 +82,16 @@ map(
 )
 map("n", "<leader>Oc", ":ObsidianToggleCheckbox<CR>", { noremap = true, silent = true, desc = "Toggle checkbox" })
 map("n", "<leader>OT", "<cmd>ObsidianTags<CR>", { desc = "Search tags" })
+
+-- Sessions
+map("n", "<leader>qS", function()
+  require("persistence").select()
+end, { desc = "Select session" })
+
+map("n", "<leader>ql", function()
+  require("persistence").load({ last = true })
+end, { desc = "Load last session" })
+
+map("n", "<leader>qd", function()
+  require("persistence").stop()
+end, { desc = "Don't save current session" })

@@ -28,7 +28,6 @@ return {
           { action = 'lua LazyVim.pick()()',                           desc = " Find File",       icon = " ", key = "f" },
           { action = "ene | startinsert",                              desc = " New File",        icon = " ", key = "n" },
           { action = 'lua LazyVim.pick("oldfiles")()',                 desc = " Recent Files",    icon = " ", key = "r" },
-          { action = 'lua LazyVim.pick("live_grep")()',                desc = " Find Text",       icon = " ", key = "g" },
           { action = 'lua LazyVim.pick.config_files()()',              desc = " Config",          icon = " ", key = "c" },
           { action = 'lua require("persistence").load()',              desc = " Restore Session", icon = " ", key = "s" },
           { action = "LazyExtras",                                     desc = " Lazy Extras",     icon = " ", key = "x" },
@@ -60,7 +59,17 @@ return {
         end,
       })
     end
+    local projects = {
+      action = "lua require('persistence').select()",
+      desc = " Projects",
+      icon = " ",
+      key = "p",
+    }
 
+    projects.desc = projects.desc .. string.rep(" ", 43 - #projects.desc)
+    projects.key_format = "  %s"
+
+    table.insert(opts.config.center, 3, projects)
     return opts
   end,
 }
