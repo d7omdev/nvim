@@ -14,11 +14,11 @@ return {
         },
       },
       panel = { enabled = false },
-      filetypes = {
-        markdown = true,
-        yaml = true,
-        help = true,
-      },
+      -- filetypes = {
+      --   markdown = true,
+      --   yaml = true,
+      --   help = true,
+      -- },
     })
   end,
 }
