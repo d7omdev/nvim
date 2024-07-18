@@ -5,6 +5,8 @@ local opt = vim.opt
 
 vim.g.lazygit_config = true
 
+opt.clipboard = "unnamedplus"
+
 -- Make cursor blink
 opt.guicursor = {
   "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50",
