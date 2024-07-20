@@ -99,3 +99,6 @@ end, { desc = "Don't save current session" })
 -- Projects
 map("n", "<leaderP", "", { desc = "+Projects" })
 map("n", "<leader>Pd", "<cmd>Telescope neovim-project discover<CR>", { desc = "Discover projects" })
+map("n", "<leader>PhDiscover projects", "<cmd>Telescope neovim-project history<CR>", { desc = "Projects history" })
+
+map("n", "<leader>gh", "", { desc = "+Gitsigns" })
