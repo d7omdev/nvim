@@ -5,6 +5,7 @@ do
       lazy = false,
       name = "catppuccin",
       opts = {
+        -- transparent_background = true,
         flavor = "mocha",
         background = {
           dark = "frappe",

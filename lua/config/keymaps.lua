@@ -7,10 +7,10 @@ local map = vim.keymap.set
 -- Remove default keymaps
 vim.keymap.del("n", "<leader>gg")
 
-map("n", "<A-Up>", "<cmd>m .-2<CR>==", { desc = "Move line up" })
-map("n", "<A-Down>", "<cmd>m .+1<CR>==", { desc = "Move line down" })
-map("n", "<S-A-Up>", "yykP", { noremap = true, silent = true, desc = "Duplicate line up" })
-map("n", "<S-A-Down>", "yyp", { noremap = true, silent = true, desc = "Duplicate line down" })
+map("n", "<A-k>", "<cmd>m .-2<CR>==", { desc = "Move line up" })
+map("n", "<A-j>", "<cmd>m .+1<CR>==", { desc = "Move line down" })
+map("n", "<S-A-k>", "yykP", { noremap = true, silent = true, desc = "Duplicate line up" })
+map("n", "<S-A-j>", "yyp", { noremap = true, silent = true, desc = "Duplicate line down" })
 -- map("v", "<A-Up>", ":<C-u>move '<-2<CR>gv-gv", { desc = "Move selection up" })
 -- map("v", "<A-Down>", ":<C-u>move '>+1<CR>gv-gv", { desc = "Move selection down" })
 
@@ -95,3 +95,7 @@ end, { desc = "Load last session" })
 map("n", "<leader>qd", function()
   require("persistence").stop()
 end, { desc = "Don't save current session" })
+
+-- Projects
+map("n", "<leaderP", "", { desc = "+Projects" })
+map("n", "<leader>Pd", "<cmd>Telescope neovim-project discover<CR>", { desc = "Discover projects" })

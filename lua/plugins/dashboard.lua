@@ -60,7 +60,7 @@ return {
       })
     end
     local projects = {
-      action = "lua require('persistence').select()",
+      action = "Telescope neovim-project history",
       desc = " Projects",
       icon = " ",
       key = "p",
