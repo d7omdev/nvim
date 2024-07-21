@@ -9,6 +9,6 @@ foo.*
 data
 .ltex-dictionary
 .luarc.json
-lazy-lock.json
-lazyvim.json
+# lazy-lock.json
+# lazyvim.json
 
