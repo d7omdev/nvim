@@ -9,8 +9,8 @@ vim.keymap.del("n", "<leader>gg")
 
 map("n", "<A-k>", "<cmd>m .-2<CR>==", { desc = "Move line up" })
 map("n", "<A-j>", "<cmd>m .+1<CR>==", { desc = "Move line down" })
-map("n", "<S-A-k>", "yykP", { noremap = true, silent = true, desc = "Duplicate line up" })
-map("n", "<S-A-j>", "yyp", { noremap = true, silent = true, desc = "Duplicate line down" })
+map("n", "<C-A-k>", "yy[P", { noremap = true, silent = true, desc = "Duplicate line up" })
+map("n", "<C-A-j>", "yy]p", { noremap = true, silent = true, desc = "Duplicate line down" })
 -- map("v", "<A-Up>", ":<C-u>move '<-2<CR>gv-gv", { desc = "Move selection up" })
 -- map("v", "<A-Down>", ":<C-u>move '>+1<CR>gv-gv", { desc = "Move selection down" })
 
@@ -35,7 +35,7 @@ map("n", "<leader>uD", ":tabnew | DBUI<CR>", { noremap = true, silent = true })
 -- Lspsaga keymaps
 map("n", "<S-r>", "<cmd>Lspsaga hover_doc<CR>", { desc = "show hover doc" })
 map("n", "<leader>ol", "<cmd>Lspsaga outline<CR>", { desc = "show outline" })
-map("n", "<C-a>", "<cmd>Lspsaga code_action<CR>", { desc = "code action" })
+-- map("n", "<C-a>", "<cmd>Lspsaga code_action<CR>", { desc = "code action" })
 map("n", "<C-c>d", "<cmd>Lspsaga peek_definition<CR>", { desc = "peek definition" })
 map("n", "<C-c>t", "<cmd>Lspsaga peek_type_definition<CR>", { desc = "peek type definition" })
 

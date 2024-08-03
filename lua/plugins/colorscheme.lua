@@ -7,10 +7,10 @@ do
       opts = {
         -- transparent_background = true,
         flavor = "mocha",
-        background = {
-          dark = "frappe",
-          light = "frappe",
-        },
+        -- background = {
+        --   dark = "frappe",
+        --   light = "frappe",
+        -- },
         integrations = {
           cmp = true,
           gitsigns = true,
@@ -62,7 +62,7 @@ do
     {
       "LazyVim/LazyVim",
       opts = {
-        colorscheme = "catppuccin-frappe",
+        colorscheme = "catppuccin",
       },
     },
     {
@@ -79,4 +79,3 @@ do
     { "ellisonleao/gruvbox.nvim", priority = 1000, config = true, opts = ... },
   }
 end
-vim.cmd.colorscheme("catppuccin")
