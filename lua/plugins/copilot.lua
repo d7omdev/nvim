@@ -9,16 +9,21 @@ return {
         auto_trigger = true,
         keymap = {
           accept = "<Tab>",
-          accept_word = "<C-Right>",
-          accept_line = "<C-Tab>",
+          accept_word = "<C-L>",
+          accept_line = "<C-CR>",
+          next = "<C-]>",
+          prev = "<C-[>",
+          dismiss = "<ESC>",
         },
       },
-      panel = { enabled = false },
-      -- filetypes = {
-      --   markdown = true,
-      --   yaml = true,
-      --   help = true,
-      -- },
+      filetypes = {
+        markdown = true,
+        yaml = true,
+        help = true,
+        gitcommit = false,
+        gitrebase = false,
+        hgcommit = false,
+      },
     })
   end,
 }
