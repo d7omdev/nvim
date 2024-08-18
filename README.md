@@ -18,12 +18,6 @@ To use this configuration, clone this repository to your Neovim configuration di
 git clone https://github.com/abdulrahmanDev1/nvim.git ~/.config/nvim
 ```
 
-Delete the .git folder to use your own repository.
-
-```bash
-rm -rf ~/.config/nvim/.git
-```
-
 Then, open Neovim and let the magic Happen!.
 
 ```bash

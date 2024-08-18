@@ -17,14 +17,14 @@ return {
         end,
         desc = "Explorer NeoTree (cwd)",
       },
-      {
-        "<leader>e",
-        function()
-          require("neo-tree.command").execute({ toggle = true, dir = LazyVim.root() })
-        end,
-        desc = "Explorer NeoTree (Root Dir)",
-        remap = true,
-      },
+      -- {
+      --   "<leader>e",
+      --   function()
+      --     require("neo-tree.command").execute({ toggle = true, dir = LazyVim.root() })
+      --   end,
+      --   desc = "Explorer NeoTree (Root Dir)",
+      --   remap = true,
+      -- },
       { "<leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
       {
         "<leader>ge",
