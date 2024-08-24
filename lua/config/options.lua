@@ -18,3 +18,6 @@ opt.linebreak = true
 opt.tabstop = 4
 opt.shiftwidth = 4
 opt.autoindent = true
+
+-- Disable highlighting if file is over 10 MB
+vim.api.nvim_command('autocmd BufReadPost * if getfsize(expand("%:p")) > 10000 * 1024 | TSBufDisable highlight | endif')
