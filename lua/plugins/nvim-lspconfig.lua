@@ -43,6 +43,11 @@ return {
             },
           },
         },
+        -- provide the inlay hints.
+        inlay_hints = {
+          enabled = true,
+          exclude = { "vue", "typescript" }, -- filetypes for which you don't want to enable inlay hints
+        },
         keys = {
           {
             "gD",

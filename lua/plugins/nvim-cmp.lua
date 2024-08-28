@@ -31,7 +31,7 @@ return {
     "hrsh7th/nvim-cmp",
     opts = {
       mapping = {
-        ["<C-c>s"] = cmp.mapping.complete(),
+        ["<C-Space>"] = cmp.mapping.complete(),
       },
       window = {
         completion = {
