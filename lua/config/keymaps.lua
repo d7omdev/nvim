@@ -102,3 +102,16 @@ map("n", "<leader>Pd", "<cmd>Telescope neovim-project discover<CR>", { desc = "D
 map("n", "<leader>PhDiscover projects", "<cmd>Telescope neovim-project history<CR>", { desc = "Projects history" })
 
 map("n", "<leader>gh", "", { desc = "+Gitsigns" })
+
+-- Tailwind Tools
+map("n", "<leader>tt", "", { desc = "+Tailwind" })
+map("n", "<leader>tts", "<cmd>TailwindSort<CR>", { desc = "Tailwind Sort" })
+map("n", "<leader>ttS", "<cmd>TailwindSortSelection<CR>", { desc = "Tailwind Sort Selection" })
+map("n", "<leader>ttc", "<cmd>TailwindConcealToggle<CR>", { desc = "Tailwind Conceal Toggle" })
+map("n", "<leader>ttC", "<cmd>TailwindConcealEnable<CR>", { desc = "Tailwind Conceal Enable" })
+map("n", "<leader>ttCd", "<cmd>TailwindConcealDisable<CR>", { desc = "Tailwind Conceal Disable" })
+map("n", "<leader>ttco", "<cmd>TailwindColorToggle<CR>", { desc = "Tailwind Color Toggle" })
+map("n", "<leader>ttcoe", "<cmd>TailwindColorEnable<CR>", { desc = "Tailwind Color Enable" })
+map("n", "<leader>ttcod", "<cmd>TailwindColorDisable<CR>", { desc = "Tailwind Color Disable" })
+map("n", "]tc", "<cmd>TailwindNextClass<CR>", { desc = "Tailwind Next Class" })
+map("n", "[tc", "<cmd>TailwindPrevClass<CR>", { desc = "Tailwind Prev Class" })
