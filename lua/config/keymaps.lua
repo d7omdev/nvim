@@ -6,13 +6,11 @@ local map = vim.keymap.set
 
 -- Remove default keymaps
 vim.keymap.del("n", "<leader>gg")
+map("n", "]d", function() end, { desc = "Disabled" })
+map("n", "[d", function() end, { desc = "Disabled" })
 
-map("n", "<A-k>", "<cmd>m .-2<CR>==", { desc = "Move line up" })
-map("n", "<A-j>", "<cmd>m .+1<CR>==", { desc = "Move line down" })
 map("n", "<C-A-k>", "yy[P", { noremap = true, silent = true, desc = "Duplicate line up" })
 map("n", "<C-A-j>", "yy]p", { noremap = true, silent = true, desc = "Duplicate line down" })
--- map("v", "<A-Up>", ":<C-u>move '<-2<CR>gv-gv", { desc = "Move selection up" })
--- map("v", "<A-Down>", ":<C-u>move '>+1<CR>gv-gv", { desc = "Move selection down" })
 
 map("n", "<leader>gg", "<cmd>LazyGit<cr>", { desc = "Lazygit" })
 -- Remove the old keymap
@@ -46,11 +44,10 @@ map("n", "<leader>AST", ":ASToggle<CR>", { noremap = true, silent = true })
 map("n", "<leader>ch", "<cmd>Cheat<CR>", { noremap = true, silent = true, desc = "Cheat Sheet" })
 
 -- LSP saga
-map("n", "]D", "<cmd>Lspsaga diagnostic_jump_next<CR>", { noremap = true, silent = true, desc = "Next diagnostic" })
-map("n", "[D", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { noremap = true, silent = true, desc = "Previous diagnostic" })
+map("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", { noremap = true, silent = true, desc = "Next diagnostic" })
+map("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { noremap = true, silent = true, desc = "Prev diagnostic" })
 
 -- Obsidian
-
 map("n", "<leader>O", "", { desc = "+Obsidian" })
 map(
   "n",

@@ -8,8 +8,8 @@ return {
         virtual_text = {
           spacing = 4,
           source = "if_many",
-          -- prefix = "●",
-          prefix = "icons",
+          prefix = "■",
+          -- prefix = "icons",
         },
         severity_sort = true,
         signs = {

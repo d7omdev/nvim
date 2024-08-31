@@ -7,10 +7,14 @@ return {
         sign = false,
       },
       code_action = { extend_gitsigns = true, num_shortcut = true },
+      diagnostic = {
+        max_height = 0.8,
+        max_width = 0.5,
+        max_show_width = 0.5,
+        keys = {
+          quit = { "q", "<ESC>" },
+        },
+      },
     })
   end,
-  dependencies = {
-    "nvim-treesitter/nvim-treesitter", -- optional
-    "nvim-tree/nvim-web-devicons", -- optional
-  },
 }
