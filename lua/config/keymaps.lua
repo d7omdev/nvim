@@ -6,8 +6,6 @@ local map = vim.keymap.set
 
 -- Remove default keymaps
 vim.keymap.del("n", "<leader>gg")
-map("n", "]d", function() end, { desc = "Disabled" })
-map("n", "[d", function() end, { desc = "Disabled" })
 
 map("n", "<C-A-k>", "yy[P", { noremap = true, silent = true, desc = "Duplicate line up" })
 map("n", "<C-A-j>", "yy]p", { noremap = true, silent = true, desc = "Duplicate line down" })
@@ -44,8 +42,16 @@ map("n", "<leader>AST", ":ASToggle<CR>", { noremap = true, silent = true })
 map("n", "<leader>ch", "<cmd>Cheat<CR>", { noremap = true, silent = true, desc = "Cheat Sheet" })
 
 -- LSP saga
-map("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", { noremap = true, silent = true, desc = "Next diagnostic" })
-map("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { noremap = true, silent = true, desc = "Prev diagnostic" })
+local function next_diagnostic()
+  vim.cmd("Lspsaga diagnostic_jump_next")
+end
+
+local function prev_diagnostic()
+  vim.cmd("Lspsaga diagnostic_jump_prev")
+end
+
+map("n", "]d", next_diagnostic, { noremap = true, silent = true, desc = "Next diagnostic" })
+map("n", "[d", prev_diagnostic, { noremap = true, silent = true, desc = "Prev diagnostic" })
 
 -- Obsidian
 map("n", "<leader>O", "", { desc = "+Obsidian" })
@@ -112,3 +118,6 @@ map("n", "<leader>ttcoe", "<cmd>TailwindColorEnable<CR>", { desc = "Tailwind Col
 map("n", "<leader>ttcod", "<cmd>TailwindColorDisable<CR>", { desc = "Tailwind Color Disable" })
 map("n", "]tc", "<cmd>TailwindNextClass<CR>", { desc = "Tailwind Next Class" })
 map("n", "[tc", "<cmd>TailwindPrevClass<CR>", { desc = "Tailwind Prev Class" })
+
+-- Ts Import
+map("n", "<leader>ti", "<cmd>Telescope import<CR>", { desc = "Import" })
