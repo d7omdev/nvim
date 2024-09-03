@@ -98,6 +98,8 @@ return {
               experimental = {
                 completion = {
                   enableServerSideFuzzyMatch = true,
+                  enableAutoImport = true,
+                  enableCallHierarchy = true,
                 },
               },
             },
@@ -107,25 +109,13 @@ return {
                 completeFunctionCalls = true,
               },
               inlayHints = {
+                parameterNames = { enabled = "literals" },
                 enumMemberValues = { enabled = true },
                 functionLikeReturnTypes = { enabled = true },
-                parameterNames = { enabled = "literals" },
                 parameterTypes = { enabled = true },
                 propertyDeclarationTypes = { enabled = true },
                 variableTypes = { enabled = false },
               },
-            },
-          },
-          inlay_hints = {
-            enabled = true,
-            exclude = {
-              "vue",
-              "javascript",
-              "javascriptreact",
-              "javascript.jsx",
-              "typescript",
-              "typescriptreact",
-              "typescript.tsx",
             },
           },
           keys = {
