@@ -3,6 +3,7 @@ return {
   config = function()
     local bars = require("bars")
     bars.setup({
+      exclude_filetypes = { "dashboard" },
       statuscolumn = true,
       statusline = false,
       tabline = false,

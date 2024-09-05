@@ -5,8 +5,6 @@ local opt = vim.opt
 
 vim.g.lazygit_config = true
 
-opt.foldmethod = "manual"
-
 opt.clipboard = "unnamedplus"
 
 -- Make cursor blink
