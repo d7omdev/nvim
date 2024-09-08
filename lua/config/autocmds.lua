@@ -8,3 +8,9 @@ vim.api.nvim_create_autocmd("BufWritePost", {
     lsp.sort_classes(true)
   end,
 })
+
+vim.filetype.add({
+  extension = {
+    mdx = "markdown.mdx",
+  },
+})

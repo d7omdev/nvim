@@ -6,7 +6,7 @@ return {
         enable = false,
         sign = false,
       },
-      code_action = { extend_gitsigns = true, num_shortcut = true },
+      code_action = { extend_gitsigns = false, num_shortcut = true },
       diagnostic = {
         max_height = 0.8,
         max_width = 0.5,

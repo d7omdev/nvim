@@ -1,5 +1,6 @@
 return {
-  "abdulrahmanDev1/nuget.nvim",
+  "d7omdev/nuget.nvim",
+  event = "VeryLazy",
   config = function()
     require("nuget").setup()
   end,

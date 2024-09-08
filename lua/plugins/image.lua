@@ -5,6 +5,8 @@ package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/shar
 -- lazy snippet
 return {
   "3rd/image.nvim",
+  event = { "BufRead", "BufNewFile" },
+  ft = { "md" },
   config = function()
     require("image").setup({
       backend = "kitty",

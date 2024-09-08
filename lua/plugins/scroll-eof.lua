@@ -3,7 +3,7 @@ return {
   event = "BufRead",
   config = function()
     require("scrollEOF").setup({
-      disabled_filetypes = {},
+      disabled_filetypes = { "minifiles" },
     })
   end,
 }
