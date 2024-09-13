@@ -82,6 +82,7 @@ return {
           enabled = false,
         },
         vtsls = {
+          enabled = false,
           filetypes = {
             "javascript",
             "javascriptreact",
