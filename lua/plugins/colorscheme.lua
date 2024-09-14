@@ -2,7 +2,7 @@ do
   return {
     {
       "catppuccin/nvim",
-      lazy = false,
+      event = "VimEnter",
       name = "catppuccin",
       opts = {
         -- transparent_background = true,

@@ -390,12 +390,12 @@ return {
         },
         ["Fix LSP Diagnostics"] = {
           strategy = "chat",
-          description = "Fix the LSP diagnostics for the selected code in normal mode",
+          description = "Fix the LSP diagnostics with buffer context",
           opts = {
             index = 8,
             default_prompt = true,
-            mapping = "<leader>af", -- Adjust the key mapping as per your preference
-            modes = { "n" }, -- Use normal mode instead of visual mode
+            mapping = "<leader>af",
+            modes = { "n" },
             slash_cmd = "lsp",
             auto_submit = true,
             user_prompt = false,
@@ -404,7 +404,7 @@ return {
           prompts = {
             {
               role = "system",
-              content = [[You are an expert coder and helpful assistant who can help debug and fix code diagnostics, such as warning and error messages. When appropriate, provide solutions with code snippets as fenced codeblocks with a language identifier for syntax highlighting.]],
+              content = [[You are a skilled developer who helps fix LSP diagnostics. Use the buffer context and provide solutions with code snippets where necessary.]],
               opts = {
                 visible = false,
               },
@@ -412,46 +412,23 @@ return {
             {
               role = "user",
               content = function(context)
+                -- Get diagnostics for the current line
                 local diagnostics = require("codecompanion.helpers.actions").get_diagnostics(
                   context.start_line,
-                  context.end_line,
+                  context.start_line, -- Target the current line
                   context.bufnr
                 )
 
-                local concatenated_diagnostics = ""
-                for i, diagnostic in ipairs(diagnostics) do
-                  concatenated_diagnostics = concatenated_diagnostics
-                    .. i
-                    .. ". Issue "
-                    .. i
-                    .. "\n  - Location: Line "
-                    .. diagnostic.line_number
-                    .. "\n  - Severity: "
-                    .. diagnostic.severity
-                    .. "\n  - Message: "
-                    .. diagnostic.message
-                    .. "\n"
-                end
+                local diagnostic_message = diagnostics[1] and diagnostics[1].message or "No diagnostics found"
 
-                return "The programming language is "
-                  .. context.filetype
-                  .. ". Here is a list of the diagnostic messages to fix:\n\n"
-                  .. concatenated_diagnostics
-              end,
-            },
-            {
-              role = "user",
-              content = function(context)
-                return "Here is the code that needs fixing:\n\n"
-                  .. "```"
-                  .. context.filetype
-                  .. "\n"
-                  .. require("codecompanion.helpers.actions").get_code(
-                    context.start_line,
-                    context.end_line,
-                    { show_line_numbers = true }
-                  )
-                  .. "\n```\n\n"
+                -- Include the buffer using the `#buffer` variable
+                return "Diagnostic message: "
+                  .. diagnostic_message
+                  .. "\n\nHere is the buffer context:\n"
+                  .. "#buffer:"
+                  .. context.start_line - 10
+                  .. "-"
+                  .. context.start_line + 10
               end,
               opts = {
                 contains_code = true,
@@ -539,6 +516,7 @@ return {
     -- Keymaps
     local map = vim.keymap.set
     map("n", "<leader>a", "", { noremap = true, silent = true, desc = "+AI" })
+    map("v", "<leader>a", "", { noremap = true, silent = true, desc = "+AI" })
     -- Keymap for visual mode with leader + a
     map("v", "<leader>i", function()
       -- Prompt user for input
@@ -556,12 +534,6 @@ return {
       "<C-a>",
       "<cmd>CodeCompanionActions<cr>",
       { noremap = true, silent = true, desc = "CodeCompanion Actions" }
-    )
-    map(
-      "v",
-      "<leader>A",
-      "<cmd>CodeCompanionActions<cr>",
-      { noremap = true, silent = true, desc = "CodeCompanion Actions (visual mode)" }
     )
     map(
       "n",
