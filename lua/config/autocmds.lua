@@ -11,8 +11,15 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   end,
 })
 
--- Auto save on focus lost, mode change, text change, and buffer enter
-vim.api.nvim_create_autocmd(
-  { "FocusLost", "TextChanged", "BufEnter" },
-  { desc = "autosave", pattern = "*", command = "silent! update" }
-)
+local group = vim.api.nvim_create_augroup("CodeCompanionHooks", {})
+
+vim.api.nvim_create_autocmd({ "User" }, {
+  pattern = "CodeCompanionInline*",
+  group = group,
+  callback = function(request)
+    if request.match == "CodeCompanionInlineFinished" then
+      -- Format the buffer after the inline request has completed
+      require("conform").format({ bufnr = request.buf })
+    end
+  end,
+})

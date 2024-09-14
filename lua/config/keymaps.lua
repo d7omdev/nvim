@@ -36,7 +36,7 @@ map("n", "<C-c>d", "<cmd>Lspsaga peek_definition<CR>", { desc = "peek definition
 map("n", "<C-c>t", "<cmd>Lspsaga peek_type_definition<CR>", { desc = "peek type definition" })
 
 -- Auto save toggle
-map("n", "<leader>AST", ":ASToggle<CR>", { noremap = true, silent = true })
+-- map("n", "<leader>AST", ":ASToggle<CR>", { noremap = true, silent = true })
 
 -- Cheat.sh
 map("n", "<leader>ch", "<cmd>Cheat<CR>", { noremap = true, silent = true, desc = "Cheat Sheet" })
@@ -123,20 +123,16 @@ map("n", "[tc", "<cmd>TailwindPrevClass<CR>", { desc = "Tailwind Prev Class" })
 map("n", "<leader>ti", "<cmd>Telescope import<CR>", { desc = "Import" })
 
 -- Typescript tools
-map("n", "<leader>co", "<cmd>TSToolsOrganizeImports<cr>", { desc = "Sorts and removes unused imports" })
-
-map("n", "<leader>cS", "<cmd>TSToolsSortImports<cr>", { desc = "Sorts imports" })
-
-map("n", "<leader>cr", "<cmd>TSToolsRemoveUnusedImports<cr>", { desc = "Removes unused imports" })
-
-map("n", "<leader>cru", "<cmd>TSToolsRemoveUnused<cr>", { desc = "Removes all unused statements" })
-
-map("n", "<leader>cM", "<cmd>TSToolsAddMissingImports<cr>", { desc = "Add missing imports" })
-
-map("n", "<leader>cFa", "<cmd>TSToolsFixAll<cr>", { desc = "Fixes all fixable errors" })
-
--- map("n", "<leader>gd", "<cmd>TSToolsGoToSourceDefinition<cr>", { desc = "Goes to source definition" })
-
-map("n", "<leader>cR", "<cmd>TSToolsRenameFile<cr>", { desc = "Rename file" })
-
-map("n", "<leader>cFr", "<cmd>TSToolsFileReferences<cr>", { desc = "Find file references" })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "typescript", "typescriptreact" },
+  callback = function()
+    map("n", "<leader>co", "<cmd>TSToolsOrganizeImports<cr>", { desc = "Sorts and removes unused imports" })
+    map("n", "<leader>cS", "<cmd>TSToolsSortImports<cr>", { desc = "Sorts imports" })
+    map("n", "<leader>cr", "<cmd>TSToolsRemoveUnusedImports<cr>", { desc = "Removes unused imports" })
+    map("n", "<leader>cru", "<cmd>TSToolsRemoveUnused<cr>", { desc = "Removes all unused statements" })
+    map("n", "<leader>cM", "<cmd>TSToolsAddMissingImports<cr>", { desc = "Add missing imports" })
+    map("n", "<leader>cFa", "<cmd>TSToolsFixAll<cr>", { desc = "Fixes all fixable errors" })
+    map("n", "<leader>cR", "<cmd>TSToolsRenameFile<cr>", { desc = "Rename file" })
+    map("n", "<leader>cFr", "<cmd>TSToolsFileReferences<cr>", { desc = "Find file references" })
+  end,
+})

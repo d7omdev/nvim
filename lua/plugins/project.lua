@@ -1,5 +1,6 @@
 return {
   "coffebar/neovim-project",
+  event = "VeryLazy",
   opts = {
     projects = { -- define project roots
       "~/Projects/*",

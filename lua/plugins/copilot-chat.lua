@@ -1,6 +1,6 @@
 return {
   "CopilotC-Nvim/CopilotChat.nvim",
-  branch = "canary",
+  enabled = false,
   cmd = "CopilotChat",
   keys = {
     { "<leader>a", "", desc = "+ai" },
@@ -45,7 +45,6 @@ return {
       desc = "Quick Chat (CopilotChat)",
       mode = { "n", "v" },
     },
-
     {
       "<leader>ac",
       ":CopilotChatCommit<cr>",
