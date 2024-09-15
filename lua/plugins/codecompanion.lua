@@ -390,7 +390,7 @@ return {
         },
         ["Fix LSP Diagnostics"] = {
           strategy = "chat",
-          description = "Fix the LSP diagnostics with buffer context",
+          description = "Fix the LSP diagnostics",
           opts = {
             index = 8,
             default_prompt = true,

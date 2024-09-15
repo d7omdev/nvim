@@ -1,4 +1,3 @@
--- tailwind-tools.lua
 return {
   {
     "luckasRanarison/tailwind-tools.nvim",
@@ -10,7 +9,7 @@ return {
       "neovim/nvim-lspconfig", -- optional
     },
     event = { "BufRead", "BufNewFile" },
-    ft = { "tex", "astro" },
+    ft = { "typescriptreact", "astro" },
     opts = {
       ---@type TailwindTools.Option
       server = {
