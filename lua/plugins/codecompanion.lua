@@ -517,7 +517,14 @@ return {
     local map = vim.keymap.set
     map("n", "<leader>a", "", { noremap = true, silent = true, desc = "+AI" })
     map("v", "<leader>a", "", { noremap = true, silent = true, desc = "+AI" })
-    -- Keymap for visual mode with leader + a
+
+    map(
+      "n",
+      "<leader>i",
+      "<cmd>CodeCompanion<cr>",
+      { noremap = true, silent = true, desc = "CodeCompanion Inline with Buffer" }
+    )
+
     map("v", "<leader>i", function()
       -- Prompt user for input
       vim.ui.input({
