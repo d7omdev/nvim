@@ -20,6 +20,9 @@ require("lazy").setup({
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     { import = "plugins" },
   },
+  ui = {
+    border = "rounded",
+  },
   defaults = {
     lazy = false,
     version = false, -- always use the latest git commit
