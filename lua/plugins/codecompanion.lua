@@ -62,14 +62,16 @@ return {
           callback = "helpers.slash_commands.buffer",
           description = "Insert open buffers",
           opts = {
+            icon = "",
             contains_code = true,
-            provider = "telescope", -- default|telescope|mini_pick|fzf_lua
+            provider = "fzf_lua", -- default|telescope|mini_pick|fzf_lua
           },
         },
         ["file"] = {
           callback = "helpers.slash_commands.file",
           description = "Insert a file",
           opts = {
+            icon = "",
             contains_code = true,
             max_lines = 1000,
             provider = "fzf_lua", -- telescope|mini_pick|fzf_lua

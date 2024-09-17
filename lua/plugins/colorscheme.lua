@@ -4,12 +4,8 @@ return {
     event = "VimEnter",
     name = "catppuccin",
     opts = {
-      -- transparent_background = true,
+      transparent_background = true,
       flavor = "mocha",
-      -- background = {
-      --   dark = "frappe",
-      --   light = "frappe",
-      -- },
       integrations = {
         cmp = true,
         gitsigns = true,
@@ -66,11 +62,14 @@ return {
   },
   {
     -- Cursor color based on mode
-    "mvllow/modes.nvim",
-    tag = "v0.2.0",
-    config = function()
-      require("modes").setup()
-    end,
+    -- "mvllow/modes.nvim",
+    -- config = function()
+    --   require("modes").setup({
+    --     line_opacity = 0.15,
+    --     set_cursorline = false,
+    --     ignore_filetypes = { "NvimTree", "TelescopePrompt", "dashboard", "minifiles" },
+    --   })
+    -- end,
   },
   { "ellisonleao/gruvbox.nvim", priority = 1000, config = true, opts = ... },
 }
