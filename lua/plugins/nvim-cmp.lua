@@ -2,9 +2,6 @@ local cmp = require("cmp")
 
 require("luasnip.loaders.from_vscode").lazy_load()
 
-vim.api.nvim_set_hl(0, "CmpNormal", { bg = "#131320", fg = "#D7D7D7" })
-vim.api.nvim_set_hl(0, "CmpBorder", { bg = "#131320", fg = "#D7D7D7" })
-
 -- `/` cmdline setup.
 cmp.setup.cmdline({ "/", "?" }, {
   mapping = cmp.mapping.preset.cmdline(),
@@ -27,18 +24,6 @@ cmp.setup.cmdline(":", {
     },
   }),
 })
-local function border(hl_name)
-  return {
-    { "╭", hl_name },
-    { "─", hl_name },
-    { "╮", hl_name },
-    { "│", hl_name },
-    { "╯", hl_name },
-    { "─", hl_name },
-    { "╰", hl_name },
-    { "│", hl_name },
-  }
-end
 
 return {
   { "hrsh7th/cmp-cmdline" },
@@ -49,14 +34,8 @@ return {
         ["<C-Space>"] = cmp.mapping.complete(),
       },
       window = {
-        completion = {
-          border = border("CmpBorder"),
-          winhighlight = "Normal:CmpNormal,FloatBorder:CmpBorder,CursorLine:PmenuSel,Search:None",
-        },
-        documentation = {
-          border = border("CmpBorder"),
-          winhighlight = "Normal:CmpNormal,FloatBorder:CmpBorder,CursorLine:PmenuSel,Search:None",
-        },
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
       },
     },
   },
