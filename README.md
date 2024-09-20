@@ -8,14 +8,13 @@ This repository contains my personal Neovim configuration.
 
 The configuration uses the [WhichKey](https://github.com/folke/which-key.nvim) plugin for keybinding management.
 The `<leader>` key is mapped to `Space`.
-Press `Space` to see the available keybindings.
 
 ## Installation
 
 To use this configuration, clone this repository to your Neovim configuration directory.
 
 ```bash
-git clone https://github.com/abdulrahmanDev1/nvim.git ~/.config/nvim
+git clone https://github.com/d7omdev/nvim.git ~/.config/nvim
 ```
 
 Then, open Neovim and let the magic Happen!.
@@ -26,16 +25,3 @@ nvim
 
 Enjoy your Neovim experience!
 
-_This configuration is using LazyVim under the hood._
-
-## Features
-
-- Multi Cursor Support `<leader>m`.
-- Spell Checking Support.
-- Git Integration using lazygit `<leader>gg` and fugitive.
-- Advanced text objects using `nvim-treesitter-textobject`.
-- Markdown Preview Command `<leader>mb`.
-- Image previewing and pasting support.
-  - image preview is disabled for now!
-  - `<leader>v` to paste image from clipboard.
-- DB ui for managing databases `<leader>D`.
