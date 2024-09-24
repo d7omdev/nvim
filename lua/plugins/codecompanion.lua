@@ -93,7 +93,7 @@ return {
         },
       },
       -- PRE-DEFINED PROMPTS ------------------------------------------------------
-      pre_defined_prompts = {
+      prompt_library = {
         -- ["Custom Prompt"] = {
         --   strategy = "inline",
         --   description = "Prompt the LLM from Neovim",
@@ -398,7 +398,7 @@ return {
             default_prompt = true,
             mapping = "<leader>af",
             modes = { "n" },
-            slash_cmd = "lsp",
+            slash_cmd = "buffer",
             auto_submit = true,
             user_prompt = false,
             stop_context_insertion = true,
@@ -428,7 +428,7 @@ return {
                   .. diagnostic_message
                   .. "\n\nHere is the buffer context:\n"
                   .. "#buffer:"
-                  .. context.start_line - 10
+                  .. context.start_line
                   .. "-"
                   .. context.start_line + 10
               end,

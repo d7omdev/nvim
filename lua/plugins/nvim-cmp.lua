@@ -2,13 +2,14 @@ local cmp = require("cmp")
 
 require("luasnip.loaders.from_vscode").lazy_load()
 
+-- Custom kind icons
 local kind_icons = {
-  Text = "",
+  Text = "󰉿",
   Method = "󰆧",
   Function = "󰊕",
   Constructor = "",
   Field = "󰇽",
-  Variable = "󰂡",
+  Variable = "󰀫",
   Class = "󰠱",
   Interface = "",
   Module = "",
@@ -28,6 +29,8 @@ local kind_icons = {
   Event = "",
   Operator = "󰆕",
   TypeParameter = "󰅲",
+  Copilot = " ",
+  Codeium = " ",
 }
 
 -- `/` cmdline setup.
@@ -70,13 +73,13 @@ return {
           -- Kind icons
           vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
           -- Source
-          vim_item.menu = ({
-            buffer = "[Buffer]",
-            nvim_lsp = "[LSP]",
-            luasnip = "[LuaSnip]",
-            nvim_lua = "[Lua]",
-            latex_symbols = "[LaTeX]",
-          })[entry.source.name]
+          -- vim_item.menu = ({
+          --   buffer = "[Buffer]",
+          --   nvim_lsp = "[LSP]",
+          --   luasnip = "[LuaSnip]",
+          --   nvim_lua = "[Lua]",
+          --   latex_symbols = "[LaTeX]",
+          -- })[entry.source.name]
           return vim_item
         end,
       },
