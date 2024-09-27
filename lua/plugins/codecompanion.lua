@@ -547,13 +547,13 @@ return {
     map(
       "n",
       "<leader>aa",
-      "<cmd>CodeCompanionToggle<cr>",
+      "<cmd>CodeCompanionChat Toggle<cr>",
       { noremap = true, silent = true, desc = "CodeCompanion Toggle" }
     )
     map(
       "v",
       "<leader>aa",
-      "<cmd>CodeCompanionToggle<cr>",
+      "<cmd>CodeCompanionChat Toggle<cr>",
       { noremap = true, silent = true, desc = "CodeCompanion Toggle" }
     )
     map("v", "ga", "<cmd>CodeCompanionAdd<cr>", { noremap = true, silent = true, desc = "CodeCompanion Add" })
