@@ -1,18 +1,8 @@
 return {
   {
-    "alexghergh/nvim-tmux-navigation",
+    "aserowy/tmux.nvim",
     config = function()
-      require("nvim-tmux-navigation").setup({
-        disable_when_zoomed = true, -- defaults to false
-        keybindings = {
-          left = "<C-h>",
-          down = "<C-j>",
-          up = "<C-k>",
-          right = "<C-l>",
-          last_active = "<C-\\>",
-          next = "<C-Space>",
-        },
-      })
+      return require("tmux").setup()
     end,
   },
   {
@@ -23,4 +13,36 @@ return {
       vim.cmd([[cab ss SudaWrite]])
     end,
   },
+
+  -- Menu
+  { "nvchad/volt", lazy = true },
+  { "nvchad/minty", lazy = true },
+  {
+    "nvchad/menu",
+
+    lazy = true,
+    config = function()
+      require("menu").open({
+        {
+          name = "Format Buffer",
+          cmd = function()
+            local ok, conform = pcall(require, "conform")
+
+            if ok then
+              conform.format({ lsp_fallback = true })
+            else
+              vim.lsp.buf.format()
+            end
+          end,
+          rtxt = "<leader>cf",
+        },
+      })
+    end,
+  },
+  vim.keymap.set("n", "<RightMouse>", function()
+    vim.cmd.exec('"normal! \\<RightMouse>"')
+
+    local options = vim.bo.ft == "NvimTree" and "nvimtree" or "default"
+    require("menu").open(options, { mouse = true })
+  end, {}),
 }
