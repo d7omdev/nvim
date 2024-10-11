@@ -466,6 +466,9 @@ return {
       },
       -- DISPLAY OPTIONS ----------------------------------------------------------
       display = {
+        diff = {
+          provider = "mini_diff",
+        },
         action_palette = {
           width = 95,
           height = 10,

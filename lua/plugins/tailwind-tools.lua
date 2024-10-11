@@ -5,10 +5,7 @@ return {
     build = ":UpdateRemotePlugins",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
-      "nvim-telescope/telescope.nvim", -- optional
-      "neovim/nvim-lspconfig", -- optional
     },
-    event = { "BufRead", "BufNewFile" },
     ft = { "typescriptreact", "astro" },
     opts = {
       ---@type TailwindTools.Option
