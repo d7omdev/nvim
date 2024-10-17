@@ -41,7 +41,7 @@ return {
       window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
       editor_only_render_when_focused = true,
       tmux_show_only_in_active_window = true,
-      hijack_file_patterns = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp", "*.avif" },
+      hijack_file_patterns = { "*.png", "*.jpg", "*.jpeg", "*.webp", "*.avif" },
     })
   end,
 }

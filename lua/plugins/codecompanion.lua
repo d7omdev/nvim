@@ -94,42 +94,13 @@ return {
       },
       -- PRE-DEFINED PROMPTS ------------------------------------------------------
       prompt_library = {
-        -- ["Custom Prompt"] = {
-        --   strategy = "inline",
-        --   description = "Prompt the LLM from Neovim",
-        --   opts = {
-        --     index = 3,
-        --     default_prompt = true,
-        --     mapping = "<leader>ai",
-        --     user_prompt = true,
-        --   },
-        --   prompts = {
-        --     {
-        --       role = "system",
-        --       content = function(context)
-        --         if context.buftype == "terminal" then
-        --           return "I want you to act as an expert in writing terminal commands that will work for my current shell "
-        --             .. os.getenv("SHELL")
-        --             .. ". I will ask you specific questions and I want you to return the raw command only (no codeblocks and explanations). If you can't respond with a command, respond with nothing"
-        --         end
-        --         return "I want you to act as a senior "
-        --           .. context.filetype
-        --           .. " developer. I will ask you specific questions and I want you to return raw code only (no codeblocks and no explanations). If you can't respond with code, respond with nothing"
-        --       end,
-        --       opts = {
-        --         visible = false,
-        --         tag = "system_tag",
-        --       },
-        --     },
-        --   },
-        -- },
         ["Explain"] = {
           strategy = "chat",
           description = "Explain how code in a buffer works",
           opts = {
             index = 4,
             default_prompt = true,
-            mapping = "<leader>ae",
+            short_name = "explain",
             modes = { "v" },
             slash_cmd = "explain",
             auto_submit = true,
@@ -169,7 +140,7 @@ return {
           opts = {
             index = 5,
             default_prompt = true,
-            mapping = "<leader>au",
+            short_name = "tests",
             modes = { "v" },
             slash_cmd = "tests",
             auto_submit = true,
@@ -217,7 +188,7 @@ return {
           opts = {
             index = 6,
             default_prompt = true,
-            mapping = "<leader>af",
+            short_name = "fix",
             modes = { "v" },
             slash_cmd = "fix",
             auto_submit = true,
@@ -264,9 +235,9 @@ return {
           description = "Send the current buffer to the LLM as part of an inline prompt",
           opts = {
             index = 7,
-            modes = { "v" },
+            modes = { "n" },
             default_prompt = true,
-            mapping = "<leader>ai",
+            short_name = "buffer",
             slash_cmd = "buffer",
             auto_submit = true,
             user_prompt = true,
@@ -325,7 +296,7 @@ return {
           opts = {
             index = 8,
             default_prompt = true,
-            mapping = "<leader>ax",
+            short_name = "lsp-explain",
             modes = { "v" },
             slash_cmd = "lsp",
             auto_submit = true,
@@ -396,8 +367,8 @@ return {
           opts = {
             index = 8,
             default_prompt = true,
-            mapping = "<leader>af",
-            modes = { "n" },
+            short_name = "lsp-fix",
+            modes = { "n", "v" },
             slash_cmd = "buffer",
             auto_submit = true,
             user_prompt = false,
@@ -444,7 +415,7 @@ return {
           opts = {
             index = 9,
             default_prompt = true,
-            mapping = "<leader>am",
+            short_name = "commit",
             slash_cmd = "commit",
             auto_submit = true,
           },
@@ -522,14 +493,7 @@ return {
     local map = vim.keymap.set
     map("n", "<leader>a", "", { noremap = true, silent = true, desc = "+AI" })
     map("v", "<leader>a", "", { noremap = true, silent = true, desc = "+AI" })
-
-    map(
-      "n",
-      "<leader>i",
-      "<cmd>CodeCompanion<cr>",
-      { noremap = true, silent = true, desc = "CodeCompanion Inline with Buffer" }
-    )
-
+    map("n", "<leader>i", "<cmd>CodeCompanion<cr>", { noremap = true, silent = true, desc = "CC Inline with Buffer" })
     map("v", "<leader>i", function()
       -- Prompt user for input
       vim.ui.input({
@@ -540,28 +504,78 @@ return {
           vim.cmd("'<,'>CodeCompanion /buffer " .. input)
         end
       end)
-    end, { noremap = true, silent = true, desc = "CodeCompanion Inline with Prompt" })
-    map(
-      "n",
-      "<C-a>",
-      "<cmd>CodeCompanionActions<cr>",
-      { noremap = true, silent = true, desc = "CodeCompanion Actions" }
-    )
-    map(
-      "n",
-      "<leader>aa",
-      "<cmd>CodeCompanionChat Toggle<cr>",
-      { noremap = true, silent = true, desc = "CodeCompanion Toggle" }
-    )
-    map(
-      "v",
-      "<leader>aa",
-      "<cmd>CodeCompanionChat Toggle<cr>",
-      { noremap = true, silent = true, desc = "CodeCompanion Toggle" }
-    )
+    end, { noremap = true, silent = true, desc = "CC Inline with Prompt" })
+    map("n", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true, desc = "CC Actions" })
+    map("n", "<leader>aa", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true, desc = "CC Toggle" })
+    map("v", "<leader>aa", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true, desc = "CC Toggle" })
     map("v", "ga", "<cmd>CodeCompanionAdd<cr>", { noremap = true, silent = true, desc = "CodeCompanion Add" })
 
-    -- Expand 'cc' into 'CodeCompanion' in the command line
-    vim.cmd([[cab cc CodeCompanion]])
+    -- Prompt Library
+    map("v", "<leader>ae", "", {
+      callback = function()
+        require("codecompanion").prompt("explain")
+      end,
+      noremap = true,
+      silent = true,
+      desc = "CC Explain",
+    })
+    map("v", "<leader>au", "", {
+      callback = function()
+        require("codecompanion").prompt("tests")
+      end,
+      noremap = true,
+      silent = true,
+      desc = "CC generate unit tests",
+    })
+    map("v", "<leader>af", "", {
+      callback = function()
+        require("codecompanion").prompt("fix")
+      end,
+      noremap = true,
+      silent = true,
+      desc = "CC fix code",
+    })
+    map("n", "<leader>ai", "", {
+      callback = function()
+        require("codecompanion").prompt("buffer")
+      end,
+      noremap = true,
+      silent = true,
+      desc = "CC insert current buffer",
+    })
+    map("v", "<leader>ax", "", {
+      callback = function()
+        require("codecompanion").prompt("lsp-explain")
+      end,
+      noremap = true,
+      silent = true,
+      desc = "CC explain LSP diagnostics",
+    })
+    -- map("v", "<leader>af", "", {
+    --   callback = function()
+    --     require("codecompanion").prompt("lsp-explain")
+    --   end,
+    --   noremap = true,
+    --   silent = true,
+    --   desc = "CC fix LSP diagnostics",
+    -- })
+    map("n", "<leader>af", "", {
+      callback = function()
+        require("codecompanion").prompt("lsp-fix")
+      end,
+      noremap = true,
+      silent = true,
+      desc = "CC fix LSP diagnostics",
+    })
+    map("n", "<leader>am", "", {
+      callback = function()
+        require("codecompanion").prompt("commit")
+      end,
+      noremap = true,
+      silent = true,
+      desc = "CC generate a commit message",
+    })
+    -- Expand 'cc' into 'CC' in the command line
+    vim.cmd([[cab cc CC]])
   end,
 }

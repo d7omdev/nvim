@@ -3,7 +3,9 @@ return {
     "catppuccin/nvim",
     event = "VimEnter",
     name = "catppuccin",
-    opts = {},
+    opts = {
+      -- transparent_background = true,
+    },
   },
   {
     "LazyVim/LazyVim",

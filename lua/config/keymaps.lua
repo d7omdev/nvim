@@ -136,3 +136,6 @@ vim.api.nvim_create_autocmd("FileType", {
     map("n", "<leader>cFr", "<cmd>TSToolsFileReferences<cr>", { desc = "Find file references" })
   end,
 })
+
+-- I dont like copy when i paste
+map("v", "p", '"_dP', { noremap = true, silent = true })
