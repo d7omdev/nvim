@@ -10,5 +10,4 @@ data
 .ltex-dictionary
 .luarc.json
 lazy-lock.json
-# lazyvim.json
-
+spell/
