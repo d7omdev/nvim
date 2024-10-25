@@ -4,7 +4,7 @@ return {
     event = "VimEnter",
     name = "catppuccin",
     opts = {
-      -- transparent_background = true,
+      transparent_background = true,
     },
   },
   {

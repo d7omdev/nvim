@@ -138,4 +138,4 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- I dont like copy when i paste
-map("v", "p", '"_dP', { noremap = true, silent = true })
+map("v", "p", '"_d]p', { noremap = true, silent = true })
