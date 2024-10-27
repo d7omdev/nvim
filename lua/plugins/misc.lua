@@ -15,7 +15,6 @@ return {
       vim.cmd([[cab ss SudaWrite]])
     end,
   },
-
   {
     "jackMort/tide.nvim",
     config = function()
@@ -47,7 +46,6 @@ return {
   { "nvchad/minty", lazy = true },
   {
     "nvchad/menu",
-
     lazy = true,
     config = function()
       require("menu").open({
@@ -67,6 +65,19 @@ return {
       })
     end,
   },
+  -- {
+  --   "nvchad/ui",
+  --   config = function()
+  --     require("nvchad")
+  --   end,
+  -- },
+  -- {
+  --   "nvchad/base46",
+  --   lazy = true,
+  --   build = function()
+  --     require("base46").load_all_highlights()
+  --   end,
+  -- },
   vim.keymap.set("n", "<RightMouse>", function()
     vim.cmd.exec('"normal! \\<RightMouse>"')
 

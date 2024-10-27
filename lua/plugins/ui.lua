@@ -15,6 +15,7 @@ return {
   },
   {
     "mvllow/modes.nvim",
+    enabled = false,
     config = function()
       require("modes").setup({
         line_opacity = 0.15,
@@ -45,9 +46,7 @@ return {
     lazy = true,
     event = "VeryLazy",
     config = function()
-      require("borderline").setup({
-        --  ...
-      })
+      require("borderline").setup({})
     end,
   },
 }

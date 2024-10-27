@@ -49,7 +49,7 @@ return {
       desc = "Open mini.files (Directory of Current File)",
     },
     {
-      "<leader>E",
+      "<leader>B",
       function()
         require("mini.files").open(vim.uv.cwd(), true)
       end,
