@@ -506,12 +506,12 @@ return {
       end)
     end, { noremap = true, silent = true, desc = "CC Inline with Prompt" })
     map("n", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true, desc = "CC Actions" })
-    map("n", "<leader>aa", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true, desc = "CC Toggle" })
-    map("v", "<leader>aa", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true, desc = "CC Toggle" })
+    map("n", "<leader>aca", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true, desc = "CC Toggle" })
+    map("v", "<leader>aca", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true, desc = "CC Toggle" })
     map("v", "ga", "<cmd>CodeCompanionAdd<cr>", { noremap = true, silent = true, desc = "CodeCompanion Add" })
 
     -- Prompt Library
-    map("v", "<leader>ae", "", {
+    map("v", "<leader>cce", "", {
       callback = function()
         require("codecompanion").prompt("explain")
       end,
@@ -519,7 +519,7 @@ return {
       silent = true,
       desc = "CC Explain",
     })
-    map("v", "<leader>au", "", {
+    map("v", "<leader>ccu", "", {
       callback = function()
         require("codecompanion").prompt("tests")
       end,
@@ -527,7 +527,7 @@ return {
       silent = true,
       desc = "CC generate unit tests",
     })
-    map("v", "<leader>af", "", {
+    map("v", "<leader>ccf", "", {
       callback = function()
         require("codecompanion").prompt("fix")
       end,
@@ -535,7 +535,7 @@ return {
       silent = true,
       desc = "CC fix code",
     })
-    map("n", "<leader>ai", "", {
+    map("n", "<leader>cci", "", {
       callback = function()
         require("codecompanion").prompt("buffer")
       end,
@@ -543,7 +543,7 @@ return {
       silent = true,
       desc = "CC insert current buffer",
     })
-    map("v", "<leader>ax", "", {
+    map("v", "<leader>ccx", "", {
       callback = function()
         require("codecompanion").prompt("lsp-explain")
       end,
@@ -559,7 +559,7 @@ return {
     --   silent = true,
     --   desc = "CC fix LSP diagnostics",
     -- })
-    map("n", "<leader>af", "", {
+    map("n", "<leader>ccf", "", {
       callback = function()
         require("codecompanion").prompt("lsp-fix")
       end,
@@ -567,7 +567,7 @@ return {
       silent = true,
       desc = "CC fix LSP diagnostics",
     })
-    map("n", "<leader>am", "", {
+    map("n", "<leader>ccm", "", {
       callback = function()
         require("codecompanion").prompt("commit")
       end,

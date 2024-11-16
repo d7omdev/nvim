@@ -5,6 +5,8 @@ local opt = vim.opt
 
 vim.g.lazygit_config = true
 
+vim.opt.laststatus = 3
+
 opt.clipboard = "unnamedplus"
 
 -- Make cursor blink
@@ -21,3 +23,5 @@ opt.autoindent = true
 
 -- Disable highlighting if file is over 10 MB
 vim.api.nvim_command('autocmd BufReadPost * if getfsize(expand("%:p")) > 10000 * 1024 | TSBufDisable highlight | endif')
+
+vim.cmd([[cab Wq wq]])
