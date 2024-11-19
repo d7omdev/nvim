@@ -25,3 +25,8 @@ opt.autoindent = true
 vim.api.nvim_command('autocmd BufReadPost * if getfsize(expand("%:p")) > 10000 * 1024 | TSBufDisable highlight | endif')
 
 vim.cmd([[cab Wq wq]])
+
+-- Disable virtual text
+vim.diagnostic.config({
+  virtual_text = false,
+})

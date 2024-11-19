@@ -49,4 +49,16 @@ return {
       require("borderline").setup({})
     end,
   },
+  {
+    "maan2003/lsp_lines.nvim",
+    event = "BufRead",
+    config = function()
+      local filetypes = { "NvimTree", "snacks_dashboard", "default", "lazy", "" }
+      local ft = vim.tbl_contains(filetypes, vim.bo.ft)
+      if ft then
+        require("lsp_lines").setup()
+        vim.keymap.set("n", "<leader>oL", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+      end
+    end,
+  },
 }
