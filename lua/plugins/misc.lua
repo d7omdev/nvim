@@ -65,19 +65,37 @@ return {
       })
     end,
   },
-  -- {
-  --   "nvchad/ui",
-  --   config = function()
-  --     require("nvchad")
-  --   end,
-  -- },
-  -- {
-  --   "nvchad/base46",
-  --   lazy = true,
-  --   build = function()
-  --     require("base46").load_all_highlights()
-  --   end,
-  -- },
+  {
+    "nvchad/ui",
+    config = function()
+      require("nvchad")
+    end,
+  },
+  {
+    "nvchad/base46",
+    lazy = true,
+    build = function()
+      require("base46").load_all_highlights()
+    end,
+  },
+  -- Disabling these plugins if nvchad ui is used
+  { "nvim-lualine/lualine.nvim", enabled = false },
+  { "akinsho/bufferline.nvim", enabled = false },
+
+  -- Also apply these configs
+  {
+    "echasnovski/mini.indentscope",
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason", "nvdash", "nvcheatsheet" },
+        callback = function()
+          vim.b.miniindentscope_disable = true
+        end,
+      })
+    end,
+  },
+  ---
+
   vim.keymap.set("n", "<RightMouse>", function()
     vim.cmd.exec('"normal! \\<RightMouse>"')
 
