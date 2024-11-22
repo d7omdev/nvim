@@ -1,7 +1,7 @@
 return {
   {
     "nvim-neo-tree/neo-tree.nvim",
-    enabled = true,
+    enabled = false,
     keys = {
       {
         "<leader>fe",

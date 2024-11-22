@@ -46,7 +46,9 @@ return {
     lazy = true,
     event = "VeryLazy",
     config = function()
-      require("borderline").setup({})
+      require("borderline").setup({
+        border = "single",
+      })
     end,
   },
   {
