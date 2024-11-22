@@ -4,7 +4,7 @@ return {
     event = "VimEnter",
     name = "catppuccin",
     opts = {
-      transparent_background = true,
+      -- transparent_background = true,
     },
   },
   {
@@ -46,7 +46,9 @@ return {
     lazy = true,
     event = "VeryLazy",
     config = function()
-      require("borderline").setup({})
+      require("borderline").setup({
+        border = "single",
+      })
     end,
   },
   {
