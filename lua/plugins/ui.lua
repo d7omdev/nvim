@@ -7,10 +7,11 @@ return {
       -- transparent_background = true,
     },
   },
+  { "olimorris/onedarkpro.nvim" },
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "catppuccin",
+      colorscheme = "nvchad",
     },
   },
   {
@@ -47,6 +48,7 @@ return {
     event = "VeryLazy",
     config = function()
       require("borderline").setup({
+        ---@diagnostic disable-next-line: assign-type-mismatch
         border = "single",
       })
     end,

@@ -74,10 +74,4 @@ vim.keymap.set("n", "<leader>cH", "<cmd> NvCheatsheet <CR>", { desc = "Mapping c
 vim.keymap.set("n", "<leader>tp", "<cmd>lua require('nvchad.themes').open() <CR>", { desc = "Theme picker" })
 
 local status, chadrc = pcall(require, "chadrc")
-return vim.tbl_deep_extend("force", options, status and chadrc or {}),
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "onedark",
-    },
-  }
+return vim.tbl_deep_extend("force", options, status and chadrc or {})
