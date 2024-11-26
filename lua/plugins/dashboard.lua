@@ -52,9 +52,10 @@ return {
         {
           pane = 2,
           section = "terminal",
-          cmd = "colorscript -e square",
+          -- cmd = "colorscript -e square",
+          cmd = "fastfetch --logo none | rg --colors=match:fg:cyan '|||||󰝚|' ",
           height = 6,
-          padding = 4,
+          padding = 2,
         },
         { section = "keys", gap = 1, padding = 1 },
         { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
