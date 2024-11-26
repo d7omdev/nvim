@@ -18,7 +18,13 @@ require("lazy").setup({
     hererocks = true,
   },
   spec = {
-    { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+    {
+      "LazyVim/LazyVim",
+      import = "lazyvim.plugins",
+      opts = {
+        colorscheme = "nvchad",
+      },
+    },
     { import = "plugins" },
   },
   ui = {
@@ -48,6 +54,6 @@ require("lazy").setup({
   },
 })
 
-dofile(vim.g.base46_cache .. "syntax")
-dofile(vim.g.base46_cache .. "defaults")
-dofile(vim.g.base46_cache .. "statusline")
+for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
+  dofile(vim.g.base46_cache .. v)
+end

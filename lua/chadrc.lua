@@ -72,6 +72,7 @@ local options = {
 
 vim.keymap.set("n", "<leader>cH", "<cmd> NvCheatsheet <CR>", { desc = "Mapping cheatsheet" })
 vim.keymap.set("n", "<leader>tp", "<cmd>lua require('nvchad.themes').open() <CR>", { desc = "Theme picker" })
+vim.keymap.set("n", "<leader>cN", require("nvchad.lsp.renamer"), { desc = "Nvchad Rename" })
 
 local status, chadrc = pcall(require, "chadrc")
 return vim.tbl_deep_extend("force", options, status and chadrc or {})

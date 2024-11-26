@@ -7,13 +7,6 @@ return {
       -- transparent_background = true,
     },
   },
-  { "olimorris/onedarkpro.nvim" },
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "nvchad",
-    },
-  },
   {
     "mvllow/modes.nvim",
     enabled = false,
