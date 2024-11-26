@@ -94,6 +94,13 @@ return {
       })
     end,
   },
+  {
+    "anuvyklack/pretty-fold.nvim",
+    config = function()
+      require("pretty-fold").setup({})
+      -- vim.opt.fillchars:append("fold:•")
+    end,
+  },
 
   ---
 

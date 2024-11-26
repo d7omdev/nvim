@@ -54,7 +54,13 @@ return {
       local ft = vim.tbl_contains(filetypes, vim.bo.ft)
       if ft then
         require("lsp_lines").setup()
-        vim.keymap.set("n", "<leader>oL", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+        vim.keymap.set("n", "<leader>oL", function()
+          local state = require("lsp_lines").toggle()
+          -- Disable virtual text
+          vim.diagnostic.config({
+            virtual_text = not state, -- Disable virtual text when lsp_lines is enabled
+          })
+        end, { desc = "Toggle lsp_lines" })
       end
     end,
   },

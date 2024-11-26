@@ -1,7 +1,6 @@
 return {
-
   "HiPhish/rainbow-delimiters.nvim",
-  enabled = false,
+  enabled = true,
   config = function()
     -- This module contains a number of default definitions
     local rainbow_delimiters = require("rainbow-delimiters")
@@ -9,11 +8,11 @@ return {
     local highlight_groups = {
       RainbowDelimiterRed = "#BB5D64", -- Yellow
       RainbowDelimiterYellow = "#BB9D66", -- Yellow
-      RainbowDelimiterBlue = "#4F8EC2", -- Blue
+      RainbowDelimiterBlue = "#569AD2", -- Blue
       RainbowDelimiterOrange = "#AC7F56", -- Orange
       RainbowDelimiterGreen = "#789A60", -- Green
       RainbowDelimiterViolet = "#936EB8", -- Violet
-      RainbowDelimiterCyan = "#46949E", -- Cyan
+      RainbowDelimiterCyan = "#09949E", -- Cyan
     }
 
     for group, color in pairs(highlight_groups) do
@@ -28,7 +27,6 @@ return {
       },
       query = {
         [""] = "rainbow-delimiters",
-        lua = "rainbow-blocks",
       },
       priority = {
         [""] = 110,
