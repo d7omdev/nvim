@@ -5,19 +5,13 @@ return {
     -- This module contains a number of default definitions
     local rainbow_delimiters = require("rainbow-delimiters")
 
-    local highlight_groups = {
-      RainbowDelimiterRed = "#BB5D64", -- Yellow
-      RainbowDelimiterYellow = "#BB9D66", -- Yellow
-      RainbowDelimiterBlue = "#569AD2", -- Blue
-      RainbowDelimiterOrange = "#AC7F56", -- Orange
-      RainbowDelimiterGreen = "#789A60", -- Green
-      RainbowDelimiterViolet = "#936EB8", -- Violet
-      RainbowDelimiterCyan = "#09949E", -- Cyan
-    }
-
-    for group, color in pairs(highlight_groups) do
-      vim.api.nvim_set_hl(0, group, { fg = color })
-    end
+    vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+    vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+    vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+    vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+    vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+    vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+    vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
 
     ---@type rainbow_delimiters.config
     vim.g.rainbow_delimiters = {
@@ -33,13 +27,13 @@ return {
         lua = 210,
       },
       highlight = {
-        "RainbowDelimiterRed",
-        "RainbowDelimiterYellow",
-        "RainbowDelimiterBlue",
-        "RainbowDelimiterOrange",
-        "RainbowDelimiterGreen",
-        "RainbowDelimiterViolet",
-        "RainbowDelimiterCyan",
+        "RainbowRed",
+        "RainbowYellow",
+        "RainbowBlue",
+        "RainbowOrange",
+        "RainbowGreen",
+        "RainbowViolet",
+        "RainbowCyan",
       },
     }
   end,

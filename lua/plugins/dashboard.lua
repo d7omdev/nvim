@@ -53,7 +53,7 @@ return {
           pane = 2,
           section = "terminal",
           -- cmd = "colorscript -e square",
-          cmd = "fastfetch --logo none | rg --colors=match:fg:cyan '|||||󰝚|' ",
+          cmd = "fastfetch --logo none | rg --colors=match:fg:cyan '|||||󰝚|'",
           height = 6,
           padding = 2,
         },

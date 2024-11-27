@@ -41,30 +41,8 @@ return {
     },
   },
 
-  -- Menu
   { "nvchad/volt", lazy = true },
   { "nvchad/minty", lazy = true },
-  {
-    "nvchad/menu",
-    lazy = true,
-    config = function()
-      require("menu").open({
-        {
-          name = "Format Buffer",
-          cmd = function()
-            local ok, conform = pcall(require, "conform")
-
-            if ok then
-              conform.format({ lsp_fallback = true })
-            else
-              vim.lsp.buf.format()
-            end
-          end,
-          rtxt = "<leader>cf",
-        },
-      })
-    end,
-  },
   {
     "nvchad/ui",
     config = function()
@@ -84,30 +62,72 @@ return {
 
   -- Also apply these configs
   {
-    "echasnovski/mini.indentscope",
-    init = function()
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason", "nvdash", "nvcheatsheet" },
-        callback = function()
-          vim.b.miniindentscope_disable = true
-        end,
+    "bbjornstad/pretty-fold.nvim",
+    config = function()
+      require("pretty-fold").setup({
+        keep_indentation = false,
+        fill_char = "━",
+        sections = {
+          left = {
+            "━ ",
+            function()
+              return string.rep("*", vim.v.foldlevel)
+            end,
+            " ━┫",
+            "content",
+            "┣",
+          },
+          right = {
+            "┫ ",
+            "number_of_folded_lines",
+            ": ",
+            "percentage",
+            " ┣━━",
+          },
+        },
       })
     end,
   },
   {
-    "anuvyklack/pretty-fold.nvim",
-    config = function()
-      require("pretty-fold").setup({})
-      -- vim.opt.fillchars:append("fold:•")
-    end,
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    ---@module "ibl"
+    ---@type ibl.config
+    opts = {},
   },
-
-  ---
-
-  vim.keymap.set("n", "<RightMouse>", function()
-    vim.cmd.exec('"normal! \\<RightMouse>"')
-
-    local options = vim.bo.ft == "NvimTree" and "nvimtree" or "default"
-    require("menu").open(options, { mouse = true })
-  end, {}),
+  {
+    "andrewferrier/debugprint.nvim",
+    opts = {
+      keymaps = {
+        normal = {
+          plain_below = "g?p",
+          plain_above = "g?P",
+          variable_below = "g?v",
+          variable_above = "g?V",
+          variable_below_alwaysprompt = nil,
+          variable_above_alwaysprompt = nil,
+          textobj_below = "g?o",
+          textobj_above = "g?O",
+          toggle_comment_debug_prints = nil,
+          delete_debug_prints = nil,
+        },
+        insert = {
+          plain = "<C-G>p",
+          variable = "<C-G>v",
+        },
+        visual = {
+          variable_below = "g?v",
+          variable_above = "g?V",
+        },
+      },
+      commands = {
+        toggle_comment_debug_prints = "ToggleCommentDebugPrints",
+        delete_debug_prints = "DeleteDebugPrints",
+      },
+    },
+    dependencies = {
+      "echasnovski/mini.nvim",
+    },
+    version = "*",
+  },
 }
