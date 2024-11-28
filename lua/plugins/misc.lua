@@ -90,6 +90,7 @@ return {
   },
   {
     "lukas-reineke/indent-blankline.nvim",
+    enabled = true,
     main = "ibl",
     ---@module "ibl"
     ---@type ibl.config
@@ -129,5 +130,26 @@ return {
       "echasnovski/mini.nvim",
     },
     version = "*",
+  },
+  {
+    "shellRaining/hlchunk.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require("hlchunk").setup({
+        line_num = {
+          enable = true,
+        },
+        chunk = {
+          enable = true,
+          chars = {
+            horizontal_line = "─",
+            vertical_line = "│",
+            left_top = "╭",
+            left_bottom = "╰",
+            right_arrow = "•",
+          },
+        },
+      })
+    end,
   },
 }
