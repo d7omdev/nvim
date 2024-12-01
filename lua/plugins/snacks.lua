@@ -27,7 +27,9 @@ return {
           { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
           { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
           { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
-          { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          -- { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          { icon = "", key = "x", desc = "Lazy Extras", action = "<cmd>LazyExtras<cr>" },
+          { icon = " ", key = "m", desc = "Marks", action = ":lua Snacks.dashboard.pick('marks')" },
           {
             icon = " ",
             key = "c",
@@ -81,6 +83,7 @@ return {
       enabled = true,
       timeout = 3000,
     },
+
     quickfile = { enabled = true },
     statuscolumn = { enabled = true },
     words = { enabled = true },
