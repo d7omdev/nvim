@@ -23,3 +23,14 @@ vim.api.nvim_create_autocmd({ "User" }, {
     end
   end,
 })
+
+local gdproject = io.open(vim.fn.getcwd() .. "/project.godot", "r")
+local godotserver = io.open("./godothost", "r")
+if gdproject then
+  io.close(gdproject)
+  if godotserver then
+    io.close(godotserver)
+    return
+  end
+  vim.fn.serverstart("./godothost")
+end
