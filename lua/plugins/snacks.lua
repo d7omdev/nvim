@@ -4,6 +4,8 @@ return {
   lazy = false,
   ---@type snacks.Config
   opts = {
+    zen = {},
+    dim = {},
     bigfile = { enabled = true },
     dashboard = { ---@class snacks.dashboard.Config
       ---@field sections snacks.dashboard.Section
@@ -83,7 +85,6 @@ return {
       enabled = true,
       timeout = 3000,
     },
-
     quickfile = { enabled = true },
     statuscolumn = { enabled = true },
     words = { enabled = true },
@@ -245,6 +246,8 @@ return {
         Snacks.toggle.treesitter():map("<leader>uT")
         Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
         Snacks.toggle.inlay_hints():map("<leader>uh")
+        Snacks.toggle.dim():map("<leader>uD")
+        -- Snacks.toggle.zen():map("<leader>uz")
       end,
     })
   end,

@@ -26,7 +26,7 @@ map("v", "<Del>", '"_d', { noremap = true, silent = true })
 map("n", "<leader>mp", ":MarkdownPreview<CR>", { noremap = true, silent = true })
 
 -- DBui
-map("n", "<leader>uD", ":tabnew | DBUI<CR>", { noremap = true, silent = true })
+map("n", "<leader>DBui", ":tabnew | DBUI<CR>", { noremap = true, silent = true })
 
 -- Lspsaga keymaps
 map("n", "<S-r>", "<cmd>Lspsaga hover_doc<CR>", { desc = "show hover doc" })

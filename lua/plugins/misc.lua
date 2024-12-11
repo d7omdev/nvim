@@ -160,6 +160,12 @@ return {
     },
     cmd = "Nerdy",
   },
+  {
+    "VidocqH/lsp-lens.nvim",
+    config = function()
+      require("lsp-lens").setup({})
+    end,
+  },
 
   -- Godot
   { "habamax/vim-godot" },
