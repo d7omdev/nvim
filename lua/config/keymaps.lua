@@ -145,5 +145,18 @@ map("n", "<C-l>", "<cmd>Treewalker Right<CR>", { noremap = true, desc = "Treewal
 --- Switch Tab with tab+tab
 map("n", "<Tab><Tab>", "<cmd>tabnext<CR>", { noremap = true, silent = true })
 
+map(
+  "n",
+  "]b",
+  require("config.buffers").next_buffer_in_tab,
+  { noremap = true, silent = true, desc = "Next buffer in tab" }
+)
+map(
+  "n",
+  "[b",
+  require("config.buffers").prev_buffer_in_tab,
+  { noremap = true, silent = true, desc = "Previous buffer in tab" }
+)
+
 -- I dont like copy when i paste
 map("v", "p", '"_dp', { noremap = true, silent = true })
