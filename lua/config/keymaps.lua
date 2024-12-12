@@ -145,6 +145,7 @@ map("n", "<C-l>", "<cmd>Treewalker Right<CR>", { noremap = true, desc = "Treewal
 --- Switch Tab with tab+tab
 map("n", "<Tab><Tab>", "<cmd>tabnext<CR>", { noremap = true, silent = true })
 
+-- Buffers
 map(
   "n",
   "]b",
@@ -157,6 +158,14 @@ map(
   require("config.buffers").prev_buffer_in_tab,
   { noremap = true, silent = true, desc = "Previous buffer in tab" }
 )
+local tabufline = require("nvchad.tabufline")
+
+map("n", "[B", function()
+  tabufline.move_buf(-1)
+end, { noremap = true, silent = true, desc = "Move buffer left" })
+map("n", "]B", function()
+  tabufline.move_buf(1)
+end, { noremap = true, silent = true, desc = "Move buffer right" })
 
 -- I dont like copy when i paste
 map("v", "p", '"_dp', { noremap = true, silent = true })
