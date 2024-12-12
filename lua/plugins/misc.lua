@@ -166,6 +166,12 @@ return {
       require("lsp-lens").setup({})
     end,
   },
+  {
+    "aaronik/treewalker.nvim",
+    config = {
+      highlight = true, -- default is false
+    },
+  },
 
   -- Godot
   { "habamax/vim-godot" },

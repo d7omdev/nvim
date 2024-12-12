@@ -137,5 +137,13 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+map("n", "<C-j>", "<cmd>Treewalker Down<CR>", { noremap = true, desc = "Treewalker Down" })
+map("n", "<C-k>", "<cmd>Treewalker Up<CR>", { noremap = true, desc = "Treewalker Up" })
+map("n", "<C-h>", "<cmd>Treewalker Left<CR>", { noremap = true, desc = "Treewalker Left" })
+map("n", "<C-l>", "<cmd>Treewalker Right<CR>", { noremap = true, desc = "Treewalker Right" })
+
+--- Switch Tab with tab+tab
+map("n", "<Tab><Tab>", "<cmd>tabnext<CR>", { noremap = true, silent = true })
+
 -- I dont like copy when i paste
 map("v", "p", '"_dp', { noremap = true, silent = true })

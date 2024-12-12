@@ -14,6 +14,7 @@ lspconfig.gdscript.setup({
 return {
   {
     "neovim/nvim-lspconfig",
+    event = "VeryLazy",
     opts = function()
       local ret = {
         diagnostics = {
