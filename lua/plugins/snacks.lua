@@ -6,6 +6,24 @@ return {
   opts = {
     zen = {},
     dim = {},
+    indent = {
+      enabled = true,
+      chunk = {
+        enabled = true,
+        -- only show chunk scopes in the current window
+        only_current = false,
+        hl = "SnacksIndentChunk", ---@type string|string[] hl group for chunk scopes
+        char = {
+          corner_top = "┌",
+          corner_bottom = "└",
+          -- corner_top = "╭",
+          -- corner_bottom = "╰",
+          horizontal = "─",
+          vertical = "│",
+          arrow = "─",
+        },
+      },
+    },
     bigfile = { enabled = true },
     dashboard = { ---@class snacks.dashboard.Config
       ---@field sections snacks.dashboard.Section

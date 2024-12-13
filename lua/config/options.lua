@@ -5,7 +5,7 @@ local opt = vim.opt
 
 vim.g.lazygit_config = true
 
-vim.opt.laststatus = 3
+opt.laststatus = 3
 
 opt.clipboard = "unnamedplus"
 
@@ -17,6 +17,7 @@ opt.guicursor = {
 }
 opt.linebreak = true
 -- Set tab width
+opt.expandtab = false
 opt.tabstop = 4
 opt.shiftwidth = 4
 opt.autoindent = true

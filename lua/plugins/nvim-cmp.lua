@@ -59,6 +59,12 @@ cmp.setup.cmdline(":", {
   }),
 })
 
+cmp.setup({
+  sources = {
+    { name = "ecolog" },
+  },
+})
+
 return {
   { "hrsh7th/cmp-cmdline" },
 }

@@ -89,14 +89,6 @@ return {
     end,
   },
   {
-    "lukas-reineke/indent-blankline.nvim",
-    enabled = true,
-    main = "ibl",
-    ---@module "ibl"
-    ---@type ibl.config
-    opts = {},
-  },
-  {
     "andrewferrier/debugprint.nvim",
     opts = {
       keymaps = {
@@ -131,27 +123,7 @@ return {
     },
     version = "*",
   },
-  {
-    "shellRaining/hlchunk.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    config = function()
-      require("hlchunk").setup({
-        line_num = {
-          enable = true,
-        },
-        chunk = {
-          enable = true,
-          chars = {
-            horizontal_line = "─",
-            vertical_line = "│",
-            left_top = "╭",
-            left_bottom = "╰",
-            right_arrow = "•",
-          },
-        },
-      })
-    end,
-  },
+
   {
     "2kabhishek/nerdy.nvim",
     dependencies = {
@@ -163,7 +135,14 @@ return {
   {
     "VidocqH/lsp-lens.nvim",
     config = function()
-      require("lsp-lens").setup({})
+      require("lsp-lens").setup({
+        sections = {
+          definition = false,
+          references = true,
+          implements = false,
+          git_authors = true,
+        },
+      })
     end,
   },
   {
@@ -172,6 +151,7 @@ return {
       highlight = true, -- default is false
     },
   },
+  { "mfussenegger/nvim-dap", event = "BufReadPre" },
 
   -- Godot
   { "habamax/vim-godot" },

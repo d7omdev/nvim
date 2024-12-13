@@ -1,7 +1,7 @@
 return {
   {
     "catppuccin/nvim",
-    event = "VimEnter",
+    event = "BufRead",
     name = "catppuccin",
     opts = {
       -- transparent_background = true,
@@ -38,7 +38,7 @@ return {
     "mikesmithgh/borderline.nvim",
     enabled = true,
     lazy = true,
-    event = "VeryLazy",
+    event = "BufRead",
     config = function()
       require("borderline").setup({
         ---@diagnostic disable-next-line: assign-type-mismatch

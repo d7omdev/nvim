@@ -3,6 +3,15 @@ return {
   dependencies = {
     "hrsh7th/nvim-cmp", -- Optional: for autocompletion support (recommended)
   },
+  event = "BufRead",
+  config = function()
+    require("ecolog").setup({
+      integrations = {
+        lsp = true,
+        lspsaga = true,
+      },
+    })
+  end,
   -- Optional: you can add some keybindings
   -- (I personally use lspsaga so check out lspsaga integration or lsp integration for a smoother experience without separate keybindings)
   keys = {
@@ -10,7 +19,6 @@ return {
     { "<leader>Ep", "<cmd>EcologPeek<cr>", desc = "Ecolog peek variable" },
     { "<leader>Es", "<cmd>EcologSelect<cr>", desc = "Switch env file" },
   },
-  lazy = false,
   opts = {
     -- Enables shelter mode for sensitive values
     shelter = {

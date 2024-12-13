@@ -11,3 +11,4 @@ data
 .luarc.json
 lazy-lock.json
 spell/
+startup_Times.log
