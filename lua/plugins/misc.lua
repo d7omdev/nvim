@@ -140,7 +140,7 @@ return {
           definition = false,
           references = true,
           implements = false,
-          git_authors = true,
+          git_authors = false,
         },
       })
     end,
@@ -151,7 +151,28 @@ return {
       highlight = true, -- default is false
     },
   },
-  { "mfussenegger/nvim-dap", event = "BufReadPre" },
+  {
+    "chrisgrieser/nvim-recorder",
+    dependencies = "rcarriga/nvim-notify", -- optional
+    opts = {}, -- required even with default settings, since it calls `setup()`
+  },
+  {
+    "chrisgrieser/nvim-recorder",
+    opts = {
+      slots = { "u", "i", "o", "p" },
+
+      mapping = {
+        startStopRecording = "qa",
+        playMacro = "Q",
+        switchSlot = "<C-A-q>",
+        editMacro = "cq",
+        deleteAllMacros = "dq",
+        yankMacro = "yq",
+        -- ⚠️ this should be a string you don't use in insert mode during a macro
+        addBreakPoint = "##",
+      },
+    }, -- required even with default settings, since it calls `setup()`
+  },
 
   -- Godot
   { "habamax/vim-godot" },

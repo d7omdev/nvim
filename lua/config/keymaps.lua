@@ -166,6 +166,12 @@ end, { noremap = true, silent = true, desc = "Move buffer left" })
 map("n", "]B", function()
   tabufline.move_buf(1)
 end, { noremap = true, silent = true, desc = "Move buffer right" })
+map("n", "<leader>bd", "<cmd>lua Snacks.bufdelete()<CR>", { noremap = true, silent = true, desc = "Delete buffer" })
+   
+
+
+
+
 
 -- I dont like copy when i paste
 map("v", "p", '"_dp', { noremap = true, silent = true })
