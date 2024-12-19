@@ -76,7 +76,7 @@ return {
     local map_split = function(buf_id, lhs, direction, close_on_file)
       local rhs = function()
         local new_target_window
-        local cur_target_window = require("mini.files").get_target_window()
+        local cur_target_window = require("mini.files").get_explorer_state().target_window
         if cur_target_window ~= nil then
           vim.api.nvim_win_call(cur_target_window, function()
             vim.cmd("belowright " .. direction .. " split")
@@ -122,8 +122,8 @@ return {
           { buffer = args.data.buf_id, desc = "Set cwd" }
         )
 
-        map_split(buf_id, opts.mappings and opts.mappings.go_in_horizontal or "<C-w>s", "horizontal", false)
-        map_split(buf_id, opts.mappings and opts.mappings.go_in_vertical or "<C-w>v", "vertical", false)
+        map_split(buf_id, opts.mappings and opts.mappings.go_in_horizontal or "<C-e>s", "horizontal", false)
+        map_split(buf_id, opts.mappings and opts.mappings.go_in_vertical or "<C-e>v", "vertical", false)
         map_split(buf_id, opts.mappings and opts.mappings.go_in_horizontal_plus or "<C-w>S", "horizontal", true)
         map_split(buf_id, opts.mappings and opts.mappings.go_in_vertical_plus or "<C-w>V", "vertical", true)
       end,

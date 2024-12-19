@@ -63,10 +63,6 @@ return {
             },
           },
         },
-        format = {
-          formatting_options = nil,
-          timeout_ms = nil,
-        },
         servers = {
           jsonls = {
             -- lazy-load schemastore when needed

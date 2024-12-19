@@ -1,5 +1,6 @@
 return {
   "OXY2DEV/bars-N-lines.nvim",
+  enabled = false,
   config = function()
     local bars = require("bars")
     bars.setup({

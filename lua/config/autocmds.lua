@@ -11,6 +11,14 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   end,
 })
 
+-- Automatically organize imports in .tsx and .ts files on save
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = { "*.tsx", "*.ts" },
+  callback = function()
+    require("lazyvim.util.lsp").action["source.organizeImports"]()
+  end,
+})
+
 local group = vim.api.nvim_create_augroup("CodeCompanionHooks", {})
 
 vim.api.nvim_create_autocmd({ "User" }, {
