@@ -43,7 +43,21 @@ local options = {
       -- default/round/block/arrow separators work only for default statusline theme
       -- round and block will work for minimal theme only
       separator_style = "default",
-      order = { "mode", "file", "git", "%=", "lsp_msg", "%=", "diagnostics", "lsp", "macro", "cwd", "cursor" },
+      order = {
+        "mode",
+        "file",
+        "git",
+        "%=",
+        "lsp_msg",
+        "%=",
+        "diagnostics",
+        "lsp",
+        "copilot",
+        "macro",
+        "cwd",
+        "cursor",
+      },
+
       modules = {
 
         cursor = function()
@@ -63,6 +77,10 @@ local options = {
           else
             return ""
           end
+        end,
+        copilot = function()
+          local status = require("custom.copilot-stl").get_status()
+          return "%#" .. status.hl .. "#" .. " " .. status.icon .. " "
         end,
       },
     },
