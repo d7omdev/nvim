@@ -167,11 +167,11 @@ map("n", "]B", function()
   tabufline.move_buf(1)
 end, { noremap = true, silent = true, desc = "Move buffer right" })
 map("n", "<leader>bd", "<cmd>lua Snacks.bufdelete()<CR>", { noremap = true, silent = true, desc = "Delete buffer" })
-   
+--
 
-
-
-
-
+map("n", "<C-A-h>", "<cmd>wincmd h<CR>", { noremap = true, silent = true }) -- Move to the left window
+map("n", "<C-A-l>", "<cmd>wincmd l<CR>", { noremap = true, silent = true }) -- Move to the right window
+map("n", "<C-A-k>", "<cmd>wincmd k<CR>", { noremap = true, silent = true }) -- Move to the top window
+map("n", "<C-A-j>", "<cmd>wincmd j<CR>", { noremap = true, silent = true }) -- Move to the bottom window
 -- I dont like copy when i paste
 map("v", "p", '"_dp', { noremap = true, silent = true })
