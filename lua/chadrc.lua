@@ -1,3 +1,17 @@
+-- Define the highlight groups
+vim.api.nvim_set_hl(0, "St_macro_recording", {
+  fg = "#FF4500", -- Orange-red color for icon
+  bg = "#22262e", -- Background color same as StatusLine (fallback to NONE if nil)
+  bold = true,
+})
+
+local utils = require("nvchad.stl.utils")
+
+local sep_icons = utils.separators
+local separators = (type("default") == "table" and "default") or sep_icons["default"]
+
+local sep_l = separators["left"]
+local sep_r = separators["right"]
 local options = {
 
   base46 = {
@@ -29,8 +43,28 @@ local options = {
       -- default/round/block/arrow separators work only for default statusline theme
       -- round and block will work for minimal theme only
       separator_style = "default",
-      order = nil,
-      modules = nil,
+      order = { "mode", "file", "git", "%=", "lsp_msg", "%=", "diagnostics", "lsp", "macro", "cwd", "cursor" },
+      modules = {
+
+        cursor = function()
+          return "%#St_pos_sep#"
+            .. sep_l
+            .. "%#St_pos_icon# %#St_pos_text# "
+            .. vim.fn.line(".")
+            .. ":"
+            .. vim.fn.col(".")
+            .. " "
+        end,
+
+        macro = function()
+          local macro_reg = vim.fn.reg_recording()
+          if macro_reg ~= "" then
+            return "%#St_macro_recording#" .. " " .. macro_reg .. " "
+          else
+            return ""
+          end
+        end,
+      },
     },
 
     -- lazyload it when there are 1+ buffers

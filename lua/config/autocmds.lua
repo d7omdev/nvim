@@ -12,7 +12,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 })
 
 -- Automatically organize imports in .tsx and .ts files on save
-vim.api.nvim_create_autocmd("BufWritePost", {
+vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = { "*.tsx", "*.ts" },
   callback = function()
     require("lazyvim.util.lsp").action["source.organizeImports"]()
