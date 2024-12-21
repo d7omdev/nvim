@@ -1,40 +1,6 @@
 local cmp = require("cmp")
 
-local options = require("chadrc")
-options = vim.tbl_deep_extend("force", options, require("nvchad.cmp"))
-require("cmp").setup(options)
 require("luasnip.loaders.from_vscode").lazy_load()
-
--- Custom kind icons
-local kind_icons = {
-  Text = "󰉿",
-  Method = "󰆧",
-  Function = "󰊕",
-  Constructor = "",
-  Field = "󰇽",
-  Variable = "󰀫",
-  Class = "󰠱",
-  Interface = "",
-  Module = "",
-  Property = "󰜢",
-  Unit = "",
-  Value = "󰎠",
-  Enum = "",
-  Keyword = "󰌋",
-  Snippet = "",
-  Color = "󰏘",
-  File = "󰈙",
-  Reference = "",
-  Folder = "󰉋",
-  EnumMember = "",
-  Constant = "󰏿",
-  Struct = "",
-  Event = "",
-  Operator = "󰆕",
-  TypeParameter = "󰅲",
-  Copilot = " ",
-  Codeium = " ",
-}
 
 -- `/` cmdline setup.
 cmp.setup.cmdline({ "/", "?" }, {
@@ -64,6 +30,10 @@ cmp.setup({
     { name = "ecolog" },
   },
 })
+
+local options = require("chadrc")
+options = vim.tbl_deep_extend("force", options, require("nvchad.cmp"))
+require("cmp").setup(options)
 
 return {
   { "hrsh7th/cmp-cmdline" },

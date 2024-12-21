@@ -1,7 +1,6 @@
--- Define the highlight groups
 vim.api.nvim_set_hl(0, "St_macro_recording", {
-  fg = "#CA6169", -- Orange-red color for icon
-  bg = "#22262e", -- Background color same as StatusLine (fallback to NONE if nil)
+  fg = "#CA6169",
+  bg = "#22262e",
   bold = true,
 })
 
@@ -26,7 +25,7 @@ local options = {
 
   ui = {
     cmp = {
-      icons_left = true, -- only for non-atom styles!
+      icons_left = false, -- only for non-atom styles!
       lspkind_text = false,
       style = "default", -- default/flat_light/flat_dark/atom/atom_colored
       format_colors = {
@@ -59,22 +58,24 @@ local options = {
       },
 
       modules = {
+        lsp = function()
+          if rawget(vim, "lsp") then
+            for _, client in ipairs(vim.lsp.get_clients()) do
+              if client.attached_buffers[vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)] then
+                return (vim.o.columns > 100 and "%#St_Lsp#" .. "   󰜥" .. client.name .. " ") or "   LSP "
+              end
+            end
+          end
+
+          return ""
+        end,
 
         cursor = function()
-          -- Get current line and total lines
           local current_line = vim.fn.line(".")
           local total_lines = vim.fn.line("$")
-
-          -- Calculate percentage with proper rounding
           local prec = math.floor((current_line / total_lines) * 100 + 0.5)
-
-          -- Determine position label
           local percent = (current_line == 1) and "Top" or (current_line == total_lines and "Bot" or prec .. "%%")
-
-          -- Construct position string
           local pos = percent .. " " .. current_line .. ":" .. vim.fn.col(".")
-
-          -- Return styled output
           return "%#St_pos_sep#" .. sep_l .. "%#St_pos_icon# %#St_pos_text# " .. pos .. " "
         end,
         macro = function()

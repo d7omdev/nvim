@@ -7,12 +7,12 @@ local map = vim.keymap.set
 -- Remove default keymaps
 vim.keymap.del("n", "<leader>gg")
 
-map("n", "<C-A-k>", "yy[P", { noremap = true, silent = true, desc = "Duplicate line up" })
-map("n", "<C-A-j>", "yy]p", { noremap = true, silent = true, desc = "Duplicate line down" })
+map("n", "<A-S-k>", "yy[P", { noremap = true, silent = true, desc = "Duplicate line up" })
+map("n", "<A-S-j>", "yy]p", { noremap = true, silent = true, desc = "Duplicate line down" })
 
-map("n", "<leader>gg", "<cmd>LazyGit<cr>", { desc = "Lazygit" })
--- Remove the old keymap
-
+map("n", "<leader>gg", function()
+  Snacks.lazygit()
+end, { desc = "Lazygit" })
 -- Exit insert mode with 'jj' in insert mode
 map("i", "jj", "<Esc>", { noremap = true, silent = true })
 
