@@ -14,7 +14,7 @@ local config = {
     sleep = "#AEB7D0", -- light gray
     disabled = "#6272A4", -- gray
     warning = "#FFB86C", -- orange
-    unknown = "#FF5555", -- red
+    unknown = "#CA6169", -- red
   },
   highlights = {
     enabled = "St_copilot_enabled",

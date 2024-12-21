@@ -1,9 +1,9 @@
 -- Autocmds are automatically loaded on the VeryLazy event
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
-
+local autocmd = vim.api.nvim_create_autocmd
 -- Automatically sort classes in a .tsx file on save
-vim.api.nvim_create_autocmd("BufWritePost", {
+autocmd("BufWritePost", {
   pattern = { "*.tsx" },
   callback = function()
     local lsp = require("tailwind-tools.lsp")
@@ -11,17 +11,36 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   end,
 })
 
--- Automatically organize imports in .tsx and .ts files on save
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = { "*.tsx", "*.ts" },
+_G.my_format_on_save = true
+
+local function organize_imports()
+  local ft = vim.bo.filetype:gsub("react$", "")
+  if not vim.tbl_contains({ "javascript", "typescript" }, ft) then
+    return
+  end
+  local ok = vim.lsp.buf_request_sync(0, "workspace/executeCommand", {
+    command = (ft .. ".organizeImports"),
+    arguments = { vim.api.nvim_buf_get_name(0) },
+  }, 3000)
+  if not ok then
+    print("Command timeout or failed to complete.")
+  end
+end
+
+autocmd("BufWritePre", {
+  pattern = { "*.css", "*.html", "*.js", "*.jsx", "*.json", "*.ts", "*.tsx" },
   callback = function()
-    require("lazyvim.util.lsp").action["source.organizeImports"]()
+    if not _G.my_format_on_save then
+      return
+    end
+    require("conform").format({ async = false })
+    organize_imports()
   end,
 })
 
 local group = vim.api.nvim_create_augroup("CodeCompanionHooks", {})
 
-vim.api.nvim_create_autocmd({ "User" }, {
+autocmd({ "User" }, {
   pattern = "CodeCompanionInline*",
   group = group,
   callback = function(request)

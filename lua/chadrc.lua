@@ -1,6 +1,6 @@
 -- Define the highlight groups
 vim.api.nvim_set_hl(0, "St_macro_recording", {
-  fg = "#FF4500", -- Orange-red color for icon
+  fg = "#CA6169", -- Orange-red color for icon
   bg = "#22262e", -- Background color same as StatusLine (fallback to NONE if nil)
   bold = true,
 })
@@ -61,15 +61,22 @@ local options = {
       modules = {
 
         cursor = function()
-          return "%#St_pos_sep#"
-            .. sep_l
-            .. "%#St_pos_icon# %#St_pos_text# "
-            .. vim.fn.line(".")
-            .. ":"
-            .. vim.fn.col(".")
-            .. " "
-        end,
+          -- Get current line and total lines
+          local current_line = vim.fn.line(".")
+          local total_lines = vim.fn.line("$")
 
+          -- Calculate percentage with proper rounding
+          local prec = math.floor((current_line / total_lines) * 100 + 0.5)
+
+          -- Determine position label
+          local percent = (current_line == 1) and "Top" or (current_line == total_lines and "Bot" or prec .. "%%")
+
+          -- Construct position string
+          local pos = percent .. " " .. current_line .. ":" .. vim.fn.col(".")
+
+          -- Return styled output
+          return "%#St_pos_sep#" .. sep_l .. "%#St_pos_icon# %#St_pos_text# " .. pos .. " "
+        end,
         macro = function()
           local macro_reg = vim.fn.reg_recording()
           if macro_reg ~= "" then
