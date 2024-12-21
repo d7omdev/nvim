@@ -265,7 +265,6 @@ return {
         Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
         Snacks.toggle.inlay_hints():map("<leader>uh")
         Snacks.toggle.dim():map("<leader>uD")
-        -- Snacks.toggle.zen():map("<leader>uz")
       end,
     })
   end,

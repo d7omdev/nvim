@@ -4,15 +4,9 @@
 
 local map = vim.keymap.set
 
--- Remove default keymaps
-vim.keymap.del("n", "<leader>gg")
-
 map("n", "<A-S-k>", "yy[P", { noremap = true, silent = true, desc = "Duplicate line up" })
 map("n", "<A-S-j>", "yy]p", { noremap = true, silent = true, desc = "Duplicate line down" })
 
-map("n", "<leader>gg", function()
-  Snacks.lazygit()
-end, { desc = "Lazygit" })
 -- Exit insert mode with 'jj' in insert mode
 map("i", "jj", "<Esc>", { noremap = true, silent = true })
 
@@ -173,5 +167,3 @@ map("n", "<C-A-h>", "<cmd>wincmd h<CR>", { noremap = true, silent = true }) -- M
 map("n", "<C-A-l>", "<cmd>wincmd l<CR>", { noremap = true, silent = true }) -- Move to the right window
 map("n", "<C-A-k>", "<cmd>wincmd k<CR>", { noremap = true, silent = true }) -- Move to the top window
 map("n", "<C-A-j>", "<cmd>wincmd j<CR>", { noremap = true, silent = true }) -- Move to the bottom window
--- I dont like copy when i paste
-map("v", "p", '"_dp', { noremap = true, silent = true })

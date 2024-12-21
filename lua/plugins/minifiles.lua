@@ -132,7 +132,7 @@ return {
     vim.api.nvim_create_autocmd("User", {
       pattern = "MiniFilesActionRename",
       callback = function(event)
-        LazyVim.lsp.on_rename(event.data.from, event.data.to)
+        Snacks.rename.on_rename_file(event.data.from, event.data.to)
       end,
     })
 
@@ -154,7 +154,7 @@ return {
     local function mapSymbols(status)
       local statusMap = {
         -- stylua: ignore start 
-        [" M"] = { symbol = "", hlGroup  = "MiniDiffSignChange"}, -- Modified in the working directory
+        [" M"] = { symbol = "󰦒", hlGroup  = "MiniDiffSignChange"}, -- Modified in the working directory
         ["M "] = { symbol = "•", hlGroup  = "MiniDiffSignChange"}, -- modified in index
         ["MM"] = { symbol = "≠", hlGroup  = "MiniDiffSignChange"}, -- modified in both working tree and index
         ["A "] = { symbol = "+", hlGroup  = "MiniDiffSignAdd"   }, -- Added to the staging area, new file
