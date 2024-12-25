@@ -48,10 +48,15 @@ return {
   },
   {
     "rachartier/tiny-inline-diagnostic.nvim",
-    event = "VeryLazy", -- Or `LspAttach`
+    event = "LspAttach",
     priority = 1000, -- needs to be loaded in first
     config = function()
-      require("tiny-inline-diagnostic").setup()
+      require("tiny-inline-diagnostic").setup({
+        options = {
+          show_source = true,
+          use_icons_from_diagnostic = true,
+        },
+      })
     end,
   },
 }

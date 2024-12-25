@@ -36,5 +36,5 @@ options = vim.tbl_deep_extend("force", options, require("nvchad.cmp"))
 require("cmp").setup(options)
 
 return {
-  { "hrsh7th/cmp-cmdline" },
+  -- { "hrsh7th/cmp-cmdline" },
 }

@@ -12,3 +12,5 @@ data
 lazy-lock.json
 spell/
 startup_Times.log
+# IDK wtf is this tbh
+command\ list-panes:\ too\ many\ arguments\ \(need\ at\ most\ 0\)

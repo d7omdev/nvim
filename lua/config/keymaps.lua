@@ -36,16 +36,13 @@ map("n", "<C-c>t", "<cmd>Lspsaga peek_type_definition<CR>", { desc = "peek type 
 map("n", "<leader>ch", "<cmd>Cheat<CR>", { noremap = true, silent = true, desc = "Cheat Sheet" })
 
 -- LSP saga
-local function next_diagnostic()
-  vim.cmd("Lspsaga diagnostic_jump_next")
-end
 
-local function prev_diagnostic()
-  vim.cmd("Lspsaga diagnostic_jump_prev")
-end
-
-map("n", "]d", next_diagnostic, { noremap = true, silent = true, desc = "Next diagnostic" })
-map("n", "[d", prev_diagnostic, { noremap = true, silent = true, desc = "Prev diagnostic" })
+map("n", "]d", function()
+  require("lspsaga.diagnostic"):goto_prev()
+end, { noremap = true, silent = true, desc = "Next diagnostic" })
+map("n", "[d", function()
+  require("lspsaga.diagnostic"):goto_next()
+end, { noremap = true, silent = true, desc = "Prev diagnostic" })
 
 -- Obsidian
 map("n", "<leader>O", "", { desc = "+Obsidian" })
@@ -131,10 +128,10 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-map("n", "<C-j>", "<cmd>Treewalker Down<CR>", { noremap = true, desc = "Treewalker Down" })
-map("n", "<C-k>", "<cmd>Treewalker Up<CR>", { noremap = true, desc = "Treewalker Up" })
-map("n", "<C-h>", "<cmd>Treewalker Left<CR>", { noremap = true, desc = "Treewalker Left" })
-map("n", "<C-l>", "<cmd>Treewalker Right<CR>", { noremap = true, desc = "Treewalker Right" })
+map("n", "<S-A-j>", "<cmd>Treewalker Down<CR>", { noremap = true, desc = "Treewalker Down" })
+map("n", "<S-A-k>", "<cmd>Treewalker Up<CR>", { noremap = true, desc = "Treewalker Up" })
+map("n", "<S-A-h>", "<cmd>Treewalker Left<CR>", { noremap = true, desc = "Treewalker Left" })
+map("n", "<S-A-l>", "<cmd>Treewalker Right<CR>", { noremap = true, desc = "Treewalker Right" })
 
 --- Switch Tab with tab+tab
 map("n", "<Tab><Tab>", "<cmd>tabnext<CR>", { noremap = true, silent = true })
@@ -163,7 +160,7 @@ end, { noremap = true, silent = true, desc = "Move buffer right" })
 map("n", "<leader>bd", "<cmd>lua Snacks.bufdelete()<CR>", { noremap = true, silent = true, desc = "Delete buffer" })
 --
 
-map("n", "<C-A-h>", "<cmd>wincmd h<CR>", { noremap = true, silent = true }) -- Move to the left window
-map("n", "<C-A-l>", "<cmd>wincmd l<CR>", { noremap = true, silent = true }) -- Move to the right window
-map("n", "<C-A-k>", "<cmd>wincmd k<CR>", { noremap = true, silent = true }) -- Move to the top window
-map("n", "<C-A-j>", "<cmd>wincmd j<CR>", { noremap = true, silent = true }) -- Move to the bottom window
+map("n", "<C-left>", "<cmd>wincmd h<CR>", { noremap = true, silent = true }) -- Move to the left window
+map("n", "<C-right>", "<cmd>wincmd l<CR>", { noremap = true, silent = true }) -- Move to the right window
+map("n", "<C-up>", "<cmd>wincmd k<CR>", { noremap = true, silent = true }) -- Move to the top window
+map("n", "<C-down>", "<cmd>wincmd j<CR>", { noremap = true, silent = true }) -- Move to the bottom window

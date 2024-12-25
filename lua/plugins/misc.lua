@@ -136,6 +136,10 @@ return {
           implements = false,
           git_authors = false,
         },
+        ignore_filetype = {
+          "prisma",
+          "lua",
+        },
       })
     end,
   },
