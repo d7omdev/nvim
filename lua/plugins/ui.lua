@@ -34,18 +34,18 @@ return {
       watermark = "",
     },
   },
-  {
-    "mikesmithgh/borderline.nvim",
-    enabled = true,
-    lazy = true,
-    event = "BufRead",
-    config = function()
-      require("borderline").setup({
-        ---@diagnostic disable-next-line: assign-type-mismatch
-        border = "single",
-      })
-    end,
-  },
+  -- {
+  --   "mikesmithgh/borderline.nvim",
+  --   enabled = true,
+  --   lazy = true,
+  --   event = "BufRead",
+  --   config = function()
+  --     require("borderline").setup({
+  --       ---@diagnostic disable-next-line: assign-type-mismatch
+  --       border = "single",
+  --     })
+  --   end,
+  -- },
   {
     "rachartier/tiny-inline-diagnostic.nvim",
     event = "LspAttach",

@@ -80,7 +80,7 @@ return {
         },
       },
       menu = {
-        border = "rounded",
+        border = "single",
         draw = {
           columns = { { "item_idx" }, { "seperator" }, { "kind_icon" }, { "label", "label_description", gap = 1 } },
           components = {
@@ -108,7 +108,7 @@ return {
         auto_show = true,
         auto_show_delay_ms = 200,
         window = {
-          border = "rounded",
+          border = "single",
         },
       },
       ghost_text = {
