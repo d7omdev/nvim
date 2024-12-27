@@ -37,10 +37,10 @@ map("n", "<leader>ch", "<cmd>Cheat<CR>", { noremap = true, silent = true, desc =
 
 -- LSP saga
 
-map("n", "]d", function()
+map("n", "[d", function()
   require("lspsaga.diagnostic"):goto_prev()
 end, { noremap = true, silent = true, desc = "Next diagnostic" })
-map("n", "[d", function()
+map("n", "]d", function()
   require("lspsaga.diagnostic"):goto_next()
 end, { noremap = true, silent = true, desc = "Prev diagnostic" })
 

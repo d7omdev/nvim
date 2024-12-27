@@ -1,11 +1,17 @@
 return {
   "saghen/blink.cmp",
+  enabled = function()
+    return not vim.tbl_contains({ "AvanteInput", "minifiles" }, vim.bo.filetype)
+      and vim.bo.buftype ~= "prompt"
+      and vim.b.completion ~= false
+  end,
   version = not vim.g.lazyvim_blink_main and "*",
   build = vim.g.lazyvim_blink_main and "cargo build --release",
   opts_extend = {
     "sources.completion.enabled_providers",
     "sources.compat",
     "sources.default",
+    "ecolog",
   },
   dependencies = {
     "rafamadriz/friendly-snippets",
@@ -122,6 +128,9 @@ return {
       -- adding any nvim-cmp sources here will enable them
       -- with blink.compat
       compat = {},
+      providers = {
+        ecolog = { name = "ecolog", module = "ecolog.integrations.cmp.blink_cmp" },
+      },
       default = { "lsp", "path", "snippets", "buffer" },
       cmdline = function()
         local type = vim.fn.getcmdtype()
@@ -200,7 +209,6 @@ return {
       opts.sources.providers[source] = vim.tbl_deep_extend(
         "force",
         { name = source, module = "blink.compat.source" },
-        { name = "ecolog", module = "ecolog" },
         opts.sources.providers[source] or {}
       )
       if type(enabled) == "table" and not vim.tbl_contains(enabled, source) then

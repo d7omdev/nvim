@@ -1,0 +1,16 @@
+{
+  "nextjsPageComponent": {
+    "prefix": "page",
+    "body": [
+      "const ${1:ComponentName} = () => {",
+      "  return (",
+      "    <div>",
+      "      ${2:/* Your content here */}",
+      "    </div>",
+      "  );",
+      "};",
+      "",
+      "export default ${1:ComponentName};"
+    ]
+  }
+}

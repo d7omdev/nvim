@@ -1,13 +1,11 @@
 return {
   "philosofonusus/ecolog.nvim",
-  dependencies = {
-    "hrsh7th/nvim-cmp", -- Optional: for autocompletion support (recommended)
-  },
   event = "BufRead",
   config = function()
     require("ecolog").setup({
       integrations = {
         lsp = true,
+        blink_cmp = true,
         lspsaga = true,
       },
     })
