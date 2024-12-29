@@ -4,8 +4,10 @@
 
 local map = vim.keymap.set
 
-map("n", "<A-S-k>", "yy[P", { noremap = true, silent = true, desc = "Duplicate line up" })
-map("n", "<A-S-j>", "yy]p", { noremap = true, silent = true, desc = "Duplicate line down" })
+map("n", "<C-A-k>", "yy[P", { noremap = true, silent = true, desc = "Duplicate line up" })
+map("n", "<C-A-j>", "yy]p", { noremap = true, silent = true, desc = "Duplicate line down" })
+map("v", "<C-A-k>", "yP", { noremap = true, silent = true, desc = "Duplicate selection up" })
+map("v", "<C-A-j>", "y]p", { noremap = true, silent = true, desc = "Duplicate selection down" })
 
 -- Exit insert mode with 'jj' in insert mode
 map("i", "jj", "<Esc>", { noremap = true, silent = true })

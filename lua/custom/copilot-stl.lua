@@ -10,11 +10,12 @@ local config = {
     unknown = " ",
   },
   colors = {
-    enabled = "#89AF6D", -- green
-    sleep = "#AEB7D0", -- light gray
-    disabled = "#6272A4", -- gray
-    warning = "#FFB86C", -- orange
-    unknown = "#CA6169", -- red
+    enabled = "#89AF6D",
+    sleep = "#AEB7D0",
+    disabled = "#6272A4",
+    warning = "#FFB86C",
+    -- unknown = "#CA6169",
+    unknown = "#42464E",
   },
   highlights = {
     enabled = "St_copilot_enabled",

@@ -174,4 +174,5 @@ return {
 
   -- Godot
   { "habamax/vim-godot" },
+  require("fzf-lua").setup({ defaults = { git_icons = false } }),
 }
