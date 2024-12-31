@@ -4,6 +4,7 @@
 local opt = vim.opt
 
 vim.g.lazygit_config = true
+vim.g.node_host_prog = "$HOME/.bun/bin/neovim-node-host"
 
 opt.laststatus = 3
 
@@ -28,8 +29,6 @@ vim.api.nvim_command('autocmd BufReadPost * if getfsize(expand("%:p")) > 10000 *
 vim.cmd([[cab Wq wq]])
 
 -- Disable virtual text
-vim.diagnostic.config({
-  virtual_text = false,
-})
+vim.diagnostic.config({ virtual_text = false })
 
 vim.cmd([[tnoremap <C-A-_> pwd\|wl-copy<CR><C-\><C-n>:cd <C-r>+<CR>]])

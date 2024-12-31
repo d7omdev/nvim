@@ -47,7 +47,6 @@ local options = {
         "file",
         "git",
         "%=",
-        "lsp_msg",
         "%=",
         "diagnostics",
         "lsp",
@@ -62,7 +61,7 @@ local options = {
           if rawget(vim, "lsp") then
             for _, client in ipairs(vim.lsp.get_clients()) do
               if client.attached_buffers[vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)] then
-                return (vim.o.columns > 100 and "%#St_Lsp#" .. "   󰜥" .. client.name .. " ") or "   LSP "
+                return (vim.o.columns > 100 and "%#St_Lsp#" .. "   󰜥" .. client.name .. " ")
               end
             end
           end

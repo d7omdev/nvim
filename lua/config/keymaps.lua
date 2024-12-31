@@ -116,19 +116,19 @@ map("n", "[tc", "<cmd>TailwindPrevClass<CR>", { desc = "Tailwind Prev Class" })
 map("n", "<leader>ti", "<cmd>Telescope import<CR>", { desc = "Import" })
 
 -- Typescript tools
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "typescript", "typescriptreact" },
-  callback = function()
-    map("n", "<leader>co", "<cmd>TSToolsOrganizeImports<cr>", { desc = "Sorts and removes unused imports" })
-    map("n", "<leader>cS", "<cmd>TSToolsSortImports<cr>", { desc = "Sorts imports" })
-    map("n", "<leader>cr", "<cmd>TSToolsRemoveUnusedImports<cr>", { desc = "Removes unused imports" })
-    map("n", "<leader>cru", "<cmd>TSToolsRemoveUnused<cr>", { desc = "Removes all unused statements" })
-    map("n", "<leader>cM", "<cmd>TSToolsAddMissingImports<cr>", { desc = "Add missing imports" })
-    map("n", "<leader>cFa", "<cmd>TSToolsFixAll<cr>", { desc = "Fixes all fixable errors" })
-    map("n", "<leader>cR", "<cmd>TSToolsRenameFile<cr>", { desc = "Rename file" })
-    map("n", "<leader>cFr", "<cmd>TSToolsFileReferences<cr>", { desc = "Find file references" })
-  end,
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = { "typescript", "typescriptreact" },
+--   callback = function()
+--     map("n", "<leader>co", "<cmd>TSToolsOrganizeImports<cr>", { desc = "Sorts and removes unused imports" })
+--     map("n", "<leader>cS", "<cmd>TSToolsSortImports<cr>", { desc = "Sorts imports" })
+--     map("n", "<leader>cr", "<cmd>TSToolsRemoveUnusedImports<cr>", { desc = "Removes unused imports" })
+--     map("n", "<leader>cru", "<cmd>TSToolsRemoveUnused<cr>", { desc = "Removes all unused statements" })
+--     map("n", "<leader>cM", "<cmd>TSToolsAddMissingImports<cr>", { desc = "Add missing imports" })
+--     map("n", "<leader>cFa", "<cmd>TSToolsFixAll<cr>", { desc = "Fixes all fixable errors" })
+--     map("n", "<leader>cR", "<cmd>TSToolsRenameFile<cr>", { desc = "Rename file" })
+--     map("n", "<leader>cFr", "<cmd>TSToolsFileReferences<cr>", { desc = "Find file references" })
+--   end,
+-- })
 
 map("n", "<S-A-j>", "<cmd>Treewalker Down<CR>", { noremap = true, desc = "Treewalker Down" })
 map("n", "<S-A-k>", "<cmd>Treewalker Up<CR>", { noremap = true, desc = "Treewalker Up" })
@@ -142,13 +142,13 @@ map("n", "<Tab><Tab>", "<cmd>tabnext<CR>", { noremap = true, silent = true })
 map(
   "n",
   "]b",
-  require("config.buffers").next_buffer_in_tab,
+  require("custom.buffers").next_buffer_in_tab,
   { noremap = true, silent = true, desc = "Next buffer in tab" }
 )
 map(
   "n",
   "[b",
-  require("config.buffers").prev_buffer_in_tab,
+  require("custom.buffers").prev_buffer_in_tab,
   { noremap = true, silent = true, desc = "Previous buffer in tab" }
 )
 local tabufline = require("nvchad.tabufline")

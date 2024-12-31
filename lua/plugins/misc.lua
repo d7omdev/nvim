@@ -15,32 +15,6 @@ return {
       vim.cmd([[cab ss SudaWrite]])
     end,
   },
-  {
-    "jackMort/tide.nvim",
-    config = function()
-      require("tide").setup({
-        keys = {
-          leader = "=", -- Leader key to prefix all Tide commands
-          panel = "=", -- Open the panel (uses leader key as prefix)
-          add_item = "a", -- Add a new item to the list (leader + 'a')
-          delete = "d", -- Remove an item from the list (leader + 'd')
-          clear_all = "x", -- Clear all items (leader + 'x')
-          horizontal = "-", -- Split window horizontally (leader + '-')
-          vertical = "|", -- Split window vertically (leader + '|')
-        },
-        animation_duration = 300, -- Animation duration in milliseconds
-        animation_fps = 30, -- Frames per second for animations
-        hints = {
-          dictionary = "qwertzuiopsfghjklycvbnm", -- Key hints for quick access
-        },
-      })
-    end,
-    requires = {
-      "MunifTanjim/nui.nvim",
-      "nvim-tree/nvim-web-devicons",
-    },
-  },
-
   { "nvchad/volt", lazy = true },
   { "nvchad/minty", lazy = true },
   {
@@ -56,11 +30,7 @@ return {
       require("base46").load_all_highlights()
     end,
   },
-  -- Disabling these plugins if nvchad ui is used
-  { "nvim-lualine/lualine.nvim", enabled = false },
-  { "akinsho/bufferline.nvim", enabled = false },
 
-  -- Also apply these configs
   {
     "bbjornstad/pretty-fold.nvim",
     config = function()
@@ -127,51 +97,45 @@ return {
     cmd = "Nerdy",
   },
   {
-    "VidocqH/lsp-lens.nvim",
+    "smoka7/multicursors.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "smoka7/hydra.nvim",
+    },
+    opts = {},
+    cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
+    keys = {
+      {
+        mode = { "v", "n" },
+        "<Leader>m",
+        "<cmd>MCstart<cr>",
+        desc = "Multi cursors",
+      },
+    },
+  },
+  {
+    "Aasim-A/scrollEOF.nvim",
+    event = "BufRead",
     config = function()
-      require("lsp-lens").setup({
-        sections = {
-          definition = false,
-          references = true,
-          implements = false,
-          git_authors = false,
-        },
-        ignore_filetype = {
-          "prisma",
-          "lua",
-        },
+      require("scrollEOF").setup({
+        disabled_filetypes = { "minifiles" },
       })
     end,
   },
   {
-    "aaronik/treewalker.nvim",
-    config = {
-      highlight = true, -- default is false
+    "chrisgrieser/nvim-rip-substitute",
+    cmd = "RipSubstitute",
+    keys = {
+      {
+        "<leader>fs",
+        function()
+          require("rip-substitute").sub()
+        end,
+        mode = { "n", "x" },
+        desc = " rip substitute",
+      },
     },
   },
-  {
-    "chrisgrieser/nvim-recorder",
-    dependencies = "rcarriga/nvim-notify", -- optional
-    opts = {}, -- required even with default settings, since it calls `setup()`
-  },
-  {
-    "chrisgrieser/nvim-recorder",
-    opts = {
-      slots = { "u", "i", "o", "p" },
-
-      mapping = {
-        startStopRecording = "qa",
-        playMacro = "Q",
-        switchSlot = "<C-A-q>",
-        editMacro = "cq",
-        deleteAllMacros = "dq",
-        yankMacro = "yq",
-        -- ⚠️ this should be a string you don't use in insert mode during a macro
-        addBreakPoint = "##",
-      },
-    }, -- required even with default settings, since it calls `setup()`
-  },
-
   -- Godot
   { "habamax/vim-godot" },
   require("fzf-lua").setup({ defaults = { git_icons = false } }),

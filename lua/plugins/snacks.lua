@@ -4,8 +4,7 @@ return {
   lazy = false,
   ---@type snacks.Config
   opts = {
-    zen = {},
-    dim = {},
+    profiler = { enabled = true },
     indent = {
       enabled = true,
       chunk = {

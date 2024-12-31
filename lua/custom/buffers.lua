@@ -3,7 +3,6 @@ local M = {}
 
 function M.next_buffer_in_tab()
   local current_buf = vim.api.nvim_get_current_buf()
-  local current_tab = vim.api.nvim_get_current_tabpage()
 
   -- Get all buffers in the current tab
   local tab_bufs = vim.t.bufs or {}
@@ -27,7 +26,6 @@ end
 
 function M.prev_buffer_in_tab()
   local current_buf = vim.api.nvim_get_current_buf()
-  local current_tab = vim.api.nvim_get_current_tabpage()
 
   -- Get all buffers in the current tab
   local tab_bufs = vim.t.bufs or {}
