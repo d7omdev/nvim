@@ -1,4 +1,5 @@
 local lspconfig = require("lspconfig")
+
 lspconfig.gdscript.setup({
   cmd = { "nc", "localhost", "6005" }, -- Connect to Godot's language server
   filetypes = { "gd", "gdscript", "gdscript3" }, -- GDScript file types
@@ -8,6 +9,16 @@ lspconfig.gdscript.setup({
     local bufopts = { noremap = true, silent = true, buffer = bufnr }
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts) -- Go to definition
     vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts) -- Show hover info
+  end,
+})
+
+-- Add the Tailwind CSS LSP configuration
+lspconfig.tailwindcss.setup({
+  filetypes = { "typescript", "typescriptreact", "tsx" },
+  root_dir = function(fname)
+    -- Check if the project has tailwind.config.js
+    local root = lspconfig.util.find_git_ancestor(fname) or vim.fn.getcwd()
+    return vim.fn.glob(root .. "/tailwind.config.js") ~= "" and root or nil
   end,
 })
 

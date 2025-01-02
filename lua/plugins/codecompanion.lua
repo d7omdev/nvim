@@ -506,7 +506,7 @@ return {
         end
       end)
     end, { noremap = true, silent = true, desc = "CC Inline with Prompt" })
-    map("n", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true, desc = "CC Actions" })
+    map("n", "<leader>cca", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true, desc = "CC Actions" })
     map("n", "<leader>aca", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true, desc = "CC Toggle" })
     map("v", "<leader>aca", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true, desc = "CC Toggle" })
     map("v", "ga", "<cmd>CodeCompanionAdd<cr>", { noremap = true, silent = true, desc = "CodeCompanion Add" })
