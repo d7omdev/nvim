@@ -130,8 +130,12 @@ return {
       compat = {},
       providers = {
         ecolog = { name = "ecolog", module = "ecolog.integrations.cmp.blink_cmp" },
+        codecompanion = {
+          name = "CodeCompanion",
+          module = "codecompanion.providers.completion.blink",
+        },
       },
-      default = { "lsp", "path", "snippets", "buffer" },
+      default = { "lsp", "path", "snippets", "buffer", "codecompanion" },
       cmdline = function()
         local type = vim.fn.getcmdtype()
         -- Search forward and backward

@@ -15,6 +15,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     event = "VeryLazy",
+    --- @class lspconfig
     opts = {
       diagnostics = {
         virtual_text = false,
@@ -33,6 +34,11 @@ return {
       },
       codelens = {
         enabled = false,
+      },
+      servers = {
+        vtsls = {
+          enabled = false,
+        },
       },
     },
   },
