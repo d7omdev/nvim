@@ -1,6 +1,7 @@
 return {
   {
     "aserowy/tmux.nvim",
+    event = "VeryLazy",
     config = function()
       return require("tmux").setup({ copy_sync = {
         enable = false,
@@ -9,6 +10,7 @@ return {
   },
   {
     "lambdalisue/vim-suda",
+    event = "VeryLazy",
     config = function()
       vim.g.suda_smart_edit = 1
       -- Expand 'ss' into 'SudaWrite' in the command line
@@ -33,6 +35,7 @@ return {
 
   {
     "bbjornstad/pretty-fold.nvim",
+    event = "VeryLazy",
     config = function()
       require("pretty-fold").setup({
         keep_indentation = true,
@@ -54,6 +57,7 @@ return {
   },
   {
     "andrewferrier/debugprint.nvim",
+    event = "VeryLazy",
     opts = {
       keymaps = {
         normal = {
@@ -90,6 +94,7 @@ return {
 
   {
     "2kabhishek/nerdy.nvim",
+    event = "VeryLazy",
     dependencies = {
       "stevearc/dressing.nvim",
       "nvim-telescope/telescope.nvim",

@@ -90,17 +90,4 @@ return {
       end,
     },
   },
-
-  {
-    "dmmulroy/tsc.nvim",
-
-    cmd = { "TSC" },
-
-    opts = {
-      auto_open_qflist = true,
-      auto_close_qflist = true,
-      auto_focus_qflist = false,
-      use_trouble_qflist = true,
-    },
-  },
 }

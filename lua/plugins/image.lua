@@ -5,7 +5,7 @@ return {
   {
     "3rd/image.nvim",
     enabled = not vim.g.neovide,
-    event = { "BufRead", "BufNewFile" },
+    event = "VeryLazy",
     ft = { "md" },
     config = function()
       require("image").setup({

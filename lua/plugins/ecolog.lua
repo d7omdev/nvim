@@ -1,6 +1,6 @@
 return {
   "philosofonusus/ecolog.nvim",
-  event = "BufRead",
+  event = "VeryLazy",
   config = function()
     require("ecolog").setup({
       integrations = {
