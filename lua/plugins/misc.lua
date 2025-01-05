@@ -143,5 +143,6 @@ return {
   },
   -- Godot
   { "habamax/vim-godot" },
-  require("fzf-lua").setup({ defaults = { git_icons = false } }),
+  { { "RishabhRD/nvim-cheat.sh", event = "VeryLazy" }, { "RishabhRD/popfix", event = "VeryLazy" } },
+  -- require("fzf-lua").setup({ defaults = { git_icons = false } }),
 }

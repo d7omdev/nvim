@@ -123,7 +123,7 @@ return {
     },
 
     -- experimental signature help support
-    signature = { enabled = true, window = { border = "single" } },
+    signature = { enabled = false, window = { border = "single" } },
     sources = {
       -- adding any nvim-cmp sources here will enable them
       -- with blink.compat
