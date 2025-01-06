@@ -10,7 +10,7 @@ return {
   {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    enabled = true,
+    enabled = false,
     ft = {
       "typescript",
       "typescriptreact",

@@ -15,11 +15,16 @@ map("i", "jj", "<Esc>", { noremap = true, silent = true })
 -- Exit with 'qq' in normal mode
 map("n", "qq", ":q<CR>", { noremap = true, silent = true })
 
+-- Quit all buffers without quitting the editor
+map("n", "QQ", function()
+  vim.cmd([[bufdo bd]])
+end, { noremap = true, silent = true })
+
 -- Delete without copying to register in visual mode
 map("v", "<Del>", '"_d', { noremap = true, silent = true })
 
 -- DBui
-map("n", "<leader>DBui", ":tabnew | DBUI<CR>", { noremap = true, silent = true })
+map("n", "<leader>DB", ":tabnew | DBUI<CR>", { noremap = true, silent = true })
 
 -- Lspsaga keymaps
 map("n", "<S-r>", "<cmd>Lspsaga hover_doc<CR>", { desc = "show hover doc" })
@@ -89,12 +94,8 @@ map("n", "<leader>qd", function()
   require("persistence").stop()
 end, { desc = "Don't save current session" })
 
--- Projects
-map("n", "<leaderP", "", { desc = "+Projects" })
-map("n", "<leader>Pd", "<cmd>Telescope neovim-project discover<CR>", { desc = "Discover projects" })
-map("n", "<leader>PhDiscover projects", "<cmd>Telescope neovim-project history<CR>", { desc = "Projects history" })
-
-map("n", "<leader>gh", "", { desc = "+Gitsigns" })
+map("n", "<leader>G", "", { desc = "+Gitsigns" })
+map("n", "<leader>E", "", { desc = "+Ecolog" })
 
 -- Tailwind Tools
 map("n", "<leader>tt", "", { desc = "+Tailwind" })
@@ -108,9 +109,6 @@ map("n", "<leader>ttcoe", "<cmd>TailwindColorEnable<CR>", { desc = "Tailwind Col
 map("n", "<leader>ttcod", "<cmd>TailwindColorDisable<CR>", { desc = "Tailwind Color Disable" })
 map("n", "]tc", "<cmd>TailwindNextClass<CR>", { desc = "Tailwind Next Class" })
 map("n", "[tc", "<cmd>TailwindPrevClass<CR>", { desc = "Tailwind Prev Class" })
-
--- Ts Import
-map("n", "<leader>ti", "<cmd>Telescope import<CR>", { desc = "Import" })
 
 -- Typescript tools
 -- vim.api.nvim_create_autocmd("FileType", {
@@ -127,10 +125,17 @@ map("n", "<leader>ti", "<cmd>Telescope import<CR>", { desc = "Import" })
 --   end,
 -- })
 
-map("n", "<S-A-j>", "<cmd>Treewalker Down<CR>", { noremap = true, desc = "Treewalker Down" })
-map("n", "<S-A-k>", "<cmd>Treewalker Up<CR>", { noremap = true, desc = "Treewalker Up" })
-map("n", "<S-A-h>", "<cmd>Treewalker Left<CR>", { noremap = true, desc = "Treewalker Left" })
-map("n", "<S-A-l>", "<cmd>Treewalker Right<CR>", { noremap = true, desc = "Treewalker Right" })
+-- movement
+map({ "n", "v" }, "<C-A-k>", "<cmd>Treewalker Up<cr>", { silent = true })
+map({ "n", "v" }, "<C-A-j>", "<cmd>Treewalker Down<cr>", { silent = true })
+map({ "n", "v" }, "<C-A-l>", "<cmd>Treewalker Right<cr>", { silent = true })
+map({ "n", "v" }, "<C-A-h>", "<cmd>Treewalker Left<cr>", { silent = true })
+
+-- swapping
+map("n", "<A-S-j>", "<cmd>Treewalker SwapDown<cr>", { silent = true })
+map("n", "<A-S-k>", "<cmd>Treewalker SwapUp<cr>", { silent = true })
+map("n", "<A-S-l>", "<cmd>Treewalker SwapRight<CR>", { silent = true })
+map("n", "<A-S-h>", "<cmd>Treewalker SwapLeft<CR>", { silent = true })
 
 --- Switch Tab with tab+tab
 map("n", "<Tab><Tab>", "<cmd>tabnext<CR>", { noremap = true, silent = true })
@@ -157,9 +162,3 @@ map("n", "]B", function()
   tabufline.move_buf(1)
 end, { noremap = true, silent = true, desc = "Move buffer right" })
 map("n", "<leader>bd", "<cmd>lua Snacks.bufdelete()<CR>", { noremap = true, silent = true, desc = "Delete buffer" })
---
-
-map("n", "<C-left>", "<cmd>wincmd h<CR>", { noremap = true, silent = true }) -- Move to the left window
-map("n", "<C-right>", "<cmd>wincmd l<CR>", { noremap = true, silent = true }) -- Move to the right window
-map("n", "<C-up>", "<cmd>wincmd k<CR>", { noremap = true, silent = true }) -- Move to the top window
-map("n", "<C-down>", "<cmd>wincmd j<CR>", { noremap = true, silent = true }) -- Move to the bottom window

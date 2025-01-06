@@ -73,3 +73,13 @@ autocmd("BufLeave", {
     vim.cmd("silent! wa")
   end,
 })
+
+vim.api.nvim_create_autocmd("BufWinEnter", {
+  callback = function()
+    local win_config = vim.api.nvim_win_get_config(0)
+    if win_config.relative ~= "" and win_config.zindex == 80 then
+      vim.b.is_lspsaga_hover = true
+      return
+    end
+  end,
+})

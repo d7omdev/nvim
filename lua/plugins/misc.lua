@@ -141,6 +141,14 @@ return {
       },
     },
   },
+  {
+    "aaronik/treewalker.nvim",
+    opts = {
+      highlight = true,
+      highlight_duration = 250,
+      highlight_group = "CursorLine",
+    },
+  },
   -- Godot
   { "habamax/vim-godot" },
   { { "RishabhRD/nvim-cheat.sh", event = "VeryLazy" }, { "RishabhRD/popfix", event = "VeryLazy" } },

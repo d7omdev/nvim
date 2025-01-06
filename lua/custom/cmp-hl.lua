@@ -10,6 +10,11 @@ local highlight_maps = {
     ["BlinkCmpMenuSelection"] = "CmpSel",
   },
 
+  lspSaga = {
+    ["HoverNormal"] = "CmpPmenu",
+    ["HoverBorder"] = "CmpDocBorder",
+  },
+
   -- Label mappings
   label = {
     ["BlinkCmpLabel"] = "CmpItemAbbr",

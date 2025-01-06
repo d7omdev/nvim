@@ -14,7 +14,7 @@ lspconfig.gdscript.setup({
 
 -- Add the Tailwind CSS LSP configuration
 lspconfig.tailwindcss.setup({
-  filetypes = { "typescript", "typescriptreact", "tsx" },
+  filetypes = { "typescript", "typescriptreact" },
   root_dir = function(fname)
     -- Check if the project has tailwind.config.js
     local root = lspconfig.util.find_git_ancestor(fname) or vim.fn.getcwd()
@@ -34,12 +34,10 @@ return {
       inlay_hints = {
         enabled = true,
         exclude = {
+          "typescript",
           "typescriptreact",
           "javascript",
           "javascriptreact",
-          "javascript.jsx",
-          "typescript",
-          "typescript.tsx",
           "vue",
         },
       },
@@ -48,7 +46,7 @@ return {
       },
       servers = {
         vtsls = {
-          enabled = false,
+          enabled = true,
         },
       },
     },
@@ -57,6 +55,9 @@ return {
     "nvimdev/lspsaga.nvim",
     config = function()
       require("lspsaga").setup({
+        ui = {
+          border = "single",
+        },
         lightbulb = {
           enable = false,
           sign = false,
