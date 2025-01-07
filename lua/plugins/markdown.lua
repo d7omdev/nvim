@@ -22,8 +22,9 @@ return {
 
           if not configs.mpls then
             configs.mpls = {
+              enabled = not vim.b.is_lspsaga_hover,
               default_config = {
-                cmd = { "mpls" },
+                cmd = { "mpls", "--dark-mode" },
                 filetypes = { "markdown" },
                 single_file_support = true,
                 root_dir = require("lspconfig").util.find_git_ancestor,

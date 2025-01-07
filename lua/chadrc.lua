@@ -60,22 +60,8 @@ local options = {
 
         lsp = function()
           if rawget(vim, "lsp") then
-            local last_client = nil
             for _, client in ipairs(vim.lsp.get_clients()) do
-              if
-                client.name ~= "copilot"
-                and client.attached_buffers[vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)]
-              then
-                last_client = client
-              end
-            end
-
-            if last_client then
-              local client_name = last_client.name
-              if client_name == "typescript-tools" then
-                client_name = "ts-tools"
-              end
-              return (vim.o.columns > 100 and "%#St_Lsp#" .. "   󰜥" .. client_name .. " ")
+              return (vim.o.columns > 100 and "%#St_Lsp#" .. "   󰜥" .. client.name .. " ")
             end
           end
           return ""

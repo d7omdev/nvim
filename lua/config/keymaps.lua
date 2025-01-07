@@ -13,7 +13,7 @@ map("v", "<C-A-j>", "y]p", { noremap = true, silent = true, desc = "Duplicate se
 map("i", "jj", "<Esc>", { noremap = true, silent = true })
 
 -- Exit with 'qq' in normal mode
-map("n", "qq", ":q<CR>", { noremap = true, silent = true })
+map({ "n", "i" }, "qq", "<cmd>q<CR>", { noremap = true, silent = true })
 
 -- Quit all buffers without quitting the editor
 map("n", "QQ", function()
@@ -47,6 +47,13 @@ end, { noremap = true, silent = true, desc = "Next diagnostic" })
 map("n", "]d", function()
   require("lspsaga.diagnostic"):goto_next()
 end, { noremap = true, silent = true, desc = "Prev diagnostic" })
+map("n", "[e", function()
+  require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+end, { noremap = true, silent = true, desc = "Next Error" })
+
+map("n", "]e", function()
+  require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+end, { noremap = true, silent = true, desc = "Prev Error" })
 
 -- Obsidian
 map("n", "<leader>O", "", { desc = "+Obsidian" })
@@ -162,3 +169,6 @@ map("n", "]B", function()
   tabufline.move_buf(1)
 end, { noremap = true, silent = true, desc = "Move buffer right" })
 map("n", "<leader>bd", "<cmd>lua Snacks.bufdelete()<CR>", { noremap = true, silent = true, desc = "Delete buffer" })
+
+-- Enter command mode in insert mode
+map("i", "::", "<Esc>:", { noremap = true })
