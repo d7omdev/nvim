@@ -1,188 +1,110 @@
--- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
+-- Helper function for keymap options
+local function opts(desc, extra)
+  local default = { noremap = true, silent = true, desc = desc }
+  return extra and vim.tbl_extend("force", default, extra) or default
+end
 
 local map = vim.keymap.set
 
-map("n", "<C-A-k>", "yy[P", { noremap = true, silent = true, desc = "Duplicate line up" })
-map("n", "<C-A-j>", "yy]p", { noremap = true, silent = true, desc = "Duplicate line down" })
-map("v", "<C-A-k>", "yP", { noremap = true, silent = true, desc = "Duplicate selection up" })
-map("v", "<C-A-j>", "y]p", { noremap = true, silent = true, desc = "Duplicate selection down" })
+-- Duplicate lines or selections
+map("n", "<C-A-k>", "yy[P", opts("Duplicate line up"))
+map("n", "<C-A-j>", "yy]p", opts("Duplicate line down"))
+map("v", "<C-A-k>", "yP", opts("Duplicate selection up"))
+map("v", "<C-A-j>", "y]p", opts("Duplicate selection down"))
 
--- Exit insert mode with 'jj' in insert mode
-map("i", "jj", "<Esc>", { noremap = true, silent = true })
+-- Exit modes
+map("i", "jj", "<Esc>", opts("Exit insert mode"))
+map({ "n", "i" }, "qq", "<cmd>q<CR>", opts("Quick quit"))
+map("n", "QQ", "<cmd>bufdo bd<CR>", opts("Quit all buffers"))
 
--- Exit with 'qq' in normal mode
-map({ "n", "i" }, "qq", "<cmd>q<CR>", { noremap = true, silent = true })
+-- Delete without copying to register
+map("v", "<Del>", '"_d', opts("Delete without yanking"))
+-- Plugins Keymaps
+-- DBUI
+map("n", "<leader>DB", ":tabnew | DBUI<CR>", opts("Open DBUI"))
 
--- Quit all buffers without quitting the editor
-map("n", "QQ", function()
-  vim.cmd([[bufdo bd]])
-end, { noremap = true, silent = true })
-
--- Delete without copying to register in visual mode
-map("v", "<Del>", '"_d', { noremap = true, silent = true })
-
--- DBui
-map("n", "<leader>DB", ":tabnew | DBUI<CR>", { noremap = true, silent = true })
-
--- Lspsaga keymaps
-map("n", "<S-r>", "<cmd>Lspsaga hover_doc<CR>", { desc = "show hover doc" })
-map("n", "<leader>ol", "<cmd>Lspsaga outline<CR>", { desc = "show outline" })
--- map("n", "<C-a>", "<cmd>Lspsaga code_action<CR>", { desc = "code action" })
-map("n", "<C-c>d", "<cmd>Lspsaga peek_definition<CR>", { desc = "peek definition" })
-map("n", "<C-c>t", "<cmd>Lspsaga peek_type_definition<CR>", { desc = "peek type definition" })
-
--- Auto save toggle
--- map("n", "<leader>AST", ":ASToggle<CR>", { noremap = true, silent = true })
-
--- Cheat.sh
-map("n", "<leader>ch", "<cmd>Cheat<CR>", { noremap = true, silent = true, desc = "Cheat Sheet" })
-
--- LSP saga
-
+-- Lspsaga
+map("n", "<S-r>", "<cmd>Lspsaga hover_doc<CR>", opts("Show hover doc"))
+map("n", "<leader>ol", "<cmd>Lspsaga outline<CR>", opts("Show outline"))
+map("n", "<C-c>d", "<cmd>Lspsaga peek_definition<CR>", opts("Peek definition"))
+map("n", "<C-c>t", "<cmd>Lspsaga peek_type_definition<CR>", opts("Peek type definition"))
 map("n", "[d", function()
   require("lspsaga.diagnostic"):goto_prev()
-end, { noremap = true, silent = true, desc = "Next diagnostic" })
+end, opts("Previous diagnostic"))
 map("n", "]d", function()
   require("lspsaga.diagnostic"):goto_next()
-end, { noremap = true, silent = true, desc = "Prev diagnostic" })
+end, opts("Next diagnostic"))
 map("n", "[e", function()
   require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
-end, { noremap = true, silent = true, desc = "Next Error" })
-
+end, opts("Previous error"))
 map("n", "]e", function()
   require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
-end, { noremap = true, silent = true, desc = "Prev Error" })
+end, opts("Next error"))
 
 -- Obsidian
-map("n", "<leader>O", "", { desc = "+Obsidian" })
-map(
-  "n",
-  "<leader>On",
-  ":execute 'ObsidianNew ' . input('Enter a name: ')<CR>",
-  { noremap = true, silent = true, desc = "New note" }
-)
-map("n", "<leader>Os", ":ObsidianQuickSwitch<CR>", { noremap = true, silent = true, desc = "Quick switch" })
-map(
-  "n",
-  "<leader>Of",
-  ":lua local user_input = vim.fn.input('Enter v for vsplit, h for hsplit or leave empty: ') if user_input == 'v' then vim.cmd('ObsidianFollowLink vsplit') elseif user_input == 'h' then vim.cmd('ObsidianFollowLink hsplit') else vim.cmd('ObsidianFollowLink') end<CR>",
-  { noremap = true, silent = true, desc = "Follow link" }
-)
-map("n", "<leader>Ob", ":ObsidianBacklinks<CR>", { noremap = true, silent = true, desc = "Backlinks" })
-map("n", "<leader>Od", ":ObsidianDailies<CR>", { noremap = true, silent = true, desc = "Dailies" })
-map(
-  "n",
-  "<leader>Ot",
-  ":execute '<cmd>ObsidianTemplate<CR>",
-  { noremap = true, silent = true, desc = "Insert template" }
-)
-map("n", "<leader>sO", "<cmd>ObsidianSearch<CR>", { noremap = true, silent = true, desc = "Obsidian search" })
-map(
-  "n",
-  "<leader>Or",
-  ":execute 'ObsidianRename ' . input('Enter new name: ')<CR>",
-  { noremap = true, silent = true, desc = "Rename note" }
-)
-map("n", "<leader>Oc", ":ObsidianToggleCheckbox<CR>", { noremap = true, silent = true, desc = "Toggle checkbox" })
-map("n", "<leader>OT", "<cmd>ObsidianTags<CR>", { desc = "Search tags" })
+map("n", "<leader>O", "", opts("+Obsidian"))
+map("n", "<leader>On", ":execute 'ObsidianNew ' . input('Enter a name: ')<CR>", opts("New note"))
+map("n", "<leader>Os", ":ObsidianQuickSwitch<CR>", opts("Quick switch"))
+map("n", "<leader>Of", ":lua require('custom.obsidian').follow_link()<CR>", opts("Follow link"))
+map("n", "<leader>Ob", ":ObsidianBacklinks<CR>", opts("Backlinks"))
+map("n", "<leader>Od", ":ObsidianDailies<CR>", opts("Dailies"))
+map("n", "<leader>Ot", ":ObsidianTemplate<CR>", opts("Insert template"))
+map("n", "<leader>sO", "<cmd>ObsidianSearch<CR>", opts("Search notes"))
+map("n", "<leader>Or", ":execute 'ObsidianRename ' . input('Enter new name: ')<CR>", opts("Rename note"))
+map("n", "<leader>Oc", ":ObsidianToggleCheckbox<CR>", opts("Toggle checkbox"))
+map("n", "<leader>OT", "<cmd>ObsidianTags<CR>", opts("Search tags"))
 
 -- Sessions
 map("n", "<leader>qS", function()
   require("persistence").select()
-end, { desc = "Select session" })
-
+end, opts("Select session"))
 map("n", "<leader>ql", function()
   require("persistence").load({ last = true })
-end, { desc = "Load last session" })
-
+end, opts("Load last session"))
 map("n", "<leader>qd", function()
   require("persistence").stop()
-end, { desc = "Don't save current session" })
-
-map("n", "<leader>G", "", { desc = "+Gitsigns" })
-map("n", "<leader>E", "", { desc = "+Ecolog" })
+end, opts("Don't save current session"))
 
 -- Tailwind Tools
-map("n", "<leader>tt", "", { desc = "+Tailwind" })
-map("n", "<leader>tts", "<cmd>TailwindSort<CR>", { desc = "Tailwind Sort" })
-map("n", "<leader>ttS", "<cmd>TailwindSortSelection<CR>", { desc = "Tailwind Sort Selection" })
-map("n", "<leader>ttc", "<cmd>TailwindConcealToggle<CR>", { desc = "Tailwind Conceal Toggle" })
-map("n", "<leader>ttC", "<cmd>TailwindConcealEnable<CR>", { desc = "Tailwind Conceal Enable" })
-map("n", "<leader>ttCd", "<cmd>TailwindConcealDisable<CR>", { desc = "Tailwind Conceal Disable" })
-map("n", "<leader>ttco", "<cmd>TailwindColorToggle<CR>", { desc = "Tailwind Color Toggle" })
-map("n", "<leader>ttcoe", "<cmd>TailwindColorEnable<CR>", { desc = "Tailwind Color Enable" })
-map("n", "<leader>ttcod", "<cmd>TailwindColorDisable<CR>", { desc = "Tailwind Color Disable" })
-map("n", "]tc", "<cmd>TailwindNextClass<CR>", { desc = "Tailwind Next Class" })
-map("n", "[tc", "<cmd>TailwindPrevClass<CR>", { desc = "Tailwind Prev Class" })
-
--- Typescript tools
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = { "typescript", "typescriptreact" },
---   callback = function()
---     map("n", "<leader>co", "<cmd>TSToolsOrganizeImports<cr>", { desc = "Sorts and removes unused imports" })
---     map("n", "<leader>cS", "<cmd>TSToolsSortImports<cr>", { desc = "Sorts imports" })
---     map("n", "<leader>cr", "<cmd>TSToolsRemoveUnusedImports<cr>", { desc = "Removes unused imports" })
---     map("n", "<leader>cru", "<cmd>TSToolsRemoveUnused<cr>", { desc = "Removes all unused statements" })
---     map("n", "<leader>cM", "<cmd>TSToolsAddMissingImports<cr>", { desc = "Add missing imports" })
---     map("n", "<leader>cFa", "<cmd>TSToolsFixAll<cr>", { desc = "Fixes all fixable errors" })
---     map("n", "<leader>cR", "<cmd>TSToolsRenameFile<cr>", { desc = "Rename file" })
---     map("n", "<leader>cFr", "<cmd>TSToolsFileReferences<cr>", { desc = "Find file references" })
---   end,
--- })
-
--- movement
-map({ "n", "v" }, "<C-A-k>", "<cmd>Treewalker Up<cr>", { silent = true })
-map({ "n", "v" }, "<C-A-j>", "<cmd>Treewalker Down<cr>", { silent = true })
-map({ "n", "v" }, "<C-A-l>", "<cmd>Treewalker Right<cr>", { silent = true })
-map({ "n", "v" }, "<C-A-h>", "<cmd>Treewalker Left<cr>", { silent = true })
-
--- swapping
-map("n", "<A-S-j>", "<cmd>Treewalker SwapDown<cr>", { silent = true })
-map("n", "<A-S-k>", "<cmd>Treewalker SwapUp<cr>", { silent = true })
-map("n", "<A-S-l>", "<cmd>Treewalker SwapRight<CR>", { silent = true })
-map("n", "<A-S-h>", "<cmd>Treewalker SwapLeft<CR>", { silent = true })
-
---- Switch Tab with tab+tab
-map("n", "<Tab><Tab>", "<cmd>tabnext<CR>", { noremap = true, silent = true })
+map("n", "<leader>tt", "", opts("+Tailwind"))
+map("n", "<leader>tts", "<cmd>TailwindSort<CR>", opts("Tailwind Sort"))
+map("n", "<leader>ttS", "<cmd>TailwindSortSelection<CR>", opts("Tailwind Sort Selection"))
+map("n", "<leader>ttc", "<cmd>TailwindConcealToggle<CR>", opts("Tailwind Conceal Toggle"))
 
 -- Buffers
-map(
-  "n",
-  "]b",
-  require("custom.buffers").next_buffer_in_tab,
-  { noremap = true, silent = true, desc = "Next buffer in tab" }
-)
-map(
-  "n",
-  "[b",
-  require("custom.buffers").prev_buffer_in_tab,
-  { noremap = true, silent = true, desc = "Previous buffer in tab" }
-)
+map("n", "]b", require("custom.buffers").next_buffer_in_tab, opts("Next buffer in tab"))
+map("n", "[b", require("custom.buffers").prev_buffer_in_tab, opts("Previous buffer in tab"))
 local tabufline = require("nvchad.tabufline")
-
 map("n", "[B", function()
   tabufline.move_buf(-1)
-end, { noremap = true, silent = true, desc = "Move buffer left" })
+end, opts("Move buffer left"))
 map("n", "]B", function()
   tabufline.move_buf(1)
-end, { noremap = true, silent = true, desc = "Move buffer right" })
-map("n", "<leader>bd", "<cmd>lua Snacks.bufdelete()<CR>", { noremap = true, silent = true, desc = "Delete buffer" })
+end, opts("Move buffer right"))
+map("n", "<leader>bd", "<cmd>lua Snacks.bufdelete()<CR>", opts("Delete buffer"))
 
--- Enter command mode in insert mode
-map("i", "::", "<Esc>:", { noremap = true })
+-- Treewalker
+map({ "n", "v" }, "<S-k>", "<cmd>Treewalker Up<CR>", opts("Treewalker Up"))
+map({ "n", "v" }, "<S-j>", "<cmd>Treewalker Down<CR>", opts("Treewalker Down"))
+map({ "n", "v" }, "<S-l>", "<cmd>Treewalker Right<CR>", opts("Treewalker Right"))
+map({ "n", "v" }, "<S-h>", "<cmd>Treewalker Left<CR>", opts("Treewalker Left"))
+map("n", "<A-S-j>", "<cmd>Treewalker SwapDown<CR>", opts("Swap Down"))
+map("n", "<A-S-k>", "<cmd>Treewalker SwapUp<CR>", opts("Swap Up"))
+map("n", "<A-S-l>", "<cmd>Treewalker SwapRight<CR>", opts("Swap Right"))
+map("n", "<A-S-h>", "<cmd>Treewalker SwapLeft<CR>", opts("Swap Left"))
 
+-- Tabs
+map("n", "<Tab><Tab>", "<cmd>tabnext<CR>", opts("Switch Tab"))
+
+-- Miscellaneous
+map("i", "::", "<Esc>:", opts("Enter command mode in insert mode"))
 map("n", "<leader>Q", function()
   require("quicker").toggle()
-end, {
-  desc = "Toggle quickfix",
-})
+end, opts("Toggle quickfix"))
 map("n", "<leader>L", function()
   require("quicker").toggle({ loclist = true })
-end, {
-  desc = "Toggle loclist",
-})
+end, opts("Toggle loclist"))
+
 require("quicker").setup({
   keys = {
     {
@@ -190,14 +112,14 @@ require("quicker").setup({
       function()
         require("quicker").expand({ before = 2, after = 2, add_to_existing = true })
       end,
-      desc = "Expand quickfix context",
+      opts("Expand quickfix context"),
     },
     {
       "<",
       function()
         require("quicker").collapse()
       end,
-      desc = "Collapse quickfix context",
+      opts("Collapse quickfix context"),
     },
   },
 })

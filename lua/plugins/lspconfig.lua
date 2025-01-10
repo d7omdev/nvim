@@ -8,7 +8,6 @@ lspconfig.gdscript.setup({
     -- Keybindings for LSP functionality
     local bufopts = { noremap = true, silent = true, buffer = bufnr }
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts) -- Go to definition
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts) -- Show hover info
   end,
 })
 
@@ -122,6 +121,15 @@ return {
         end,
       },
     },
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = function()
+      local Keys = require("lazyvim.plugins.lsp.keymaps").get()
+      vim.list_extend(Keys, {
+        { "K", false },
+      })
+    end,
   },
   {
     "nvimdev/lspsaga.nvim",
