@@ -108,7 +108,7 @@ return {
         },
       },
       list = {
-        selection = "auto_insert",
+        selection = { auto_insert = true },
       },
       documentation = {
         auto_show = true,

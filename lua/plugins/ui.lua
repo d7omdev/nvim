@@ -9,6 +9,7 @@ return {
   },
   {
     "mvllow/modes.nvim",
+    event = "BufRead",
     enabled = true,
     config = function()
       require("modes").setup({
@@ -20,6 +21,7 @@ return {
   },
   {
     "mistricky/codesnap.nvim",
+    event = "BufRead",
     build = "make build_generator",
     keys = {
       { "<leader>cs", "", mode = "x", desc = "+Code Snap" },
@@ -49,7 +51,7 @@ return {
   },
   {
     "Bekaboo/dropbar.nvim",
-
+    event = "BufRead",
     config = function()
       local dropbar_api = require("dropbar.api")
       vim.keymap.set("n", "<Leader>;", dropbar_api.pick, { desc = "Pick symbols in winbar" })

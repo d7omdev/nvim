@@ -36,7 +36,7 @@ return {
 
   {
     "bbjornstad/pretty-fold.nvim",
-    event = "VeryLazy",
+    event = "BufRead",
     config = function()
       require("pretty-fold").setup({
         keep_indentation = true,
@@ -58,7 +58,7 @@ return {
   },
   {
     "andrewferrier/debugprint.nvim",
-    event = "VeryLazy",
+    event = "BufRead",
     opts = {
       keymaps = {
         normal = {
@@ -104,7 +104,7 @@ return {
   },
   {
     "smoka7/multicursors.nvim",
-    event = "VeryLazy",
+    event = "BufRead",
     dependencies = {
       "smoka7/hydra.nvim",
     },
@@ -130,6 +130,7 @@ return {
   },
   {
     "chrisgrieser/nvim-rip-substitute",
+    event = "BufRead",
     cmd = "RipSubstitute",
     keys = {
       {
@@ -144,14 +145,20 @@ return {
   },
   {
     "aaronik/treewalker.nvim",
+    event = "BufRead",
     opts = {
       highlight = true,
       highlight_duration = 250,
       highlight_group = "CursorLine",
     },
   },
-  -- Godot
-  { "habamax/vim-godot" },
+  { "habamax/vim-godot", event = "FileType gd" },
   { { "RishabhRD/nvim-cheat.sh", event = "VeryLazy" }, { "RishabhRD/popfix", event = "VeryLazy" } },
-  -- require("fzf-lua").setup({ defaults = { git_icons = false } }),
+  {
+    "stevearc/quicker.nvim",
+    event = "FileType qf",
+    config = function()
+      require("quicker").setup()
+    end,
+  },
 }
