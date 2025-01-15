@@ -7,7 +7,7 @@ return {
 
     opts = {
       provider = "copilot",
-      auto_suggestions_provider = "copilot",
+      -- auto_suggestions_provider = "copilot",
       hints = { enabled = false },
       file_selector = {
         provider = "fzf",

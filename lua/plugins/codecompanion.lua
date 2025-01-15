@@ -435,6 +435,39 @@ return {
             },
           },
         },
+        ["Comment "] = {
+          strategy = "inline",
+          description = "Comment the selected code",
+          opts = {
+            index = 10,
+            modes = { "v" },
+            default_prompt = true,
+            short_name = "comment",
+            slash_cmd = "comment",
+            auto_submit = true,
+            user_prompt = false,
+            stop_context_insertion = true,
+          },
+          prompts = {
+            {
+              role = "system",
+              content = [[When asked to comment code, follow these steps: 1. Identify the programming language. 2. Describe the purpose of the code and reference core concepts from the programming language. 3. Explain each function or significant block of code, including parameters and return values. 4. Highlight any specific functions or methods used and their roles. 5. Provide context on how the code fits into a larger application if applicable.]],
+              opts = {
+                visible = false,
+              },
+            },
+            {
+              role = "user",
+              content = function(context)
+                local code = require("codecompanion.helpers.actions").get_code(context.start_line, context.end_line)
+                return "Please comment this code:\n\n```" .. context.filetype .. "\n" .. code .. "\n```\n\n"
+              end,
+              opts = {
+                contains_code = true,
+              },
+            },
+          },
+        },
       },
       -- DISPLAY OPTIONS ----------------------------------------------------------
       display = {
@@ -506,7 +539,12 @@ return {
         end
       end)
     end, { noremap = true, silent = true, desc = "CC Inline with Prompt" })
-    map("n", "<leader>cca", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true, desc = "CC Actions" })
+    map(
+      { "n", "v" },
+      "<leader>cca",
+      "<cmd>CodeCompanionActions<cr>",
+      { noremap = true, silent = true, desc = "CC Actions" }
+    )
     map("n", "<leader>aca", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true, desc = "CC Toggle" })
     map("v", "<leader>aca", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true, desc = "CC Toggle" })
     map("v", "ga", "<cmd>CodeCompanionAdd<cr>", { noremap = true, silent = true, desc = "CodeCompanion Add" })

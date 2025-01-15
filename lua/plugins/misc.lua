@@ -161,4 +161,10 @@ return {
       require("quicker").setup()
     end,
   },
+  {
+    "nvzone/typr",
+    cmd = "TyprStats",
+    dependencies = "nvzone/volt",
+    opts = {},
+  },
 }

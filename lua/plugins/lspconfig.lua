@@ -153,7 +153,6 @@ return {
           },
         },
       })
-      require("lspsaga").config.symbol_in_winbar = {}
     end,
   },
 }

@@ -1,6 +1,5 @@
 # Neovim Configuration
 
-
 ![nvim-screenshot](README-img/nvim-screenshot.png)
 This repository contains my personal Neovim configuration.
 
@@ -8,7 +7,7 @@ This repository contains my personal Neovim configuration.
 
 The configuration uses the [WhichKey](https://github.com/folke/which-key.nvim) plugin for keybinding management.
 The `<leader>` key is mapped to `Space`.
-For *cheat sheet*, press `<leader>` + `cH`.
+For _cheat sheet_, press `<leader>` + `cH`.
 
 ## Installation
 
@@ -25,4 +24,3 @@ nvim
 ```
 
 Enjoy your Neovim experience!
-
