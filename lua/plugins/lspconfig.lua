@@ -107,7 +107,7 @@ return {
             end
             formatter.format = function(buf)
               local client = get_client(buf)
-              client.flags = { allow_incremental_sync = false, debounce_text_changes = 1000, exit_timeout = 1500 }
+              client.flags = { allow_incremental_sync = false, debounce_text_changes = 2000, exit_timeout = 1500 }
               if client then
                 local diag = vim.diagnostic.get(buf, { namespace = vim.lsp.diagnostic.get_namespace(client.id) })
                 if #diag > 0 then
