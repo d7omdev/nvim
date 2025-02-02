@@ -66,3 +66,11 @@ autocmd("BufWritePre", {
     vim.cmd([[silent! %s/\s\+$//e]])
   end,
 })
+
+-- Setup filetype for .aliasesrc
+autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = ".aliasesrc",
+  callback = function()
+    vim.bo.filetype = "zsh"
+  end,
+})
