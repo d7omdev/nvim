@@ -80,6 +80,34 @@ local highlight_maps = {
     ["FzfLuaFzfPrompt"] = "TelescopePromptNormal",
     ["FzfLuaFzfQuery"] = "TelescopeMatching",
   },
+  -- SnacksPicker mappings to Telescope highlights
+  snacksPicker = {
+    ["SnacksPickerBorder"] = "TelescopeBorder",
+    ["SnacksPickerInput"] = "TelescopePromptNormal",
+    ["SnacksPickerInputBorder"] = "TelescopePromptBorder",
+    ["SnacksPickerBoxBorder"] = "TelescopePromptBorder",
+    ["SnacksPickerTitle"] = "TelescopePromptTitle",
+    ["SnacksPickerBoxTitle"] = "TelescopePromptTitle",
+    ["SnacksPickerList"] = "TelescopePromptNormal",
+    ["SnacksPickerPrompt"] = "TelescopePromptPrefix",
+    ["SnacksPickerPreviewTitle"] = "TelescopePreviewTitle",
+    ["SnacksPickerPreview"] = "TelescopePreviewNormal",
+    ["SnacksPickerToggle"] = "TelescopeSelectionCaret",
+    ["SnacksNormal"] = "TelescopeNormal",
+    ["SnacksNormalNC"] = "TelescopeNormal",
+    ["SnacksBackdrop"] = "TelescopeNormal",
+    ["SnacksIndent"] = "TelescopeNormal",
+    ["SnacksIndentChunk"] = "TelescopeNormal",
+    ["SnacksIndentScope"] = "TelescopeNormal",
+    ["SnacksIndent1"] = "TelescopeNormal",
+    ["SnacksIndent2"] = "TelescopeNormal",
+    ["SnacksIndent3"] = "TelescopeNormal",
+    ["SnacksIndent4"] = "TelescopeNormal",
+    ["SnacksIndent5"] = "TelescopeNormal",
+    ["SnacksIndent6"] = "TelescopeNormal",
+    ["SnacksIndent7"] = "TelescopeNormal",
+    ["SnacksIndent8"] = "TelescopeNormal",
+  },
 }
 
 -- Kind mappings table
@@ -132,6 +160,7 @@ function M.setup_highlights()
   end
 end
 
+-- Set up autocmd to ensure it runs on VimEnter as well
 vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = "*",
   callback = M.setup_highlights,

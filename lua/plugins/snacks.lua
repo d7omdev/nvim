@@ -4,6 +4,13 @@ return {
   lazy = false,
   ---@type snacks.Config
   opts = {
+    terminal = {
+      win = {
+        wo = {
+          winbar = "",
+        },
+      },
+    },
     profiler = { enabled = true },
     indent = {
       enabled = true,

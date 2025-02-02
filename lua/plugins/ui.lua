@@ -61,6 +61,7 @@ return {
   -- },
   {
     "rachartier/tiny-glimmer.nvim",
+    branch = "main",
     event = "TextYankPost",
     opts = {
       default_animation = "left_to_right",

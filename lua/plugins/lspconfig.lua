@@ -1,5 +1,6 @@
 local lspconfig = require("lspconfig")
 
+-- Configure GDScript LSP
 lspconfig.gdscript.setup({
   cmd = { "nc", "localhost", "6005" }, -- Connect to Godot's language server
   filetypes = { "gd", "gdscript", "gdscript3" }, -- GDScript file types
@@ -21,6 +22,43 @@ lspconfig.tailwindcss.setup({
   end,
 })
 
+-- ESLint using eslint_d for faster linting
+lspconfig.eslint.setup({
+  cmd = { "/home/d7om/.local/share/nvim/mason/bin/eslint_d", "--stdin", "--stdin-filename", "%filename" }, -- Use eslint_d for fast linting
+  filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact", "vue" },
+  settings = {
+    eslint = {
+      autoFixOnSave = true, -- Auto fix on save
+      lint = false, -- Disable linting if not needed for better performance
+    },
+  },
+  init_options = {
+    lint = false, -- Disable linting to save resources
+    codeAction = true,
+    format = true,
+  },
+})
+
+-- Configure vtsls with optimizations
+lspconfig.vtsls.setup({
+  settings = {
+    typescript = {
+      diagnostics = {
+        enable = false, -- Disable diagnostics for better performance
+      },
+      inlayHints = {
+        enabled = false, -- Disable inlay hints to save resources
+      },
+    },
+  },
+  on_attach = function(client, bufnr)
+    -- Customize keymaps and actions for vtsls
+    local bufopts = { noremap = true, silent = true, buffer = bufnr }
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts) -- Go to definition
+  end,
+})
+
+-- Configuration for LazyVim's LSP settings
 return {
   {
     "neovim/nvim-lspconfig",
@@ -54,7 +92,7 @@ return {
           enabled = true,
         },
         eslint = {
-          enabled = true,
+          enabled = false,
         },
       },
       setup = {
@@ -85,39 +123,6 @@ return {
               end,
             }
           end)
-        end,
-        eslint = function(_, opts)
-          local function get_client(buf)
-            return LazyVim.lsp.get_clients({ name = "eslint", bufnr = buf })[1]
-          end
-
-          local formatter = LazyVim.lsp.formatter({
-            name = "eslint: lsp",
-            primary = false,
-            priority = 200,
-            filter = "eslint",
-          })
-
-          -- Use EslintFixAll on Neovim < 0.10.0
-          if not pcall(require, "vim.lsp._dynamic") then
-            formatter.name = "eslint: EslintFixAll"
-            formatter.sources = function(buf)
-              local client = get_client(buf)
-              return client and { "eslint" } or {}
-            end
-            formatter.format = function(buf)
-              local client = get_client(buf)
-              client.flags = { allow_incremental_sync = false, debounce_text_changes = 2000, exit_timeout = 1500 }
-              if client then
-                local diag = vim.diagnostic.get(buf, { namespace = vim.lsp.diagnostic.get_namespace(client.id) })
-                if #diag > 0 then
-                  vim.cmd("EslintFixAll")
-                end
-              end
-            end
-          end
-          -- register the formatter with LazyVim
-          LazyVim.format.register(formatter)
         end,
       },
     },

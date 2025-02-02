@@ -268,6 +268,5 @@ return {
     end
 
     require("blink.cmp").setup(opts)
-    require("custom.cmp-hl").setup_highlights()
   end,
 }
