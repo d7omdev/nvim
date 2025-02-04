@@ -12,6 +12,20 @@ map("n", "<C-A-j>", "yy]p", opts("Duplicate line down"))
 map("v", "<C-A-k>", "yP", opts("Duplicate selection up"))
 map("v", "<C-A-j>", "y]p", opts("Duplicate selection down"))
 
+-- Block selection
+map("n", "<A-q>", "<C-v>", { noremap = true, silent = true })
+
+-- Remap delete without copying
+map("n", "d", '"ad', opts())
+map("v", "d", '"ad', opts())
+
+-- Remap change without copying
+map("n", "c", '"ac', opts())
+map("v", "c", '"ac', opts())
+
+-- Remap x (delete character) without copying
+map("n", "x", '"ax', opts())
+
 -- Exit modes
 map("i", "jj", "<Esc>", opts("Exit insert mode"))
 map({ "n", "i" }, "qq", "<cmd>q<CR>", opts("Quick quit"))

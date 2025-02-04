@@ -40,23 +40,25 @@ lspconfig.eslint.setup({
 })
 
 -- Configure vtsls with optimizations
-lspconfig.vtsls.setup({
-  settings = {
-    typescript = {
-      diagnostics = {
-        enable = false, -- Disable diagnostics for better performance
-      },
-      inlayHints = {
-        enabled = false, -- Disable inlay hints to save resources
-      },
-    },
-  },
-  on_attach = function(client, bufnr)
-    -- Customize keymaps and actions for vtsls
-    local bufopts = { noremap = true, silent = true, buffer = bufnr }
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts) -- Go to definition
-  end,
-})
+-- lspconfig.vtsls.setup({
+--   settings = {
+--     enable = false,
+--     typescript = {
+--       diagnostics = {
+--         enable = false, -- Disable diagnostics for better performance
+--       },
+--       inlayHints = {
+--         enabled = false, -- Disable inlay hints to save resources
+--       },
+--     },
+--   },
+--   on_attach = function(client, bufnr)
+--     -- Customize keymaps and actions for vtsls
+--     client.server_capabilities.documentFormattingProvider = nil
+--     local bufopts = { noremap = true, silent = true, buffer = bufnr }
+--     vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts) -- Go to definition
+--   end,
+-- })
 
 -- Configuration for LazyVim's LSP settings
 return {
@@ -89,10 +91,10 @@ return {
           enabled = false,
         },
         vtsls = {
-          enabled = true,
+          enabled = false,
         },
         eslint = {
-          enabled = false,
+          enabled = true,
         },
       },
       setup = {

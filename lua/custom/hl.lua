@@ -96,6 +96,16 @@ local highlight_maps = {
     ["SnacksNormal"] = "TelescopeNormal",
     ["SnacksBackdrop"] = "TelescopeNormal",
   },
+
+  minifiles = {
+    ["MiniFilesBorder"] = "Comment",
+    ["MiniFilesBorderModified"] = "TelescopeBorder",
+    ["MiniFilesDirectory"] = "TelescopePreviewDirectory",
+    -- ["MiniFilesFile"] = "TelescopePreviewNormal",
+    ["MiniFilesNormal"] = "TelescopeNormal",
+    ["MiniFilesTitle"] = "TelescopePreviewTitle",
+    ["MiniFilesTitleFocused"] = "TelescopePromptTitle",
+  },
 }
 
 -- Kind mappings table
