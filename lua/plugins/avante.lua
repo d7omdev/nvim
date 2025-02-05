@@ -10,7 +10,7 @@ return {
       -- auto_suggestions_provider = "copilot",
       hints = { enabled = false },
       file_selector = {
-        provider = "fzf",
+        provider = "snacks",
         provider_opts = {},
       },
     },

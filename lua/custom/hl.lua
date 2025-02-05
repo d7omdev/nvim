@@ -1,5 +1,8 @@
 local M = {}
 
+vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#6F737B", bg = "#1B1F27" })
+-- vim.api.nvim_set_hl(0, "SnacksPickerInputBorder", { fg = "#6F737B", bg = "#252931" })
+
 local highlight_maps = {
   -- Basic mappings
   menu = {
@@ -85,7 +88,7 @@ local highlight_maps = {
     ["SnacksPickerBorder"] = "TelescopeBorder",
     ["SnacksPickerInput"] = "TelescopePromptNormal",
     ["SnacksPickerInputBorder"] = "TelescopePromptBorder",
-    -- ["SnacksPickerBoxBorder"] = "TelescopePromptBorder",
+    -- ["SnacksPickerBoxBorder"] = "TelescopeBorder",
     ["SnacksPickerTitle"] = "TelescopePromptTitle",
     ["SnacksPickerBoxTitle"] = "TelescopePromptTitle",
     ["SnacksPickerList"] = "TelescopePromptNormal",
