@@ -73,6 +73,7 @@ return {
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     event = "LspAttach",
     config = function()
+      vim.diagnostic.config({ virtual_lines = { only_current_line = true } })
       vim.api.nvim_create_autocmd("FileType", {
         pattern = { "lazy", "text" },
         callback = function()
