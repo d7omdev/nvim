@@ -94,7 +94,7 @@ return {
         },
       },
       list = {
-        selection = { preselect = true, auto_insert = false },
+        selection = { preselect = false, auto_insert = true },
       },
       documentation = {
         auto_show = true,

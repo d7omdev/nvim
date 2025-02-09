@@ -16,7 +16,7 @@ map("v", "<C-A-j>", "y]p", opts("Duplicate selection down"))
 map("n", "<A-q>", "<C-v>", { noremap = true, silent = true })
 
 -- Remap delete without copying
-map("n", "d", '"ad', opts())
+-- map("n", "d", '"ad', opts())
 map("v", "d", '"ad', opts())
 
 -- Remap change without copying

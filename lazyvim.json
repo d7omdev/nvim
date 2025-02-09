@@ -18,8 +18,8 @@
     "lazyvim.plugins.extras.lang.json",
     "lazyvim.plugins.extras.lang.python",
     "lazyvim.plugins.extras.lang.toml",
-    "lazyvim.plugins.extras.lang.typescript",
     "lazyvim.plugins.extras.lang.yaml",
+    "lazyvim.plugins.extras.linting.eslint",
     "lazyvim.plugins.extras.ui.mini-animate",
     "lazyvim.plugins.extras.ui.treesitter-context",
     "lazyvim.plugins.extras.util.chezmoi",
@@ -28,8 +28,9 @@
     "lazyvim.plugins.extras.util.startuptime",
     "lazyvim.plugins.extras.vscode"
   ],
+  "install_version": 7,
   "news": {
     "NEWS.md": "10960"
   },
-  "version": 7
+  "version": 8
 }

@@ -12,59 +12,10 @@ lspconfig.gdscript.setup({
   end,
 })
 
--- Add the Tailwind CSS LSP configuration
-lspconfig.tailwindcss.setup({
-  filetypes = { "typescript", "typescriptreact" },
-  root_dir = function(fname)
-    -- Check if the project has tailwind.config.js
-    local root = vim.fs.find(".git", { path = vim.fn.getcwd(), upward = true })[1] or vim.fn.getcwd()
-    return vim.fn.glob(root .. "/tailwind.config.js") ~= "" and root or nil
-  end,
-})
-
--- ESLint using eslint_d for faster linting
-lspconfig.eslint.setup({
-  cmd = { "/home/d7om/.local/share/nvim/mason/bin/eslint_d", "--stdin", "--stdin-filename", "%filename" }, -- Use eslint_d for fast linting
-  filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact", "vue" },
-  settings = {
-    eslint = {
-      autoFixOnSave = true, -- Auto fix on save
-      lint = false, -- Disable linting if not needed for better performance
-    },
-  },
-  init_options = {
-    lint = false, -- Disable linting to save resources
-    codeAction = true,
-    format = true,
-  },
-})
-
--- Configure vtsls with optimizations
--- lspconfig.vtsls.setup({
---   settings = {
---     enable = false,
---     typescript = {
---       diagnostics = {
---         enable = false, -- Disable diagnostics for better performance
---       },
---       inlayHints = {
---         enabled = false, -- Disable inlay hints to save resources
---       },
---     },
---   },
---   on_attach = function(client, bufnr)
---     -- Customize keymaps and actions for vtsls
---     client.server_capabilities.documentFormattingProvider = nil
---     local bufopts = { noremap = true, silent = true, buffer = bufnr }
---     vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts) -- Go to definition
---   end,
--- })
-
 -- Configuration for LazyVim's LSP settings
 return {
   {
     "neovim/nvim-lspconfig",
-    event = "VeryLazy",
     --- @class lspconfig
     opts = {
       diagnostics = {
@@ -94,7 +45,7 @@ return {
           enabled = false,
         },
         eslint = {
-          enabled = true,
+          enabled = false,
         },
       },
       setup = {

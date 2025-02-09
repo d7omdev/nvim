@@ -2,7 +2,7 @@ return {
   {
     "yetone/avante.nvim",
     lazy = true,
-    event = "VeryLazy",
+    event = "BufRead",
     build = "make",
 
     opts = {
