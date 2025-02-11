@@ -1,5 +1,6 @@
 return {
   "olimorris/codecompanion.nvim",
+  version = "11.28.x",
   event = "VeryLazy",
   dependencies = {
     {
@@ -73,7 +74,6 @@ return {
           strategy = "chat",
           description = "Fix the selected code",
           opts = {
-            index = 6,
             default_prompt = true,
             short_name = "fix",
             modes = { "v" },
@@ -121,7 +121,6 @@ return {
           strategy = "chat",
           description = "Fix the LSP diagnostics",
           opts = {
-            index = 8,
             default_prompt = true,
             short_name = "lsp-fix",
             modes = { "n", "v" },
@@ -169,7 +168,6 @@ return {
           strategy = "chat",
           description = "Generate a commit message",
           opts = {
-            index = 9,
             default_prompt = true,
             short_name = "commit",
             slash_cmd = "commit",
@@ -194,7 +192,6 @@ return {
           strategy = "inline",
           description = "Comment the selected code",
           opts = {
-            index = 10,
             modes = { "v" },
             default_prompt = true,
             short_name = "comment",

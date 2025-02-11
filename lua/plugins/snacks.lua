@@ -14,7 +14,6 @@ return {
     profiler = { enabled = true },
     picker = {
       layout = {
-        preview = true,
         layout = {
           backdrop = false,
           row = 1,
@@ -27,7 +26,7 @@ return {
           { win = "list", height = 0.4 },
           {
             win = "preview",
-            title = "{preview:Preview}",
+            title = "{preview}",
             border = "single",
             title_pos = "center",
           },
