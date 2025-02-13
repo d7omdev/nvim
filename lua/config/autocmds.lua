@@ -74,3 +74,10 @@ autocmd({ "BufRead", "BufNewFile" }, {
     vim.bo.filetype = "zsh"
   end,
 })
+
+autocmd("FileType", {
+  pattern = "hyprlang",
+  callback = function()
+    vim.bo.commentstring = "# %s"
+  end,
+})
