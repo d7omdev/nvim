@@ -153,7 +153,7 @@ return {
 
     local function mapSymbols(status)
       local statusMap = {
-        -- stylua: ignore start 
+        -- stylua: ignore start
         [" M"] = { symbol = "󰦒", hlGroup  = "MiniDiffSignChange"}, -- Modified in the working directory
         ["M "] = { symbol = "•", hlGroup  = "MiniDiffSignChange"}, -- modified in index
         ["MM"] = { symbol = "≠", hlGroup  = "MiniDiffSignChange"}, -- modified in both working tree and index

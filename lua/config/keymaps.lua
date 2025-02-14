@@ -19,6 +19,8 @@ map("n", "<A-q>", "<C-v>", { noremap = true, silent = true })
 -- map("n", "d", '"ad', opts())
 map("v", "d", '"ad', opts())
 
+map({ "n", "v" }, "p", '"+p', opts("Paste from 0 register"))
+
 -- Remap change without copying
 map("n", "c", '"ac', opts())
 map("v", "c", '"ac', opts())
@@ -35,7 +37,7 @@ map("n", "QQ", "<cmd>bufdo bd<CR>", opts("Quit all buffers"))
 map("v", "<Del>", '"_d', opts("Delete without yanking"))
 -- Plugins Keymaps
 -- DBUI
-map("n", "<leader>DB", ":tabnew | DBUI<CR>", opts("Open DBUI"))
+-- map("n", "<leader>DB", ":tabnew | DBUI<CR>", opts("Open DBUI"))
 
 -- Lspsaga
 map("n", "<S-r>", "<cmd>Lspsaga hover_doc<CR>", opts("Show hover doc"))
@@ -137,3 +139,8 @@ require("quicker").setup({
     },
   },
 })
+
+-- Use dressing (or mini.pick) for spelling suggestions.
+map("n", "z=", "<cmd>Pick spellsuggest<CR>", { desc = "Spelling suggestions" })
+
+map("n", "<C-p>", "<cmd>Pick files<CR>", { desc = "Mini files picker" })

@@ -1,10 +1,11 @@
 return {
   "lewis6991/gitsigns.nvim",
   event = "LazyFile",
+  enabled = true,
   config = function()
     require("gitsigns").setup({
       current_line_blame = true,
-      numhl = true,
+      numhl = false,
       signs = {
         add = { text = "▎" },
         change = { text = "▎" },

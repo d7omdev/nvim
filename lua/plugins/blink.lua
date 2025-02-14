@@ -88,7 +88,7 @@ return {
       menu = {
         border = "single",
         draw = {
-          columns = { { "kind_icon", gap = 1 }, { "label", gap = 1 }, { "label_description" } },
+          columns = { { "kind_icon", gap = 1 }, { "label", gap = 4 }, { "kind" }, { "label_description" } },
           gap = 1,
           treesitter = { "lsp" },
         },

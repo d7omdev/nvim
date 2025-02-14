@@ -38,7 +38,7 @@ local function setup_highlights()
   for state, hl_name in pairs(config.highlights) do
     vim.api.nvim_set_hl(0, hl_name, {
       fg = config.colors[state],
-      bg = "#22262e", -- This ensures background is inherited
+      bg = vim.fn.synIDattr(vim.fn.hlID("StatusLine"), "bg#"),
       default = true, -- This allows other colorschemes to override if needed
     })
   end

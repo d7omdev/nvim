@@ -1,6 +1,6 @@
 vim.api.nvim_set_hl(0, "St_macro_recording", {
   fg = "#CA6169",
-  bg = "#22262e",
+  bg = vim.fn.synIDattr(vim.fn.hlID("StatusLine"), "bg#"),
   bold = true,
 })
 
@@ -97,19 +97,6 @@ local options = {
       lazyload = true,
       order = { "treeOffset", "buffers", "tabs", "btns" },
       modules = nil,
-    },
-  },
-
-  term = {
-    winopts = { number = false, relativenumber = false },
-    sizes = { sp = 0.3, vsp = 0.2, ["bo sp"] = 0.3, ["bo vsp"] = 0.2 },
-    float = {
-      relative = "editor",
-      row = 0.3,
-      col = 0.25,
-      width = 0.5,
-      height = 0.4,
-      border = "single",
     },
   },
 

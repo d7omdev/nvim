@@ -67,6 +67,34 @@ return {
     event = "TextYankPost",
     opts = {
       default_animation = "left_to_right",
+      overwrite = {
+        search = {
+          enabled = false,
+          default_animation = "pulse",
+          next_mapping = "nzzzv",
+          prev_mapping = "Nzzzv",
+        },
+        paste = {
+          enabled = true,
+          default_animation = "reverse_fade",
+          paste_mapping = "p",
+          Paste_mapping = "P",
+        },
+        undo = {
+          enabled = true,
+          default_animation = {
+            name = "fade",
+          },
+          undo_mapping = "u",
+        },
+        redo = {
+          enabled = true,
+          default_animation = {
+            name = "reverse_fade",
+          },
+          redo_mapping = "<c-r>",
+        },
+      },
     },
   },
   {
