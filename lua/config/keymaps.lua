@@ -144,3 +144,7 @@ require("quicker").setup({
 map("n", "z=", "<cmd>Pick spellsuggest<CR>", { desc = "Spelling suggestions" })
 
 map("n", "<C-p>", "<cmd>Pick files<CR>", { desc = "Mini files picker" })
+
+map("n", "<leader>gp", function()
+  require("custom.utils").open_github_repo()
+end, { desc = "Open Github repo" })
