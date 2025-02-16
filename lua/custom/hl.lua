@@ -109,6 +109,10 @@ local highlight_maps = {
     ["MiniFilesTitle"] = "TelescopePreviewTitle",
     ["MiniFilesTitleFocused"] = "TelescopePromptTitle",
   },
+
+  misc = {
+    ["SagaBorder"] = "@symbol",
+  },
 }
 
 -- Kind mappings table

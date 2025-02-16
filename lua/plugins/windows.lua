@@ -1,6 +1,7 @@
 return {
   {
     "d7omdev/windows.nvim",
+    event = "BufRead",
     enabled = function()
       return not vim.tbl_contains({ "snacks_terminal" }, vim.bo.filetype)
     end,

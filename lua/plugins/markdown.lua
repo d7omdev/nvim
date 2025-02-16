@@ -1,14 +1,14 @@
 return {
   {
     "OXY2DEV/markview.nvim",
-    event = "VeryLazy",
+    event = "BufRead",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
     },
     opts = {
       preview = {
-        filetypes = { "markdown", "codecompanion" },
+        filetypes = { "markdown" },
         ignore_buftypes = {},
       },
     },

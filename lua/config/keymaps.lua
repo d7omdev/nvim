@@ -137,7 +137,7 @@ require("quicker").setup({
       end,
       opts("Collapse quickfix context"),
     },
-  },
+   },
 })
 
 -- Use dressing (or mini.pick) for spelling suggestions.
@@ -148,3 +148,5 @@ map("n", "<C-p>", "<cmd>Pick files<CR>", { desc = "Mini files picker" })
 map("n", "<leader>gp", function()
   require("custom.utils").open_github_repo()
 end, { desc = "Open Github repo" })
+
+map({ "n", "t" }, "<A-t>", "<cmd>Lspsaga term_toggle<CR>")

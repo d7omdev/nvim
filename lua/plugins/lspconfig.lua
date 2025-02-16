@@ -82,6 +82,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     opts = function()
       local Keys = require("lazyvim.plugins.lsp.keymaps").get()
       vim.list_extend(Keys, {
