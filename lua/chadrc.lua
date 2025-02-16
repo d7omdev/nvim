@@ -3,14 +3,11 @@ vim.api.nvim_set_hl(0, "St_macro_recording", {
   bg = vim.fn.synIDattr(vim.fn.hlID("StatusLine"), "bg#"),
   bold = true,
 })
-
 local utils = require("nvchad.stl.utils")
-
 local sep_icons = utils.separators
 local separators = (type("default") == "table" and "default") or sep_icons["default"]
-
 local sep_l = separators["left"]
-local sep_r = separators["right"]
+
 local options = {
 
   base46 = {
@@ -120,4 +117,5 @@ vim.keymap.set("n", "<leader>tp", "<cmd>lua require('nvchad.themes').open() <CR>
 vim.keymap.set("n", "<leader>cN", require("nvchad.lsp.renamer"), { desc = "Nvchad Rename" })
 
 local status, chadrc = pcall(require, "chadrc")
-return vim.tbl_deep_extend("force", options, status and chadrc or {})
+vim.tbl_deep_extend("force", options, status and chadrc or {})
+return options

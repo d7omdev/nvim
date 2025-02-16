@@ -11,6 +11,7 @@ return {
         },
       },
     },
+    image = { enabled = true },
     profiler = { enabled = true },
     picker = {
       layout = {
@@ -134,8 +135,14 @@ return {
     statuscolumn = { enabled = true },
     words = { enabled = true },
     styles = {
+      ---@diagnostic disable-next-line: missing-fields
       notification = {
+        border = "single",
         wo = { wrap = false }, -- Wrap notifications
+      },
+      ---@diagnostic disable-next-line: missing-fields
+      notification_history = {
+        border = "single",
       },
     },
   },

@@ -1,6 +1,9 @@
 return {
   {
     "d7omdev/windows.nvim",
+    enabled = function()
+      return not vim.tbl_contains({ "snacks_terminal" }, vim.bo.filetype)
+    end,
     dependencies = { "anuvyklack/middleclass", "anuvyklack/animation.nvim" },
     config = function()
       vim.o.winwidth = 100

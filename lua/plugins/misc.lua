@@ -14,7 +14,7 @@ return {
     config = function()
       vim.g.suda_smart_edit = 1
       -- Expand 'ss' into 'SudaWrite' in the command line
-      vim.cmd([[cab ss SudaWrite]])
+      vim.cmd([[cab ss SudaWrite<CR>]])
     end,
   },
   { "nvchad/volt", lazy = true },
@@ -87,9 +87,6 @@ return {
         delete_debug_prints = "DeleteDebugPrints",
       },
     },
-    dependencies = {
-      "echasnovski/mini.nvim",
-    },
     version = "*",
   },
 
@@ -98,7 +95,6 @@ return {
     event = "VeryLazy",
     dependencies = {
       "stevearc/dressing.nvim",
-      "nvim-telescope/telescope.nvim",
     },
     cmd = "Nerdy",
   },
