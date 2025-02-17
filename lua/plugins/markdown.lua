@@ -27,7 +27,7 @@ return {
           if not configs.mpls then
             configs.mpls = {
               default_config = {
-                cmd = { "mpls", "--dark-mode", "--enable-emoji" },
+                cmd = { "mpls", "--dark-mode", "--enable-emoji", "--no-auto", "--full-sync", "--port", "8989" },
                 filetypes = { "markdown" },
                 single_file_support = true,
                 root_dir = function(startpath)

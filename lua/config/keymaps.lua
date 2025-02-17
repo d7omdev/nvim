@@ -137,7 +137,7 @@ require("quicker").setup({
       end,
       opts("Collapse quickfix context"),
     },
-   },
+  },
 })
 
 -- Use dressing (or mini.pick) for spelling suggestions.
@@ -150,3 +150,13 @@ map("n", "<leader>gp", function()
 end, { desc = "Open Github repo" })
 
 map({ "n", "t" }, "<A-t>", "<cmd>Lspsaga term_toggle<CR>")
+
+map("n", "<leader>mp", function()
+  local filetype = vim.bo.filetype
+  if filetype == "markdown" then
+    local cmd = "xdg-open http://localhost:8989"
+    vim.fn.system(cmd)
+  else
+    vim.notify("This is not a markdown file!", "warn")
+  end
+end, { desc = "Markdown preview" })
