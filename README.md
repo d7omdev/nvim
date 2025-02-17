@@ -1,13 +1,9 @@
 # Neovim Configuration
 
-![nvim-screenshot](README-img/nvim-screenshot.png)
 This repository contains my personal Neovim configuration.
 
-## Keybindings
-
-The configuration uses the [WhichKey](https://github.com/folke/which-key.nvim) plugin for keybinding management.
-The `<leader>` key is mapped to `Space`.
-For _cheat sheet_, press `<leader>` + `cH`.
+![Dashvoard](./README-img/dash-img.png)
+![Window](./README-img/window-img.png)
 
 ## Installation
 
@@ -22,5 +18,3 @@ Then, open Neovim and let the magic Happen!.
 ```bash
 nvim
 ```
-
-Enjoy your Neovim experience!

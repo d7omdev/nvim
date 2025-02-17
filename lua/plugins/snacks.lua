@@ -200,7 +200,7 @@ opts.styles = {
 -- Scroll Configuration
 -- ===============================
 opts.scroll = {
-  enabled = true,
+  enabled = false,
 }
 
 -- ===============================

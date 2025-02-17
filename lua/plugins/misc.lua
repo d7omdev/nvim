@@ -167,9 +167,9 @@ return {
         dir_path = function()
           return vim.fn.expand("%:t:r") .. "-img"
         end,
-        prompt_for_file_name = false, ---@type boolean
+        prompt_for_file_name = true, ---@type boolean
         file_name = "%Y-%m-%d-at-%H-%M-%S", ---@type string
-        process_cmd = "convert - -quality 75 -resize 50% png:-", ---@type string
+        process_cmd = "convert - png:-", ---@type string
       },
       filetypes = {
         markdown = {

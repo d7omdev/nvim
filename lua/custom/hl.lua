@@ -1,6 +1,6 @@
 local M = {}
 
-vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#6F737B", bg = "#1B1F27" })
+vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#6F737B", bg = Snacks.util.color("Normal", "bg") })
 -- vim.api.nvim_set_hl(0, "SnacksPickerInputBorder", { fg = "#6F737B", bg = "#252931" })
 
 local highlight_maps = {
@@ -112,6 +112,7 @@ local highlight_maps = {
 
   misc = {
     ["SagaBorder"] = "@symbol",
+    ["MiniPickBorder"] = "TelescopeBorder",
   },
 }
 
