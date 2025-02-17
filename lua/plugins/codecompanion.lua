@@ -37,14 +37,36 @@ return {
             llm = "  Copilot ",
             user = "  D7OM ",
           },
-        },
-        inline = {
-          adapter = "copilot",
-        },
-        agent = {
-          adapter = "copilot",
+          slash_commands = {
+            ["buffer"] = {
+              opts = {
+                contains_code = true,
+                provider = "mini_pick",
+              },
+            },
+            ["file"] = {
+              opts = {
+                contains_code = true,
+                max_lines = 1000,
+                provider = "mini_pick",
+              },
+            },
+            ["help"] = {
+              opts = {
+                contains_code = false,
+                provider = "mini_pick",
+              },
+            },
+          },
         },
       },
+      inline = {
+        adapter = "copilot",
+      },
+      agent = {
+        adapter = "copilot",
+      },
+
       keymaps = {
         close = {
           modes = {
@@ -56,18 +78,7 @@ return {
           description = "Close Chat",
         },
       },
-      slash_commands = {
-        ["buffer"] = {
-          opts = {
-            provider = "fzf_lua", -- default|telescope|mini_pick|fzf_lua
-          },
-        },
-        ["file"] = {
-          opts = {
-            provider = "fzf_lua", -- telescope|mini_pick|fzf_lua
-          },
-        },
-      },
+
       -- PROMPTS ------------------------------------------------------
       prompt_library = {
         ["Fix code"] = {

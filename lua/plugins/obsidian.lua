@@ -1,6 +1,6 @@
 return {
   "epwalsh/obsidian.nvim",
-  lazy = true,
+  lazy = false,
   opts = {
     -- A list of workspace names, paths, and configuration overrides.
     -- If you use the Obsidian app, the 'path' of a workspace should generally be

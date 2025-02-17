@@ -179,6 +179,28 @@ opts.styles = {
   notification_history = {
     border = "single",
   },
+  input = {
+    backdrop = false,
+    position = "float",
+    border = "single",
+    height = 1,
+    width = 40,
+    relative = "cursor",
+    row = -3,
+    col = 1,
+    b = {
+      completion = false,
+    },
+  },
+}
+
+-- scroll conf
+
+-- ===============================
+-- Scroll Configuration
+-- ===============================
+opts.scroll = {
+  enabled = true,
 }
 
 -- ===============================

@@ -165,10 +165,37 @@ function M.setup_highlights()
   end
 end
 
--- Set up autocmd to ensure it runs on VimEnter as well
 vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = "*",
   callback = M.setup_highlights,
 })
+-- ========================
+-- Custom highlights
+-- ========================
+
+function M.set_hl(group, fg, bg, opts)
+  opts = opts or {}
+  opts.fg = fg
+  opts.bg = bg
+  vim.api.nvim_set_hl(0, group, opts)
+end
+
+M.statusline_bg = Snacks.util.color("StatusLine", "bg")
+M.emptyspace_bg = Snacks.util.color("St_EmptySpace", "bg")
+
+M.highlights = {
+  St_macro_recording = { fg = "#CA6169", bg = M.statusline_bg, opts = { bold = true } },
+  Updates = { fg = "#56B6C2", bg = M.emptyspace_bg },
+  St_Updates_Icon = { fg = M.statusline_bg, bg = "#56B6C2" },
+  St_Updates_sep = { fg = "#56B6C2", bg = M.statusline_bg },
+}
+
+function M.apply_highlights()
+  for group, hl in pairs(M.highlights) do
+    M.set_hl(group, hl.fg, hl.bg, hl.opts)
+  end
+end
+
+M.apply_highlights()
 
 return M

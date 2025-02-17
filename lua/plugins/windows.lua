@@ -2,9 +2,7 @@ return {
   {
     "d7omdev/windows.nvim",
     event = "BufRead",
-    enabled = function()
-      return not vim.tbl_contains({ "snacks_terminal" }, vim.bo.filetype)
-    end,
+    enabled = false,
     dependencies = { "anuvyklack/middleclass", "anuvyklack/animation.nvim" },
     config = function()
       vim.o.winwidth = 100
