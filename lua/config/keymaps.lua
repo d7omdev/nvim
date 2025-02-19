@@ -35,9 +35,13 @@ map("n", "QQ", "<cmd>bufdo bd<CR>", opts("Quit all buffers"))
 
 -- Delete without copying to register
 map("v", "<Del>", '"_d', opts("Delete without yanking"))
+
+map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
+
+-- ==================
 -- Plugins Keymaps
--- DBUI
--- map("n", "<leader>DB", ":tabnew | DBUI<CR>", opts("Open DBUI"))
+-- ==================
 
 -- Lspsaga
 map("n", "<S-r>", "<cmd>Lspsaga hover_doc<CR>", opts("Show hover doc"))

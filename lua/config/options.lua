@@ -5,7 +5,6 @@ local opt = vim.opt
 
 vim.g.lazygit_config = true
 vim.g.node_host_prog = "$HOME/.bun/bin/neovim-node-host"
-vim.b.is_lspsaga_hover = false
 
 opt.laststatus = 3
 

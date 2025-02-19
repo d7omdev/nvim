@@ -170,6 +170,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = "*",
   callback = M.setup_highlights,
 })
+
 -- ========================
 -- Custom highlights
 -- ========================
@@ -184,16 +185,21 @@ end
 M.statusline_bg = Snacks.util.color("StatusLine", "bg")
 M.emptyspace_bg = Snacks.util.color("St_EmptySpace", "bg")
 
+local colors = dofile(vim.g.base46_cache .. "colors")
+
 M.highlights = {
   St_macro_recording = { fg = "#CA6169", bg = M.statusline_bg, opts = { bold = true } },
-  Updates = { fg = "#56B6C2", bg = M.emptyspace_bg },
-  St_Updates_Icon = { fg = M.statusline_bg, bg = "#56B6C2" },
-  St_Updates_sep = { fg = "#56B6C2", bg = M.statusline_bg },
+  Updates = { fg = colors.teal, bg = M.emptyspace_bg },
+  St_Updates_Icon = { fg = M.statusline_bg, bg = colors.teal },
+  St_Updates_sep = { fg = colors.teal, bg = M.statusline_bg },
 }
 
 function M.apply_highlights()
   for group, hl in pairs(M.highlights) do
     M.set_hl(group, hl.fg, hl.bg, hl.opts)
+  end
+  if require("lazy.status").has_updates() then
+    require("nvchad").base46.hl_override.St_cwd_sep = { bg = Snacks.util.color("St_EmptySpace", "bg") }
   end
 end
 

@@ -100,6 +100,7 @@ return {
   },
   {
     "smoka7/multicursors.nvim",
+    enabled = false,
     event = "BufRead",
     dependencies = {
       "smoka7/hydra.nvim",

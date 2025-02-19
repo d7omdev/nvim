@@ -87,7 +87,7 @@ return {
       local date = os.date("*t")
       -- Format the date as year-month-day
       local date_str = string.format("%02d-%02d-%02d", date.year % 100, date.month, date.day)
-      return date_str .. "-" .. suffix
+      return suffix .. "-" .. date_str
     end,
 
     -- Optional, customize how note file names are generated given the ID, target directory, and title.

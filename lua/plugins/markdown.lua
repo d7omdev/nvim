@@ -46,17 +46,6 @@ live preview of markdown files in your browser while you edit them in your favor
           end
 
           lspconfig.mpls.setup(opts)
-
-          -- Add keybinding to manually start the MPLS LSP
-          vim.keymap.set("n", "<leader>lm", function()
-            if not vim.lsp.get_clients({ name = "mpls" })[1] then
-              vim.cmd("LspStart mpls")
-              print("MPLS started")
-            else
-              vim.cmd("LspStop mpls")
-              print("MPLS stopped")
-            end
-          end, { desc = "Toggle MPLS LSP" })
         end,
       },
     },
