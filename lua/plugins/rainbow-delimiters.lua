@@ -40,7 +40,7 @@ return {
         "RainbowRed",
         "RainbowYellow",
         "RainbowBlue",
-        "RainbowOrange",
+        -- "RainbowOrange",
         "RainbowGreen",
         "RainbowViolet",
         "RainbowCyan",

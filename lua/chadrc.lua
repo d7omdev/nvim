@@ -7,12 +7,12 @@ local lazy_status = require("lazy.status")
 
 local options = {
   base46 = {
-    theme = "monochrome", -- default theme
+    theme = "gruvchad", -- default theme
     hl_add = {},
     integrations = {},
     changed_themes = {},
     transparency = false,
-    theme_toggle = { "monochrome", "catppuccin" },
+    theme_toggle = { "gruvchad", "catppuccin" },
     hl_override = {},
   },
 }

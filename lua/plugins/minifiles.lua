@@ -167,7 +167,7 @@ return {
         ["UU"] = { symbol = "⇄", hlGroup  = "MiniDiffSignAdd"   }, -- file is unmerged
         ["UA"] = { symbol = "⊕", hlGroup  = "MiniDiffSignAdd"   }, -- file is unmerged and added in working tree
         ["??"] = { symbol = "?", hlGroup  = "MiniDiffSignDelete"}, -- Untracked files
-        ["!!"] = { symbol = "", hlGroup  = "Comment"}, -- Ignored files
+        ["!!"] = { symbol = "", hlGroup  = "Comment"}, -- Ignored files
         -- stylua: ignore end
       }
 
@@ -210,15 +210,15 @@ return {
 
           if status then
             local symbol, hlGroup = mapSymbols(status)
-            vim.api.nvim_buf_set_extmark(buf_id, nsMiniFiles, i - 1, 0, {
-              -- NOTE: if you want the signs on the right uncomment those and comment
-              -- the 3 lines after
-              -- virt_text = { { symbol, hlGroup } },
-              -- virt_text_pos = "right_align",
-              sign_text = symbol,
-              sign_hl_group = hlGroup,
-              priority = 2,
-            })
+            if status == "!!" then
+              vim.api.nvim_buf_add_highlight(buf_id, nsMiniFiles, "Comment", i - 1, 0, -1)
+            else
+              vim.api.nvim_buf_set_extmark(buf_id, nsMiniFiles, i - 1, 0, {
+                virt_text = { { symbol, hlGroup } },
+                virt_text_pos = "eol",
+                priority = 2,
+              })
+            end
           else
           end
         end
