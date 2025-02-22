@@ -1,7 +1,7 @@
 local M = {}
 
-vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#6F737B", bg = Snacks.util.color("Normal", "bg") })
--- vim.api.nvim_set_hl(0, "SnacksPickerInputBorder", { fg = "#6F737B", bg = "#252931" })
+vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#242728", bg = "#242728" })
+vim.api.nvim_set_hl(0, "SnacksPickerInputBorder", { fg = Snacks.util.color("Normal", "bg"), bg = "#242728" })
 
 local highlight_maps = {
   -- Basic mappings
@@ -87,7 +87,7 @@ local highlight_maps = {
   snacksPicker = {
     ["SnacksPickerBorder"] = "TelescopeBorder",
     ["SnacksPickerInput"] = "TelescopePromptNormal",
-    ["SnacksPickerInputBorder"] = "TelescopePromptBorder",
+    -- ["SnacksPickerInputBorder"] = "TelescopePromptBorder",
     -- ["SnacksPickerBoxBorder"] = "TelescopeBorder",
     ["SnacksPickerTitle"] = "TelescopePromptTitle",
     ["SnacksPickerBoxTitle"] = "TelescopePromptTitle",
@@ -204,5 +204,12 @@ function M.apply_highlights()
 end
 
 M.apply_highlights()
+
+M.RefreshHighlights = function()
+  M.apply_highlights()
+  M.setup_highlights()
+
+  vim.cmd("doautocmd ColorScheme")
+end
 
 return M

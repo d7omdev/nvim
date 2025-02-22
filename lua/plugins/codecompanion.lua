@@ -41,20 +41,20 @@ return {
             ["buffer"] = {
               opts = {
                 contains_code = true,
-                provider = "mini_pick",
+                provider = "default",
               },
             },
             ["file"] = {
               opts = {
                 contains_code = true,
                 max_lines = 1000,
-                provider = "mini_pick",
+                provider = "default",
               },
             },
             ["help"] = {
               opts = {
                 contains_code = false,
-                provider = "mini_pick",
+                provider = "default",
               },
             },
           },

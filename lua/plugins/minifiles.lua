@@ -1,26 +1,15 @@
 return {
   "echasnovski/mini.files",
   opts = {
-    -- I didn't like the default mappings, so I modified them
-    -- Module mappings created only inside explorer.
-    -- Use `''` (empty string) to not create one.
     mappings = {
       close = "q",
-      -- Use this if you want to open several files
       go_in = "l",
-      -- This opens the file, but quits out of mini.files (default L)
       go_in_plus = "<CR>",
-      -- I swapped the following 2 (default go_out: h)
-      -- go_out_plus: when you go out, it shows you only 1 item to the right
-      -- go_out: shows you all the items to the right
       go_out = "H",
       go_out_plus = "h",
-      -- Default <BS>
       reset = ",",
-      -- Default @
       reveal_cwd = ".",
       show_help = "g?",
-      -- Default =
       synchronize = "s",
       trim_left = "<",
       trim_right = ">",
@@ -31,12 +20,7 @@ return {
       width_preview = 60,
     },
     options = {
-      -- Whether to use for editing directories
-      -- Disabled by default in LazyVim because neo-tree is used for that
       use_as_default_explorer = true,
-      -- If set to false, files are moved to the trash directory
-      -- To get this dir run :echo stdpath('data')
-      -- ~/.local/share/neobean/mini.files/trash
       permanent_delete = false,
     },
   },
@@ -57,20 +41,204 @@ return {
     },
   },
   config = function(_, opts)
+    -- Initialize Git status integration first
+    local nsMiniFiles = vim.api.nvim_create_namespace("mini_files_git")
+    local autocmd = vim.api.nvim_create_autocmd
+    local _, MiniFiles = pcall(require, "mini.files")
+
+    -- Initialize cache before it's used
+    local gitStatusCache = {}
+    local cacheTimeout = 2000 -- Cache timeout in milliseconds
+
+    -- State management for visibility toggles - both start as false (hidden)
+    local show_dotfiles = false
+    local show_ignored = false
+
+    -- Define mapSymbols function in proper scope
+    local function mapSymbols(status)
+      local statusMap = {
+        [" M"] = { symbol = "󰦒", hlGroup = "MiniDiffSignChange" },
+        ["M "] = { symbol = "•", hlGroup = "MiniDiffSignChange" },
+        ["MM"] = { symbol = "≠", hlGroup = "MiniDiffSignChange" },
+        ["A "] = { symbol = "+", hlGroup = "MiniDiffSignAdd" },
+        ["AA"] = { symbol = "≈", hlGroup = "MiniDiffSignAdd" },
+        ["D "] = { symbol = "-", hlGroup = "MiniDiffSignDelete" },
+        ["AM"] = { symbol = "⊕", hlGroup = "MiniDiffSignChange" },
+        ["AD"] = { symbol = "-•", hlGroup = "MiniDiffSignChange" },
+        ["R "] = { symbol = "→", hlGroup = "MiniDiffSignChange" },
+        ["U "] = { symbol = "‖", hlGroup = "MiniDiffSignChange" },
+        ["UU"] = { symbol = "⇄", hlGroup = "MiniDiffSignAdd" },
+        ["UA"] = { symbol = "⊕", hlGroup = "MiniDiffSignAdd" },
+        ["??"] = { symbol = "?", hlGroup = "MiniDiffSignDelete" },
+        ["!!"] = { symbol = "", hlGroup = "Comment" },
+      }
+
+      local result = statusMap[status] or { symbol = "?", hlGroup = "NonText" }
+      return result.symbol, result.hlGroup
+    end
+
+    -- Filter functions that use the cache
+    local function is_ignored(fs_entry)
+      if not gitStatusCache then
+        return false
+      end
+
+      local cwd = vim.fn.getcwd()
+      if not gitStatusCache[cwd] then
+        return false
+      end
+
+      local relative_path = fs_entry.path:gsub("^" .. vim.fn.escape(cwd, "%-%.%+%[%]%(%)%$%^") .. "/", "")
+      return gitStatusCache[cwd].statusMap and gitStatusCache[cwd].statusMap[relative_path] == "!!"
+    end
+
+    local function filter_entries(fs_entry)
+      local is_dot = vim.startswith(fs_entry.name, ".")
+      local is_ignored_file = is_ignored(fs_entry)
+
+      return (not is_dot or show_dotfiles) and (not is_ignored_file or show_ignored)
+    end
+
+    -- Add the filter to the initial setup options
+    opts.content = {
+      filter = filter_entries,
+    }
+
+    -- Now set up mini.files with the modified opts
     require("mini.files").setup(opts)
 
-    local show_dotfiles = true
-    local filter_show = function(fs_entry)
-      return true
-    end
-    local filter_hide = function(fs_entry)
-      return not vim.startswith(fs_entry.name, ".")
+    local function fetchGitStatus(cwd, callback)
+      local function on_exit(content)
+        if content.code == 0 then
+          callback(content.stdout)
+        end
+      end
+      vim.system({ "git", "status", "--ignored", "--porcelain" }, { text = true, cwd = cwd }, on_exit)
     end
 
+    local function escapePattern(str)
+      return str:gsub("([%^%$%(%)%%%.%[%]%*%+%-%?])", "%%%1")
+    end
+
+    local function updateMiniWithGit(buf_id, gitStatusMap)
+      vim.schedule(function()
+        if not vim.api.nvim_buf_is_valid(buf_id) then
+          return
+        end
+
+        local nlines = vim.api.nvim_buf_line_count(buf_id)
+        local cwd = vim.fn.getcwd()
+        local escapedcwd = escapePattern(cwd)
+        if vim.fn.has("win32") == 1 then
+          escapedcwd = escapedcwd:gsub("\\", "/")
+        end
+
+        -- Clear existing highlights
+        vim.api.nvim_buf_clear_namespace(buf_id, nsMiniFiles, 0, -1)
+
+        for i = 1, nlines do
+          local entry = MiniFiles.get_fs_entry(buf_id, i)
+          if not entry then
+            break
+          end
+          local relativePath = entry.path:gsub("^" .. escapedcwd .. "/", "")
+          local status = gitStatusMap[relativePath]
+
+          if status then
+            local symbol, hlGroup = mapSymbols(status)
+            if status == "!!" then
+              -- Apply Comment highlight to the whole line
+              vim.api.nvim_buf_add_highlight(buf_id, nsMiniFiles, "Comment", i - 1, 0, -1)
+
+              -- Add the symbol at EOL
+              vim.api.nvim_buf_set_extmark(buf_id, nsMiniFiles, i - 1, 0, {
+                virt_text = { { symbol, "Comment" } },
+                virt_text_pos = "eol",
+                priority = 2,
+                hl_mode = "combine",
+              })
+            else
+              vim.api.nvim_buf_set_extmark(buf_id, nsMiniFiles, i - 1, 0, {
+                virt_text = { { symbol, hlGroup } },
+                virt_text_pos = "eol",
+                priority = 2,
+                hl_mode = "combine",
+              })
+            end
+          end
+        end
+      end)
+    end
+
+    local function parseGitStatus(content)
+      local gitStatusMap = {}
+      for line in content:gmatch("[^\r\n]+") do
+        local status, filePath = string.match(line, "^(..)%s+(.*)")
+        local parts = {}
+        for part in filePath:gmatch("[^/]+") do
+          table.insert(parts, part)
+        end
+
+        local currentPath = ""
+        for i, part in ipairs(parts) do
+          if i == 1 then
+            currentPath = part
+          else
+            currentPath = currentPath .. "/" .. part
+          end
+          -- For ignored items, propagate !! status to all parent directories
+          if status == "!!" then
+            gitStatusMap[currentPath] = status
+          end
+          -- For the actual file/folder itself
+          if i == #parts then
+            gitStatusMap[currentPath] = status
+          end
+        end
+      end
+      return gitStatusMap
+    end
+
+    local function is_valid_git_repo()
+      if vim.fn.isdirectory(".git") == 0 then
+        return false
+      end
+      return true
+    end
+
+    -- Toggle functions
     local toggle_dotfiles = function()
       show_dotfiles = not show_dotfiles
-      local new_filter = show_dotfiles and filter_show or filter_hide
-      require("mini.files").refresh({ content = { filter = new_filter } })
+      require("mini.files").refresh({ content = { filter = filter_entries } })
+    end
+
+    local toggle_ignored = function()
+      show_ignored = not show_ignored
+      require("mini.files").refresh({ content = { filter = filter_entries } })
+    end
+
+    local function updateGitStatus(buf_id)
+      if not is_valid_git_repo() then
+        return
+      end
+      local cwd = vim.fn.expand("%:p:h")
+      local currentTime = os.time()
+      if gitStatusCache[cwd] and currentTime - gitStatusCache[cwd].time < cacheTimeout then
+        updateMiniWithGit(buf_id, gitStatusCache[cwd].statusMap)
+      else
+        fetchGitStatus(cwd, function(content)
+          local gitStatusMap = parseGitStatus(content)
+          gitStatusCache[cwd] = {
+            time = currentTime,
+            statusMap = gitStatusMap,
+          }
+          updateMiniWithGit(buf_id, gitStatusMap)
+        end)
+      end
+    end
+
+    local function clearCache()
+      gitStatusCache = {}
     end
 
     local map_split = function(buf_id, lhs, direction, close_on_file)
@@ -103,29 +271,26 @@ return {
       end
     end
 
+    -- Set up autocmds
+    local function augroup(name)
+      return vim.api.nvim_create_augroup("MiniFiles_" .. name, { clear = true })
+    end
+
     vim.api.nvim_create_autocmd("User", {
       pattern = "MiniFilesBufferCreate",
       callback = function(args)
         local buf_id = args.data.buf_id
 
-        vim.keymap.set(
-          "n",
-          opts.mappings and opts.mappings.toggle_hidden or "g.",
-          toggle_dotfiles,
-          { buffer = buf_id, desc = "Toggle hidden files" }
-        )
+        vim.keymap.set("n", "g.", toggle_dotfiles, { buffer = buf_id, desc = "Toggle hidden files" })
 
-        vim.keymap.set(
-          "n",
-          opts.mappings and opts.mappings.change_cwd or "gc",
-          files_set_cwd,
-          { buffer = args.data.buf_id, desc = "Set cwd" }
-        )
+        vim.keymap.set("n", "gi", toggle_ignored, { buffer = buf_id, desc = "Toggle ignored files" })
 
-        map_split(buf_id, opts.mappings and opts.mappings.go_in_horizontal or "<C-e>s", "horizontal", false)
-        map_split(buf_id, opts.mappings and opts.mappings.go_in_vertical or "<C-e>v", "vertical", false)
-        map_split(buf_id, opts.mappings and opts.mappings.go_in_horizontal_plus or "<C-w>S", "horizontal", true)
-        map_split(buf_id, opts.mappings and opts.mappings.go_in_vertical_plus or "<C-w>V", "vertical", true)
+        vim.keymap.set("n", "gc", files_set_cwd, { buffer = buf_id, desc = "Set cwd" })
+
+        map_split(buf_id, "<C-e>s", "horizontal", false)
+        map_split(buf_id, "<C-e>v", "vertical", false)
+        map_split(buf_id, "<C-w>S", "horizontal", true)
+        map_split(buf_id, "<C-w>V", "vertical", true)
       end,
     })
 
@@ -136,168 +301,10 @@ return {
       end,
     })
 
-    ---------------------------------------------------------------------------
-    ---------------------------------------------------------------------------
-
-    -- -- All of the section below is to show the git status on files found here
-    -- -- https://www.reddit.com/r/neovim/comments/1c37m7c/is_there_a_way_to_get_the_minifiles_plugin_to/
-    -- -- Which points to
-    -- -- https://gist.github.com/bassamsdata/eec0a3065152226581f8d4244cce9051#file-notes-md
-    local nsMiniFiles = vim.api.nvim_create_namespace("mini_files_git")
-    local autocmd = vim.api.nvim_create_autocmd
-    local _, MiniFiles = pcall(require, "mini.files")
-
-    -- Cache for git status
-    local gitStatusCache = {}
-    local cacheTimeout = 2000 -- Cache timeout in milliseconds
-
-    local function mapSymbols(status)
-      local statusMap = {
-        -- stylua: ignore start
-        [" M"] = { symbol = "󰦒", hlGroup  = "MiniDiffSignChange"}, -- Modified in the working directory
-        ["M "] = { symbol = "•", hlGroup  = "MiniDiffSignChange"}, -- modified in index
-        ["MM"] = { symbol = "≠", hlGroup  = "MiniDiffSignChange"}, -- modified in both working tree and index
-        ["A "] = { symbol = "+", hlGroup  = "MiniDiffSignAdd"   }, -- Added to the staging area, new file
-        ["AA"] = { symbol = "≈", hlGroup  = "MiniDiffSignAdd"   }, -- file is added in both working tree and index
-        ["D "] = { symbol = "-", hlGroup  = "MiniDiffSignDelete"}, -- Deleted from the staging area
-        ["AM"] = { symbol = "⊕", hlGroup  = "MiniDiffSignChange"}, -- added in working tree, modified in index
-        ["AD"] = { symbol = "-•", hlGroup = "MiniDiffSignChange"}, -- Added in the index and deleted in the working directory
-        ["R "] = { symbol = "→", hlGroup  = "MiniDiffSignChange"}, -- Renamed in the index
-        ["U "] = { symbol = "‖", hlGroup  = "MiniDiffSignChange"}, -- Unmerged path
-        ["UU"] = { symbol = "⇄", hlGroup  = "MiniDiffSignAdd"   }, -- file is unmerged
-        ["UA"] = { symbol = "⊕", hlGroup  = "MiniDiffSignAdd"   }, -- file is unmerged and added in working tree
-        ["??"] = { symbol = "?", hlGroup  = "MiniDiffSignDelete"}, -- Untracked files
-        ["!!"] = { symbol = "", hlGroup  = "Comment"}, -- Ignored files
-        -- stylua: ignore end
-      }
-
-      local result = statusMap[status] or { symbol = "?", hlGroup = "NonText" }
-      return result.symbol, result.hlGroup
-    end
-
-    ---@param cwd string
-    ---@param callback function
-    local function fetchGitStatus(cwd, callback)
-      local function on_exit(content)
-        if content.code == 0 then
-          callback(content.stdout)
-          vim.g.content = content.stdout
-        end
-      end
-      vim.system({ "git", "status", "--ignored", "--porcelain" }, { text = true, cwd = cwd }, on_exit)
-    end
-
-    local function escapePattern(str)
-      return str:gsub("([%^%$%(%)%%%.%[%]%*%+%-%?])", "%%%1")
-    end
-
-    local function updateMiniWithGit(buf_id, gitStatusMap)
-      vim.schedule(function()
-        local nlines = vim.api.nvim_buf_line_count(buf_id)
-        local cwd = vim.fn.getcwd() --  vim.fn.expand("%:p:h")
-        local escapedcwd = escapePattern(cwd)
-        if vim.fn.has("win32") == 1 then
-          escapedcwd = escapedcwd:gsub("\\", "/")
-        end
-
-        for i = 1, nlines do
-          local entry = MiniFiles.get_fs_entry(buf_id, i)
-          if not entry then
-            break
-          end
-          local relativePath = entry.path:gsub("^" .. escapedcwd .. "/", "")
-          local status = gitStatusMap[relativePath]
-
-          if status then
-            local symbol, hlGroup = mapSymbols(status)
-            if status == "!!" then
-              vim.api.nvim_buf_add_highlight(buf_id, nsMiniFiles, "Comment", i - 1, 0, -1)
-            else
-              vim.api.nvim_buf_set_extmark(buf_id, nsMiniFiles, i - 1, 0, {
-                virt_text = { { symbol, hlGroup } },
-                virt_text_pos = "eol",
-                priority = 2,
-              })
-            end
-          else
-          end
-        end
-      end)
-    end
-
-    local function is_valid_git_repo()
-      if vim.fn.isdirectory(".git") == 0 then
-        return false
-      end
-      return true
-    end
-
-    -- Thanks for the idea of gettings https://github.com/refractalize/oil-git-status.nvim signs for dirs
-    local function parseGitStatus(content)
-      local gitStatusMap = {}
-      -- lua match is faster than vim.split (in my experience )
-      for line in content:gmatch("[^\r\n]+") do
-        local status, filePath = string.match(line, "^(..)%s+(.*)")
-        -- Split the file path into parts
-        local parts = {}
-        for part in filePath:gmatch("[^/]+") do
-          table.insert(parts, part)
-        end
-        -- Start with the root directory
-        local currentKey = ""
-        for i, part in ipairs(parts) do
-          if i > 1 then
-            -- Concatenate parts with a separator to create a unique key
-            currentKey = currentKey .. "/" .. part
-          else
-            currentKey = part
-          end
-          -- If it's the last part, it's a file, so add it with its status
-          if i == #parts then
-            gitStatusMap[currentKey] = status
-          else
-            -- If it's not the last part, it's a directory. Check if it exists, if not, add it.
-            if not gitStatusMap[currentKey] then
-              gitStatusMap[currentKey] = status
-            end
-          end
-        end
-      end
-      return gitStatusMap
-    end
-
-    local function updateGitStatus(buf_id)
-      if not is_valid_git_repo() then
-        return
-      end
-      local cwd = vim.fn.expand("%:p:h")
-      local currentTime = os.time()
-      if gitStatusCache[cwd] and currentTime - gitStatusCache[cwd].time < cacheTimeout then
-        updateMiniWithGit(buf_id, gitStatusCache[cwd].statusMap)
-      else
-        fetchGitStatus(cwd, function(content)
-          local gitStatusMap = parseGitStatus(content)
-          gitStatusCache[cwd] = {
-            time = currentTime,
-            statusMap = gitStatusMap,
-          }
-          updateMiniWithGit(buf_id, gitStatusMap)
-        end)
-      end
-    end
-
-    local function clearCache()
-      gitStatusCache = {}
-    end
-
-    local function augroup(name)
-      return vim.api.nvim_create_augroup("MiniFiles_" .. name, { clear = true })
-    end
-
+    -- Set up git status autocmds
     autocmd("User", {
       group = augroup("start"),
       pattern = "MiniFilesExplorerOpen",
-      -- pattern = { "minifiles" },
       callback = function()
         local bufnr = vim.api.nvim_get_current_buf()
         updateGitStatus(bufnr)
