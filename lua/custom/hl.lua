@@ -1,7 +1,9 @@
+local isTransparent = require("custom.utils").is_transparent_theme()
+
 local M = {}
 
-vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#242728", bg = "#242728" })
-vim.api.nvim_set_hl(0, "SnacksPickerInputBorder", { fg = Snacks.util.color("Normal", "bg"), bg = "#242728" })
+-- vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#242728", bg = "#242728" })
+vim.api.nvim_set_hl(0, "SnacksPickerInputBorder", { fg = "#242728", bg = "#242728" })
 
 local highlight_maps = {
   -- Basic mappings
@@ -164,10 +166,18 @@ function M.setup_highlights()
     local cmp_hl = string.format("CmpItemKind%s", kind)
     vim.cmd(string.format("hi! link %s %s", blink_hl, cmp_hl))
   end
+
+  if isTransparent then
+    vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "NONE" })
+    vim.api.nvim_set_hl(0, "TbBufOn", { bg = "#1E2122" })
+    vim.api.nvim_set_hl(0, "TbBufOnClose", { bg = "#1E2122", fg = "#CA6169" })
+    vim.api.nvim_set_hl(0, "SnacksPickerInputBorder", { fg = "NONE", bg = "NONE" })
+    vim.api.nvim_set_hl(0, "St_Updates_Icon", { bg = "NONE" })
+  end
 end
 
-vim.api.nvim_create_autocmd("ColorScheme", {
-  pattern = "*",
+vim.api.nvim_create_autocmd({ "ColorScheme", "User", "BufWritePost" }, {
+  pattern = { "*", "NvThemeReload" },
   callback = M.setup_highlights,
 })
 

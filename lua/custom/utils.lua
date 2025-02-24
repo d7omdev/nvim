@@ -28,4 +28,8 @@ function M.open_github_repo()
   vim.fn.jobstart({ "xdg-open", url }, { detach = true })
 end
 
+M.is_transparent_theme = function()
+  return require("nvconfig").base46.transparency
+end
+
 return M

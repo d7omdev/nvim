@@ -11,7 +11,7 @@ local options = {
     hl_add = {},
     integrations = {},
     changed_themes = {},
-    transparency = false,
+    transparency = true,
     theme_toggle = { "gruvchad", "catppuccin" },
     hl_override = {},
   },
@@ -119,11 +119,15 @@ options.colorify = {
 }
 
 -- Keybindings
-vim.keymap.set("n", "<leader>cH", "<cmd> NvCheatsheet <CR>", { desc = "Mapping cheatsheet" })
-vim.keymap.set("n", "<leader>tp", function()
+local map = vim.keymap.set
+map("n", "<leader>cH", "<cmd> NvCheatsheet <CR>", { desc = "Mapping cheatsheet" })
+map("n", "<leader>tp", function()
   require("nvchad.themes").open()
 end, { desc = "Theme picker" })
-vim.keymap.set("n", "<leader>cN", require("nvchad.lsp.renamer"), { desc = "Nvchad Rename" })
+map("n", "<leader>cN", require("nvchad.lsp.renamer"), { desc = "Nvchad Rename" })
+map("n", "<leader>tT", function()
+  require("base46").toggle_transparency()
+end, { desc = "Toggle transparency" })
 
 -- Merge with external config if exists
 local status, chadrc = pcall(require, "chadrc")

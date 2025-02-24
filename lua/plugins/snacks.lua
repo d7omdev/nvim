@@ -56,7 +56,7 @@ opts.picker = {
         box = "vertical",
         border = "single",
         title = "{title} {live} {flags}",
-        { win = "input", height = 1, border = "bottom" },
+        { win = "input", height = 1, border = "single" },
         { win = "list", border = "none" },
       },
       { win = "preview", title = "{preview}", border = "single", width = 0.6 },
