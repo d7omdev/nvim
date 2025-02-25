@@ -15,6 +15,7 @@ return {
       require("modes").setup({
         line_opacity = 0.15,
         set_cursorline = false,
+        set_number = false,
         ignore_filetypes = { "NvimTree", "TelescopePrompt", "dashboard", "minifiles" },
       })
     end,

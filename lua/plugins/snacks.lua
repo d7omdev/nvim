@@ -112,7 +112,7 @@ opts.dashboard = {
       { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
       { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
       { icon = "", key = "x", desc = "Lazy Extras", action = "<cmd>LazyExtras<cr>" },
-      { icon = " ", key = "m", desc = "Marks", action = ":lua Snacks.dashboard.pick('marks')" },
+      -- { icon = " ", key = "m", desc = "Marks", action = ":lua Snacks.dashboard.pick('marks')" },
       {
         icon = " ",
         key = "c",
@@ -138,8 +138,9 @@ opts.dashboard = {
     {
       pane = 2,
       section = "terminal",
-      cmd = "fastfetch --logo none | rg --colors=match:fg:cyan '|||||󰝚|'",
-      height = 6,
+      -- cmd = "fastfetch --logo none | rg --colors=match:fg:cyan '|||||󰝚|'",
+      cmd = "pipes.sh -t 1",
+      height = 8,
       padding = 2,
     },
     { section = "keys", gap = 1, padding = 1 },

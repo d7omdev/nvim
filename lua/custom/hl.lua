@@ -1,9 +1,10 @@
 local isTransparent = require("custom.utils").is_transparent_theme()
 
 local M = {}
+local hl = vim.api.nvim_set_hl
 
--- vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#242728", bg = "#242728" })
-vim.api.nvim_set_hl(0, "SnacksPickerInputBorder", { fg = "#242728", bg = "#242728" })
+-- hl(0, "TelescopeBorder", { fg = "#242728", bg = "#242728" })
+hl(0, "SnacksPickerInputBorder", { fg = "#242728", bg = "#242728" })
 
 local highlight_maps = {
   -- Basic mappings
@@ -168,11 +169,11 @@ function M.setup_highlights()
   end
 
   if isTransparent then
-    vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "NONE" })
-    vim.api.nvim_set_hl(0, "TbBufOn", { bg = "#1E2122" })
-    vim.api.nvim_set_hl(0, "TbBufOnClose", { bg = "#1E2122", fg = "#CA6169" })
-    vim.api.nvim_set_hl(0, "SnacksPickerInputBorder", { fg = "NONE", bg = "NONE" })
-    vim.api.nvim_set_hl(0, "St_Updates_Icon", { bg = "NONE" })
+    hl(0, "StatusLineNC", { bg = "NONE" })
+    hl(0, "TbBufOn", { bg = "#1E2122" })
+    hl(0, "TbBufOnClose", { bg = "#1E2122", fg = "#CA6169" })
+    hl(0, "SnacksPickerInputBorder", { fg = "#1E2122", bg = "NONE" })
+    -- GitSignsChangeNr transparent
   end
 end
 
@@ -189,7 +190,7 @@ function M.set_hl(group, fg, bg, opts)
   opts = opts or {}
   opts.fg = fg
   opts.bg = bg
-  vim.api.nvim_set_hl(0, group, opts)
+  hl(0, group, opts)
 end
 
 M.statusline_bg = Snacks.util.color("StatusLine", "bg")
@@ -200,13 +201,13 @@ local colors = dofile(vim.g.base46_cache .. "colors")
 M.highlights = {
   St_macro_recording = { fg = "#CA6169", bg = M.statusline_bg, opts = { bold = true } },
   Updates = { fg = colors.teal, bg = M.emptyspace_bg },
-  St_Updates_Icon = { fg = M.statusline_bg, bg = colors.teal },
+  St_Updates_Icon = { fg = colors.black, bg = colors.teal },
   St_Updates_sep = { fg = colors.teal, bg = M.statusline_bg },
 }
 
 function M.apply_highlights()
-  for group, hl in pairs(M.highlights) do
-    M.set_hl(group, hl.fg, hl.bg, hl.opts)
+  for group, highlight in pairs(M.highlights) do
+    M.set_hl(group, highlight.fg, highlight.bg, highlight.opts)
   end
   if require("lazy.status").has_updates() then
     require("nvchad").base46.hl_override.St_cwd_sep = { bg = Snacks.util.color("St_EmptySpace", "bg") }
