@@ -11,7 +11,7 @@ local options = {
     hl_add = {},
     integrations = {},
     changed_themes = {},
-    transparency = true,
+    transparency = false,
     theme_toggle = { "gruvchad", "catppuccin" },
     hl_override = {},
   },

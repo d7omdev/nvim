@@ -49,6 +49,7 @@ opts.picker = {
   layout = {
     layout = {
       box = "horizontal",
+      border = "none",
       width = 0.8,
       min_width = 120,
       height = 0.8,
