@@ -1,5 +1,11 @@
 local M = {}
 
+_G.ToggleLspStatus = function()
+  vim.g.lsp_status_expanded = not (vim.g.lsp_status_expanded or false)
+  -- Force statusline update
+  vim.cmd("redrawstatus")
+end
+
 function M.open_github_repo()
   local line = vim.api.nvim_get_current_line()
   local cursor_col = vim.fn.col(".") - 1 -- Get the current cursor position (column)

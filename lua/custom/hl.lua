@@ -173,14 +173,8 @@ function M.setup_highlights()
     hl(0, "TbBufOn", { bg = "#1E2122" })
     hl(0, "TbBufOnClose", { bg = "#1E2122", fg = "#CA6169" })
     hl(0, "SnacksPickerInputBorder", { fg = "#1E2122", bg = "NONE" })
-    -- GitSignsChangeNr transparent
   end
 end
-
-vim.api.nvim_create_autocmd({ "ColorScheme", "User", "BufWritePost" }, {
-  pattern = { "*", "NvThemeReload" },
-  callback = M.setup_highlights,
-})
 
 -- ========================
 -- Custom highlights
@@ -209,18 +203,15 @@ function M.apply_highlights()
   for group, highlight in pairs(M.highlights) do
     M.set_hl(group, highlight.fg, highlight.bg, highlight.opts)
   end
-  if require("lazy.status").has_updates() then
-    require("nvchad").base46.hl_override.St_cwd_sep = { bg = Snacks.util.color("St_EmptySpace", "bg") }
-  end
 end
 
 M.apply_highlights()
 
-M.RefreshHighlights = function()
-  M.apply_highlights()
-  M.setup_highlights()
-
-  vim.cmd("doautocmd ColorScheme")
-end
+vim.api.nvim_create_autocmd({ "ColorScheme", "BufWritePost" }, {
+  pattern = { "NvThemeReload" },
+  callback = function()
+    M.setup_highlights()
+  end,
+})
 
 return M

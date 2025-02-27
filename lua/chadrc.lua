@@ -11,7 +11,7 @@ local options = {
     hl_add = {},
     integrations = {},
     changed_themes = {},
-    transparency = false,
+    transparency = true,
     theme_toggle = { "gruvchad", "catppuccin" },
     hl_override = {},
   },
@@ -55,14 +55,51 @@ options.ui = {
 
     modules = {
       lsp = function()
-        if rawget(vim, "lsp") then
-          for _, client in ipairs(vim.lsp.get_clients()) do
-            if client.attached_buffers[vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)] then
-              return (vim.o.columns > 100 and "%#St_Lsp#   󰜥" .. client.name .. " ") or " "
-            end
+        if not rawget(vim, "lsp") then
+          return ""
+        end
+
+        local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)
+        local clients = vim.lsp.get_clients({ bufnr = bufnr })
+
+        if #clients == 0 then
+          return ""
+        end
+
+        -- Check if expanded mode is enabled
+        local expanded = vim.g.lsp_status_expanded or false
+        local output = "%#St_Lsp#  "
+
+        -- Function to shorten client names
+        local function format_client_name(name)
+          if name == "typescript-tools" then
+            return "ts-tools"
+          elseif name == "tailwind-tools" then
+            return "tw-tools"
+          else
+            return name
           end
         end
-        return ""
+
+        if expanded then
+          local names = {}
+          for _, client in ipairs(clients) do
+            table.insert(names, format_client_name(client.name))
+          end
+          output = output .. " " .. table.concat(names, ", ") .. " "
+        else
+          local main_client = format_client_name(clients[1].name)
+          for _, client in ipairs(clients) do
+            if client.name == "typescript-tools" then
+              main_client = format_client_name(client.name)
+              break
+            end
+          end
+          output = output .. "  󰜥" .. main_client .. " "
+        end
+
+        -- Make the entire component clickable to toggle expanded view
+        return "%@v:lua.ToggleLspStatus@" .. output .. "%X"
       end,
 
       cursor = function()
