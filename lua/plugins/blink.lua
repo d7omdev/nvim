@@ -63,7 +63,6 @@ return {
     -- },
     cmdline = {
       enabled = true,
-      keymap = nil,
       ---@diagnostic disable-next-line: assign-type-mismatch
       sources = function()
         local type = vim.fn.getcmdtype()
@@ -77,9 +76,13 @@ return {
         end
         return {}
       end,
+      keymap = {
+        ["<Down>"] = { "select_next", "fallback" },
+        ["<Up>"] = { "select_prev", "fallback" },
+      },
       completion = {
         menu = {
-          auto_show = nil,
+          auto_show = true,
           draw = {
             columns = { { "kind_icon", "label", "label_description", gap = 1 } },
           },

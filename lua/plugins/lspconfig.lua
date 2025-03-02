@@ -28,7 +28,7 @@ return {
           "typescriptreact",
           "javascript",
           "javascriptreact",
-          "vue",
+          -- "vue",
         },
       },
       codelens = {
@@ -42,7 +42,7 @@ return {
           enabled = false,
         },
         vtsls = {
-          enabled = false,
+          enabled = vim.fn.filereadable("vite.config.ts") == 1 or vim.fn.filereadable("src/App.vue") == 1,
         },
         eslint = {
           enabled = false,

@@ -15,7 +15,10 @@ opts.terminal = {
 -- ===============================
 -- Image Configuration
 -- ===============================
-opts.image = { enabled = true }
+---@class snacks.image.Config
+opts.image = { enabled = true, doc = {
+  inline = false,
+} }
 
 -- ===============================
 -- Profiler Configuration
