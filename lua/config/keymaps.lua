@@ -1,3 +1,5 @@
+local Utils = require("custom.utils")
+
 -- Helper function for keymap options
 local function opts(desc, extra)
   local default = { noremap = true, silent = true, desc = desc }
@@ -208,7 +210,7 @@ local keymaps = {
     N,
     "<leader>gp",
     function()
-      require("custom.utils").open_github_repo()
+      Utils.open_github_repo()
     end,
     opts("Open Github repo"),
   },
@@ -225,6 +227,7 @@ local keymaps = {
     end,
     opts("Markdown preview"),
   },
+  { V, "<leader>cW", Utils.WrapWithTag, opts("Wrap selection with tag") },
 }
 
 -- Apply all keymaps

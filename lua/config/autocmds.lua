@@ -2,7 +2,7 @@ local autocmd = vim.api.nvim_create_autocmd
 
 -- Automatically sort classes in a .tsx file on save
 autocmd("BufWritePost", {
-  pattern = { "*.tsx" },
+  pattern = { "*.tsx", "*.vue" },
   callback = function()
     local clients = vim.lsp.get_clients()
     for _, client in ipairs(clients) do
