@@ -38,7 +38,7 @@ options.ui = {
   statusline = {
     enabled = true,
     theme = "default", -- default/vscode/vscode_colored/minimal
-    separator_style = "default",
+    separator_style = "default", -- default/round/block/arrow
     order = {
       "mode",
       "file",
@@ -134,6 +134,7 @@ options.ui = {
         if lazy_status.has_updates() then
           local updates_count = lazy_status.updates():match("%d+") or "0"
           return ("%#St_Updates_sep#" .. sep_l .. "%#St_Updates_Icon# %#Updates# " .. updates_count .. " ")
+          -- return ("%#St_Updates_Icon# %#Updates#" .. updates_count .. " ")
         end
         return ""
       end,

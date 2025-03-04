@@ -227,7 +227,14 @@ local keymaps = {
     end,
     opts("Markdown preview"),
   },
-  { V, "<leader>cW", Utils.WrapWithTag, opts("Wrap selection with tag") },
+  {
+    V,
+    "<leader>cW",
+    function()
+      Utils.wrap_with_tag()
+    end,
+    opts("Wrap selection with tag"),
+  },
 }
 
 -- Apply all keymaps
