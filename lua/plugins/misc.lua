@@ -89,15 +89,6 @@ return {
     },
     version = "*",
   },
-
-  {
-    "2kabhishek/nerdy.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "stevearc/dressing.nvim",
-    },
-    cmd = "Nerdy",
-  },
   {
     "smoka7/multicursors.nvim",
     enabled = false,

@@ -30,25 +30,6 @@ opts.profiler = { enabled = true }
 -- ===============================
 ---@class snacks.picker.Config
 opts.picker = {
-  -- layout = {
-  --   layout = {
-  --     backdrop = false,
-  --     row = 1,
-  --     width = 0.7,
-  --     min_width = 80,
-  --     height = 0.8,
-  --     border = "none",
-  --     box = "vertical",
-  --     { win = "input", height = 1, border = "double", title = "{title} {live} {flags}", title_pos = "center" },
-  --     { win = "list", height = 0.4 },
-  --     {
-  --       win = "preview",
-  --       title = "{preview}",
-  --       border = "single",
-  --       title_pos = "center",
-  --     },
-  --   },
-  -- },
   layout = {
     layout = {
       box = "horizontal",

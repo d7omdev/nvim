@@ -1,7 +1,7 @@
-local M = {}
+_G.Utils = {}
 
 -- UI-related functions
-function M.is_transparent_theme()
+function Utils.is_transparent_theme()
   return require("nvconfig").base46.transparency
 end
 
@@ -12,7 +12,7 @@ _G.ToggleLspStatus = function()
 end
 
 -- HTML/markup functions
-function M.wrap_with_tag()
+function Utils.wrap_with_tag()
   -- Save the current visual selection
   vim.cmd('normal! "xy')
   local selected_text = vim.fn.getreg("x")
@@ -113,7 +113,7 @@ function M.wrap_with_tag()
 end
 
 -- Web/URL functions
-function M.open_github_repo()
+function Utils.open_github_repo()
   local line = vim.api.nvim_get_current_line()
 
   -- Match text inside quotes on the current line
@@ -144,15 +144,43 @@ end
 local function setup_commands()
   vim.api.nvim_create_user_command(
     "WrapWithTag",
-    M.wrap_with_tag,
+    Utils.wrap_with_tag,
     { range = true, desc = "Wrap visual selection with HTML tag" }
   )
 
   vim.api.nvim_create_user_command(
     "OpenGitHubRepo",
-    M.open_github_repo,
+    Utils.open_github_repo,
     { desc = "Open GitHub repository from cursor position" }
   )
+end
+
+Utils.vertical_picker = function(picker_type)
+  if not picker_type or not Snacks.picker[picker_type] then
+    return vim.notify(string.format("Invalid picker type: %s", tostring(picker_type)), vim.log.levels.ERROR)
+  end
+
+  Snacks.picker[picker_type]({
+    layout = {
+      layout = {
+        backdrop = false,
+        row = 1,
+        width = 0.7,
+        min_width = 80,
+        height = 0.8,
+        border = "none",
+        box = "vertical",
+        { win = "input", height = 1, border = "single", title = "{title} {live} {flags}", title_pos = "center" },
+        { win = "list", height = 0.4 },
+        {
+          win = "preview",
+          title = "{preview}",
+          border = "single",
+          title_pos = "center",
+        },
+      },
+    },
+  })
 end
 
 -- Initialize
@@ -162,4 +190,4 @@ end
 
 init()
 
-return M
+return Utils

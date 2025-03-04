@@ -1,5 +1,3 @@
-local Utils = require("custom.utils")
-
 -- Helper function for keymap options
 local function opts(desc, extra)
   local default = { noremap = true, silent = true, desc = desc }
@@ -234,6 +232,13 @@ local keymaps = {
       Utils.wrap_with_tag()
     end,
     opts("Wrap selection with tag"),
+  },
+  {
+    N,
+    "<leader>sk",
+    function()
+      Utils.vertical_picker("keymaps")
+    end,
   },
 }
 
