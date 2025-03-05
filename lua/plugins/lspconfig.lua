@@ -42,7 +42,7 @@ return {
           enabled = false,
         },
         vtsls = {
-          enabled = vim.fn.filereadable("vite.config.ts") == 1 or vim.fn.filereadable("src/App.vue") == 1,
+          enabled = vim.fn.filereadable("src/App.vue") == 1 or vim.fn.filereadable("nuxt.config.ts") == 1,
         },
         eslint = {
           enabled = false,

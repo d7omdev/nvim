@@ -7,7 +7,7 @@ local lazy_status = require("lazy.status")
 
 local options = {
   base46 = {
-    theme = "gruvchad", -- default theme
+    theme = "gruvchad",
     hl_add = {},
     integrations = {},
     changed_themes = {},
@@ -20,6 +20,8 @@ local options = {
 -- Ensure highlight override is set only if there are updates
 if lazy_status.has_updates() then
   options.base46.hl_override.St_cwd_sep = { bg = Snacks.util.color("St_EmptySpace", "bg") }
+else
+  options.base46.hl_override = {}
 end
 
 options.ui = {

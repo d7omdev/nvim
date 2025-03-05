@@ -7,11 +7,9 @@ return {
 
     opts = {
       provider = "copilot",
-      -- auto_suggestions_provider = "copilot",
       hints = { enabled = false },
       file_selector = {
         provider = "snacks",
-        provider_opts = {},
       },
     },
 
