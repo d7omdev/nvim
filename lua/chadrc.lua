@@ -18,11 +18,11 @@ local options = {
 }
 
 -- Ensure highlight override is set only if there are updates
-if lazy_status.has_updates() then
-  options.base46.hl_override.St_cwd_sep = { bg = Snacks.util.color("St_EmptySpace", "bg") }
-else
-  options.base46.hl_override = {}
-end
+-- if lazy_status.has_updates() then
+--   options.base46.hl_override.St_cwd_sep = { bg = Snacks.util.color("St_EmptySpace", "bg") }
+-- else
+--   options.base46.hl_override = {}
+-- end
 
 options.ui = {
   cmp = {
@@ -134,10 +134,12 @@ options.ui = {
 
       updates = function()
         if lazy_status.has_updates() then
+          options.base46.hl_override.St_cwd_sep = { bg = Snacks.util.color("St_EmptySpace", "bg") }
           local updates_count = lazy_status.updates():match("%d+") or "0"
           return ("%#St_Updates_sep#" .. sep_l .. "%#St_Updates_Icon# %#Updates# " .. updates_count .. " ")
           -- return ("%#St_Updates_Icon# %#Updates#" .. updates_count .. " ")
         end
+        options.base46.hl_override.St_cwd_sep = {}
         return ""
       end,
     },

@@ -25,6 +25,7 @@ local keymaps = {
   -- ===================
   -- General Keymaps
   -- ===================
+  { I, "<Tab>", "<C-V><Tab>", opts("Insert tab") },
   { N, "<C-A-k>", "yy[P", opts("Duplicate line up") },
   { N, "<C-A-j>", "yy]p", opts("Duplicate line down") },
   { V, "<C-A-k>", "yP", opts("Duplicate selection up") },

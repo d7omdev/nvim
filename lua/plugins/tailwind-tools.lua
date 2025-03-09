@@ -3,7 +3,7 @@ return {
     "luckasRanarison/tailwind-tools.nvim",
     event = "BufRead",
     enabled = function()
-      return not vim.tbl_contains({ "AvanteInput", "minifiles", "snacks_dashboard" }, vim.bo.filetype)
+      return not vim.tbl_contains({ "AvanteInput", "minifiles", "snacks_dashboard", "blade" }, vim.bo.filetype)
         and vim.bo.buftype ~= "prompt"
         and vim.b.completion ~= false
     end,
@@ -12,9 +12,8 @@ return {
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
     },
-    ft = { "typescriptreact", "astro" },
+    ft = { "typescriptreact", "astro", "vue" },
     opts = {
-      ---@type TailwindTools.Option
       server = {
         override = true, -- setup the server from the plugin if true
         settings = {}, -- shortcut for `settings.tailwindCSS`
