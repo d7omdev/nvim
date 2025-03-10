@@ -18,11 +18,11 @@ local options = {
 }
 
 -- Ensure highlight override is set only if there are updates
--- if lazy_status.has_updates() then
---   options.base46.hl_override.St_cwd_sep = { bg = Snacks.util.color("St_EmptySpace", "bg") }
--- else
---   options.base46.hl_override = {}
--- end
+if lazy_status.has_updates() then
+  options.base46.hl_override.St_cwd_sep = { bg = Snacks.util.color("St_EmptySpace", "bg") }
+else
+  options.base46.hl_override = {}
+end
 
 options.ui = {
   cmp = {
@@ -47,6 +47,7 @@ options.ui = {
       "git",
       "%=",
       "diagnostics",
+      "live_server",
       "lsp",
       "copilot",
       "macro",
@@ -141,6 +142,27 @@ options.ui = {
         end
         options.base46.hl_override.St_cwd_sep = {}
         return ""
+      end,
+
+      live_server = function()
+        if vim.bo.filetype ~= "html" then
+          return ""
+        end
+
+        local server_active = vim.g.live_server_active or false
+        local output = "%#St_HtmlServer#"
+
+        if server_active then
+          -- Server is running, show stop icon
+          output = output .. "  󰒏"
+          -- Make clickable to stop server
+          return "%@v:lua.StopLiveServer@" .. output .. "%X"
+        else
+          -- Server not running, show start icon
+          output = output .. "  󰒋"
+          -- Make clickable to start server
+          return "%@v:lua.StartLiveServer@" .. output .. "%X"
+        end
       end,
     },
   },

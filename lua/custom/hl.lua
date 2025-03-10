@@ -1,10 +1,13 @@
 local isTransparent = require("custom.utils").is_transparent_theme()
+_G.Colors = dofile(vim.g.base46_cache .. "colors")
 
 local M = {}
 local hl = vim.api.nvim_set_hl
 
 -- hl(0, "TelescopeBorder", { fg = "#242728", bg = "#242728" })
 hl(0, "SnacksPickerInputBorder", { fg = "#242728", bg = "#242728" })
+-- St_HtmlServer
+hl(0, "St_HtmlServer", { fg = Colors.teal, bg = "NONE" })
 
 local highlight_maps = {
   -- Basic mappings

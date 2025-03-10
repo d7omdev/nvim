@@ -5,8 +5,22 @@ function Utils.is_transparent_theme()
   return require("nvconfig").base46.transparency
 end
 
-_G.ToggleLspStatus = function()
+function _G.ToggleLspStatus()
   vim.g.lsp_status_expanded = not (vim.g.lsp_status_expanded or false)
+  -- Force statusline update
+  vim.cmd("redrawstatus")
+end
+
+function _G.StartLiveServer()
+  vim.cmd("LiveServerStart")
+  vim.g.live_server_active = true
+  -- Force statusline update
+  vim.cmd("redrawstatus")
+end
+
+function _G.StopLiveServer()
+  vim.cmd("LiveServerStop")
+  vim.g.live_server_active = false
   -- Force statusline update
   vim.cmd("redrawstatus")
 end

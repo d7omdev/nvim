@@ -15,8 +15,6 @@ autocmd("BufWritePost", {
   end,
 })
 
-_G.my_format_on_save = true
-
 local group = vim.api.nvim_create_augroup("CodeCompanionHooks", {})
 
 autocmd({ "User" }, {
@@ -46,16 +44,6 @@ autocmd("BufLeave", {
   pattern = "*",
   callback = function()
     vim.cmd("silent! wa")
-  end,
-})
-
-vim.api.nvim_create_autocmd("BufWinEnter", {
-  callback = function()
-    local win_config = vim.api.nvim_win_get_config(0)
-    if win_config.relative ~= "" and win_config.zindex == 80 then
-      vim.b.is_lspsaga_hover = true
-      return
-    end
   end,
 })
 
