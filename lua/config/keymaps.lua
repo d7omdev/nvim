@@ -241,6 +241,18 @@ local keymaps = {
       Utils.vertical_picker("keymaps")
     end,
   },
+  {
+    N,
+    "<Leader>cL",
+    require("lsp_lines").toggle,
+    opts("Toggle LSP Lines"),
+  },
+  {
+    N_I,
+    "<C-a>",
+    "ggVG",
+    opts("Select all"),
+  },
 }
 
 -- Apply all keymaps

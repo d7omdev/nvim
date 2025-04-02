@@ -1,3 +1,4 @@
+local colors = dofile(vim.g.base46_cache .. "colors")
 local isTransparent = require("custom.utils").is_transparent_theme()
 _G.Colors = dofile(vim.g.base46_cache .. "colors")
 
@@ -173,7 +174,6 @@ function M.setup_highlights()
 
   if isTransparent then
     hl(0, "StatusLineNC", { bg = "NONE" })
-    hl(0, "TbBufOn", { bg = "#1E2122" })
     hl(0, "TbBufOnClose", { bg = "#1E2122", fg = "#CA6169" })
     hl(0, "SnacksPickerInputBorder", { fg = "#1E2122", bg = "NONE" })
   end
@@ -191,14 +191,12 @@ function M.set_hl(group, fg, bg, opts)
 end
 
 M.statusline_bg = Snacks.util.color("StatusLine", "bg")
-M.emptyspace_bg = Snacks.util.color("St_EmptySpace", "bg")
-
-local colors = dofile(vim.g.base46_cache .. "colors")
+M.file_bg = Snacks.util.color("St_file", "bg")
 
 M.highlights = {
   St_macro_recording = { fg = "#CA6169", bg = M.statusline_bg, opts = { bold = true } },
-  Updates = { fg = colors.teal, bg = M.emptyspace_bg },
-  St_Updates_Icon = { fg = colors.black, bg = colors.teal },
+  Updates = { fg = colors.teal, bg = "NONE" },
+  St_Updates_Icon = { fg = colors.teal, bg = "NONE" },
   St_Updates_sep = { fg = colors.teal, bg = M.statusline_bg },
 }
 

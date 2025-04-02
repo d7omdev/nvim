@@ -16,6 +16,7 @@ return {
     dependencies = {
       {
         "MeanderingProgrammer/render-markdown.nvim",
+        lazy = true,
         ft = { "Avante" },
       },
     },

@@ -8,7 +8,7 @@ return {
     },
     opts = {
       preview = {
-        filetypes = { "markdown", "codecompanion" },
+        filetypes = { "codecompanion", "markdown" },
         ignore_buftypes = {},
       },
     },

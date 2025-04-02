@@ -23,13 +23,16 @@ opt.tabstop = 4
 opt.shiftwidth = 4
 opt.autoindent = true
 
--- Disable highlighting if file is over 10 MB
-vim.api.nvim_command('autocmd BufReadPost * if getfsize(expand("%:p")) > 10000 * 1024 | TSBufDisable highlight | endif')
-
 vim.cmd([[cab Wq wq]])
 
--- Disable virtual text
-vim.diagnostic.config({ virtual_text = false })
+vim.diagnostic.config({
+  virtual_text = false,
+  float = {
+    border = "rounded",
+    max_width = 60,
+    max_height = 10,
+  },
+})
 
 vim.cmd([[tnoremap <C-A-_> pwd\|wl-copy<CR><C-\><C-n>:cd <C-r>+<CR>]])
 

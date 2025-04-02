@@ -2,10 +2,6 @@ return {
   {
     "catppuccin/nvim",
     event = "BufRead",
-    name = "catppuccin",
-    opts = {
-      -- transparent_background = true,
-    },
   },
   {
     "mvllow/modes.nvim",

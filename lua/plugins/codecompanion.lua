@@ -1,6 +1,6 @@
 return {
   "olimorris/codecompanion.nvim",
-  version = "11.28.x",
+  -- version = "11.28.x",
   event = "VeryLazy",
   config = function()
     require("codecompanion").setup({
@@ -13,7 +13,7 @@ return {
         chat = {
           roles = {
             llm = "  Copilot ",
-            user = "  D7OM ",
+            user = " D7OM",
           },
           keymaps = {
             close = {

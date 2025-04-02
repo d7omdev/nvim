@@ -197,6 +197,43 @@ Utils.vertical_picker = function(picker_type)
   })
 end
 
+-- Function to toggle fribidi processing and remove BOM
+Utils.toggle_fribidi_processing = function()
+  -- Get the current buffer's content
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  local content = table.concat(lines, "\n")
+
+  if vim.b.processed_with_fribidi then
+    -- Undo the fribidi processing
+    vim.cmd("%!fribidi")
+    vim.b.processed_with_fribidi = false
+    print("Fribidi processing reversed.")
+  else
+    -- Process the file with fribidi
+    vim.cmd("%!fribidi")
+
+    -- Check for BOM in the first line after processing
+    lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+    if #lines > 0 and lines[1]:byte(1) == 0xEF and lines[1]:byte(2) == 0xBB and lines[1]:byte(3) == 0xBF then
+      -- Remove BOM from first line
+      lines[1] = lines[1]:sub(4)
+      -- Write back to buffer
+      vim.api.nvim_buf_set_lines(0, 0, 1, false, { lines[1] })
+      print("BOM removed.")
+    end
+
+    -- Mark the buffer as processed
+    vim.b.processed_with_fribidi = true
+    print("File processed with fribidi.")
+  end
+
+  -- Save the changes
+  vim.cmd("write")
+end -- Map the function to a key combination, e.g., <Leader>p
+vim.keymap.set("n", "<Leader>tf", function()
+  Utils.toggle_fribidi_processing()
+end, { noremap = true, silent = true })
+
 -- Initialize
 local function init()
   setup_commands()
