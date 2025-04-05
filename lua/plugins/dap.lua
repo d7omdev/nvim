@@ -8,9 +8,10 @@ local js_based_languages = {
 }
 
 return {
-  { "nvim-neotest/nvim-nio" },
+  { "nvim-neotest/nvim-nio", event = "BufReadPost" },
   {
     "mfussenegger/nvim-dap",
+    event = "BufReadPost",
     config = function()
       local dap = require("dap")
 

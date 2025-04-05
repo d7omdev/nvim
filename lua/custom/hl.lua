@@ -3,11 +3,12 @@ local isTransparent = require("custom.utils").is_transparent_theme()
 _G.Colors = dofile(vim.g.base46_cache .. "colors")
 
 local M = {}
+M.is_transparent = isTransparent
 local hl = vim.api.nvim_set_hl
 
 -- hl(0, "TelescopeBorder", { fg = "#242728", bg = "#242728" })
-hl(0, "SnacksPickerInputBorder", { fg = "#242728", bg = "#242728" })
--- St_HtmlServer
+-- hl(0, "SnacksPickerInputBorder", { fg = "#242728", bg = "#242728" })
+
 hl(0, "St_HtmlServer", { fg = Colors.teal, bg = "NONE" })
 
 local highlight_maps = {
@@ -174,8 +175,8 @@ function M.setup_highlights()
 
   if isTransparent then
     hl(0, "StatusLineNC", { bg = "NONE" })
+    hl(0, "TbBufOn", { bg = "#1E2122", fg = "#CA6169" })
     hl(0, "TbBufOnClose", { bg = "#1E2122", fg = "#CA6169" })
-    hl(0, "SnacksPickerInputBorder", { fg = "#1E2122", bg = "NONE" })
   end
 end
 
@@ -208,7 +209,7 @@ end
 
 M.apply_highlights()
 
-vim.api.nvim_create_autocmd({ "ColorScheme", "BufWritePost" }, {
+vim.api.nvim_create_autocmd({ "ColorScheme", "BufWritePost", "FileType" }, {
   pattern = { "NvThemeReload" },
   callback = function()
     M.setup_highlights()

@@ -26,8 +26,8 @@ return {
         border = "single",
         draw = {
           columns = {
+            { "label", gap = 10 },
             { "kind_icon", gap = 1 },
-            { "label", gap = 4 },
             { "kind" },
             { "label_description" },
           },
@@ -61,6 +61,30 @@ return {
     --   },
     --   default = { "lsp", "path", "snippets", "buffer" },
     -- },
+    sources = {
+      default = { "snippets", "lsp", "path", "buffer" },
+      providers = {
+        snippets = {
+          min_keyword_length = 1,
+          score_offset = 4,
+        },
+        lsp = {
+          min_keyword_length = 0,
+          score_offset = 3,
+          name = "LSP",
+          module = "blink.cmp.sources.lsp",
+          fallbacks = {},
+        },
+        path = {
+          min_keyword_length = 0,
+          score_offset = 2,
+        },
+        buffer = {
+          min_keyword_length = 1,
+          score_offset = 1,
+        },
+      },
+    },
     cmdline = {
       enabled = true,
       ---@diagnostic disable-next-line: assign-type-mismatch
@@ -103,12 +127,12 @@ return {
         Struct = "󱡠",
         Module = "󰅩",
         Unit = "󰪚",
-        Value = "󰫧",
+        Value = "",
         Enum = "",
         EnumMember = "",
         Keyword = "",
         Constant = "󰏿",
-        Snippet = "󱄽",
+        Snippet = "",
         Color = "󰏘",
         File = "󰈔",
         Reference = "󰬲",

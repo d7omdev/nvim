@@ -248,10 +248,16 @@ local keymaps = {
     opts("Toggle LSP Lines"),
   },
   {
-    N_I,
-    "<C-a>",
-    "ggVG",
-    opts("Select all"),
+    N,
+    "<leader>R",
+    "<cmd>OverseerRunC<CR>",
+    opts("Overseer Run"),
+  },
+  {
+    N,
+    "<leader>Rt",
+    "<cmd>OverseerToggle<CR>",
+    opts("Overseer Toggle"),
   },
 }
 

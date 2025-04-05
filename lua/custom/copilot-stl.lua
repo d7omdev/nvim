@@ -3,18 +3,17 @@ local M = {}
 -- Configuration
 local config = {
   icons = {
-    enabled = " ",
-    sleep = " ",
-    disabled = " ",
-    warning = " ",
-    unknown = " ",
+    enabled = " ",
+    sleep = " ",
+    disabled = " ",
+    warning = " ",
+    unknown = " ",
   },
   colors = {
     enabled = "#89AF6D",
     sleep = "#AEB7D0",
     disabled = "#6272A4",
     warning = "#FFB86C",
-    -- unknown = "#CA6169",
     unknown = "#42464E",
   },
   highlights = {
@@ -36,9 +35,17 @@ local spinner = {
 -- Setup highlight groups
 local function setup_highlights()
   for state, hl_name in pairs(config.highlights) do
+    local bg = "#000000" -- Default fallback
+    local status_bg = vim.fn.synIDattr(vim.fn.hlID("StatusLine"), "bg#")
+
+    -- Handle empty or invalid bg color
+    if status_bg and status_bg ~= "" then
+      bg = status_bg
+    end
+
     vim.api.nvim_set_hl(0, hl_name, {
       fg = config.colors[state],
-      bg = vim.fn.synIDattr(vim.fn.hlID("StatusLine"), "bg#"),
+      bg = bg,
       default = true, -- This allows other colorschemes to override if needed
     })
   end
@@ -79,11 +86,21 @@ end
 
 -- Helper function to check if buffer is attached
 local function is_buffer_attached()
-  local clients = vim.lsp.get_active_clients()
   local buf = vim.api.nvim_get_current_buf()
 
+  -- Handle both newer and older Neovim API
+  local get_clients = vim.lsp.get_active_clients or vim.lsp.get_clients
+  local clients = get_clients({ bufnr = buf })
+
   for _, client in pairs(clients) do
-    if client.name == "copilot" and vim.lsp.buf_is_attached(buf, client.id) then
+    if client.name == "copilot" then
+      -- Check if buffer is attached using the available method
+      if vim.lsp.buf_is_attached then
+        return vim.lsp.buf_is_attached(buf, client.id)
+      elseif client.attached_buffers then
+        return client.attached_buffers[buf] or false
+      end
+      -- Default to true if we can't specifically check
       return true
     end
   end
@@ -100,18 +117,24 @@ function M.get_status()
     }
   end
 
+  local has_copilot_suggestion = pcall(require, "copilot.suggestion")
+  local has_copilot_client, copilot_client = pcall(require, "copilot.client")
+  local has_copilot_api, copilot_api = pcall(require, "copilot.api")
+  local has_copilot_config, copilot_config = pcall(require, "copilot.config")
+
+  -- Get auto trigger status more safely
   local auto_trigger = vim.b.copilot_suggestion_auto_trigger
-  if auto_trigger == nil then
-    local ok, copilot_config = pcall(require, "copilot.config")
-    if ok then
-      auto_trigger = copilot_config.get("suggestion").auto_trigger
-    end
+  if auto_trigger == nil and has_copilot_config then
+    auto_trigger = copilot_config.get("suggestion").auto_trigger
   end
 
+  -- Check if disabled
   local disabled = false
-  pcall(function()
-    disabled = require("copilot.client").is_disabled()
-  end)
+  if has_copilot_client then
+    pcall(function()
+      disabled = copilot_client.is_disabled()
+    end)
+  end
 
   if disabled then
     stop_spinner()
@@ -131,10 +154,15 @@ function M.get_status()
     }
   end
 
+  -- Check warning status
   local warning = false
-  pcall(function()
-    warning = require("copilot.api").status.data.status == "Warning"
-  end)
+  if has_copilot_api then
+    pcall(function()
+      if copilot_api.status and copilot_api.status.data then
+        warning = copilot_api.status.data.status == "Warning"
+      end
+    end)
+  end
 
   if warning then
     stop_spinner()
@@ -145,10 +173,15 @@ function M.get_status()
     }
   end
 
+  -- Check loading status
   local loading = false
-  pcall(function()
-    loading = require("copilot.api").status.data.status == "InProgress"
-  end)
+  if has_copilot_api then
+    pcall(function()
+      if copilot_api.status and copilot_api.status.data then
+        loading = copilot_api.status.data.status == "InProgress"
+      end
+    end)
+  end
 
   if loading then
     start_spinner()
@@ -189,6 +222,7 @@ function M.cleanup()
   stop_spinner()
 end
 
+-- Initialize highlights on load
 setup_highlights()
 
 return M

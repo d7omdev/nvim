@@ -58,7 +58,7 @@ return {
   },
   {
     "andrewferrier/debugprint.nvim",
-    event = "BufRead",
+    event = "BufReadPost",
     opts = {
       keymaps = {
         normal = {
@@ -176,6 +176,7 @@ return {
   },
   {
     "echasnovski/mini.diff",
+    event = "VeryLazy",
     version = "*",
     config = function()
       require("mini.diff").setup({
@@ -198,5 +199,17 @@ return {
     build = "bun add -g live-server",
     cmd = { "LiveServerStart", "LiveServerStop" },
     config = true,
+  },
+  {
+    "jonahgoldwastaken/copilot-status.nvim",
+    lazy = true,
+    event = "BufReadPost",
+  },
+  {
+    "stevearc/overseer.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("overseer").setup()
+    end,
   },
 }

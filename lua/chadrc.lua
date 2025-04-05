@@ -17,6 +17,13 @@ local options = {
   },
 }
 
+if options.base46.transparency then
+  options.base46.hl_override = {
+    TbBufOn = { bg = "#1E2122" },
+    TbBufOnClose = { fg = "#CA6169", bg = "#2D3031" },
+  }
+end
+
 options.ui = {
   cmp = {
     icons_left = false, -- only for non-atom styles!
@@ -42,7 +49,7 @@ options.ui = {
       "diagnostics",
       "live_server",
       "lsp",
-      -- "copilot",
+      "copilot",
       "macro",
       "updates",
       "cwd",
@@ -122,15 +129,14 @@ options.ui = {
       end,
 
       copilot = function()
-        local status = require("custom.copilot-stl").get_status()
-        return "%#" .. status.hl .. "#" .. " " .. status.icon .. " "
+        return " " .. require("copilot_status").status_string() .. " "
       end,
 
       updates = function()
         if lazy_status.has_updates() then
           local updates_count = lazy_status.updates():match("%d+") or "0"
           -- return ("%#St_Updates_sep#" .. sep_l .. "%#St_Updates_Icon# %#Updates# " .. updates_count .. " ")
-          return ("%#St_Updates_Icon#󰁡 %#Updates#" .. updates_count .. " ")
+          return ("%#St_Updates_Icon# %#Updates#" .. updates_count .. " ")
         end
         return ""
       end,
@@ -167,7 +173,7 @@ options.ui = {
 }
 
 options.colorify = {
-  enabled = true,
+  enabled = false,
   mode = "virtual", -- fg, bg, virtual
   virt_text = "󱓻 ",
   highlight = { hex = true, lspvars = true },
