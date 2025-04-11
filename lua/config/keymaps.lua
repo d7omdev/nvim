@@ -31,7 +31,7 @@ local keymaps = {
   { V, "<C-A-k>", "yP", opts("Duplicate selection up") },
   { V, "<C-A-j>", "y]p", opts("Duplicate selection down") },
 
-  { N, "<A-q>", "<C-v>", opts("Block selection") },
+  { N, "<A-v>", "<C-v>", opts("Block selection") },
 
   { V, "d", '"ad', opts("Delete without yanking") },
   { N_V, "p", '"+p', opts("Paste from system clipboard") },
@@ -41,7 +41,14 @@ local keymaps = {
 
   { I, "jj", "<Esc>", opts("Exit insert mode") },
   { N_I, "qq", "<cmd>q<CR>", opts("Quick quit") },
-  { N, "QQ", "<cmd>bufdo bd<CR>", opts("Quit all buffers") },
+  {
+    N,
+    "QQ",
+    function()
+      Utils.close_all_buffers()
+    end,
+    opts("Quit all buffers"),
+  },
 
   { N, "<C-d>", "<C-d>zz", opts("Scroll down and center") },
   { N, "<C-u>", "<C-u>zz", opts("Scroll up and center") },
@@ -138,38 +145,38 @@ local keymaps = {
   { N, "<leader>ttc", "<cmd>TailwindConcealToggle<CR>", opts("Tailwind Conceal Toggle") },
 
   -- Buffers
-  {
-    N,
-    "]b",
-    function()
-      require("custom.buffers").next_buffer_in_tab()
-    end,
-    opts("Next buffer in tab"),
-  },
-  {
-    N,
-    "[b",
-    function()
-      require("custom.buffers").prev_buffer_in_tab()
-    end,
-    opts("Previous buffer in tab"),
-  },
-  {
-    N,
-    "[B",
-    function()
-      require("nvchad.tabufline").move_buf(-1)
-    end,
-    opts("Move buffer left"),
-  },
-  {
-    N,
-    "]B",
-    function()
-      require("nvchad.tabufline").move_buf(1)
-    end,
-    opts("Move buffer right"),
-  },
+  -- {
+  --   N,
+  --   "]b",
+  --   function()
+  --     require("custom.buffers").next_buffer_in_tab()
+  --   end,
+  --   opts("Next buffer in tab"),
+  -- },
+  -- {
+  --   N,
+  --   "[b",
+  --   function()
+  --     require("custom.buffers").prev_buffer_in_tab()
+  --   end,
+  --   opts("Previous buffer in tab"),
+  -- },
+  -- {
+  --   N,
+  --   "[B",
+  --   function()
+  --     require("nvchad.tabufline").move_buf(-1)
+  --   end,
+  --   opts("Move buffer left"),
+  -- },
+  -- {
+  --   N,
+  --   "]B",
+  --   function()
+  --     require("nvchad.tabufline").move_buf(1)
+  --   end,
+  --   opts("Move buffer right"),
+  -- },
   { N, "<leader>bd", "<cmd>lua Snacks.bufdelete()<CR>", opts("Delete buffer") },
 
   -- Treewalker
@@ -203,8 +210,15 @@ local keymaps = {
     end,
     opts("Toggle loclist"),
   },
-  { N, "z=", "<cmd>Pick spellsuggest<CR>", opts("Spelling suggestions") },
-  { N, "<C-p>", "<cmd>Pick files<CR>", opts("Mini files picker") },
+  {
+    N,
+    "z=",
+    function()
+      Utils.select("spelling")
+    end,
+    opts("Spelling suggestions"),
+  },
+  { N, "<C-p>", "<cmd>BufferLinePick<CR>", opts("Bufferline picke") },
   {
     N,
     "<leader>gp",

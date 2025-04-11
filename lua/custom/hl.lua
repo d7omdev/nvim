@@ -172,12 +172,6 @@ function M.setup_highlights()
     local cmp_hl = string.format("CmpItemKind%s", kind)
     vim.cmd(string.format("hi! link %s %s", blink_hl, cmp_hl))
   end
-
-  if isTransparent then
-    hl(0, "StatusLineNC", { bg = "NONE" })
-    hl(0, "TbBufOn", { bg = "#1E2122", fg = "#CA6169" })
-    hl(0, "TbBufOnClose", { bg = "#1E2122", fg = "#CA6169" })
-  end
 end
 
 -- ========================

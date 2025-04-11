@@ -31,7 +31,6 @@ function Utils.wrap_with_tag()
   vim.cmd('normal! "xy')
   local selected_text = vim.fn.getreg("x")
 
-  -- If no text is selected or something went wrong, exit
   if not selected_text or selected_text == "" then
     vim.api.nvim_echo({ { "No text selected", "ErrorMsg" } }, false, {})
     return
@@ -39,7 +38,6 @@ function Utils.wrap_with_tag()
 
   -- Common HTML tags
   local common_tags = {
-    -- Layout tags
     "div",
     "span",
     "section",
@@ -49,8 +47,6 @@ function Utils.wrap_with_tag()
     "nav",
     "aside",
     "main",
-
-    -- Text tags
     "p",
     "h1",
     "h2",
@@ -59,62 +55,50 @@ function Utils.wrap_with_tag()
     "em",
     "code",
     "pre",
-
-    -- List tags
     "ul",
     "ol",
     "li",
-
-    -- Table tags
     "table",
     "thead",
     "tbody",
     "tr",
     "th",
     "td",
-
-    -- Interactive tags
     "a",
     "button",
     "form",
   }
 
   -- Create menu items for vim.ui.select
-  local menu_items = {}
-  for _, tag in ipairs(common_tags) do
-    table.insert(menu_items, tag)
-  end
-  table.insert(menu_items, "Custom...") -- Option for custom tag
+  local menu_items = vim.tbl_extend("force", common_tags, { "Custom..." })
 
   -- Show selection menu
-  vim.ui.select(menu_items, {
+  Utils.items_select(menu_items, {
     prompt = "Select HTML tag:",
     format_item = function(item)
       return item
     end,
   }, function(choice, idx)
     if not choice then
-      return -- User cancelled
+      return
     end
 
     local tag
     if choice == "Custom..." then
-      -- Prompt for custom tag
+      -- Prompt for custom tag if user selects "Custom..."
       tag = vim.fn.input("Enter custom HTML tag: ")
-      if tag == "" then
-        return
-      end
     else
       tag = choice
     end
 
-    -- Extract tag name (for the closing tag)
-    local tag_name = string.match(tag, "^([%w-]+)")
-    if not tag_name then
-      tag_name = tag -- Fallback if regex fails
+    if tag == "" then
+      return
     end
 
-    -- Create wrapped text
+    -- Extract the tag name for closing tag
+    local tag_name = string.match(tag, "^([%w-]+)") or tag
+
+    -- Create wrapped text with the selected/custom tag
     local wrapped_text = "<" .. tag .. ">" .. selected_text .. "</" .. tag_name .. ">"
 
     -- Replace the selection with the wrapped text
@@ -197,42 +181,103 @@ Utils.vertical_picker = function(picker_type)
   })
 end
 
--- Function to toggle fribidi processing and remove BOM
-Utils.toggle_fribidi_processing = function()
-  -- Get the current buffer's content
-  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-  local content = table.concat(lines, "\n")
-
-  if vim.b.processed_with_fribidi then
-    -- Undo the fribidi processing
-    vim.cmd("%!fribidi")
-    vim.b.processed_with_fribidi = false
-    print("Fribidi processing reversed.")
-  else
-    -- Process the file with fribidi
-    vim.cmd("%!fribidi")
-
-    -- Check for BOM in the first line after processing
-    lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-    if #lines > 0 and lines[1]:byte(1) == 0xEF and lines[1]:byte(2) == 0xBB and lines[1]:byte(3) == 0xBF then
-      -- Remove BOM from first line
-      lines[1] = lines[1]:sub(4)
-      -- Write back to buffer
-      vim.api.nvim_buf_set_lines(0, 0, 1, false, { lines[1] })
-      print("BOM removed.")
-    end
-
-    -- Mark the buffer as processed
-    vim.b.processed_with_fribidi = true
-    print("File processed with fribidi.")
+Utils.select = function(picker_type)
+  if not picker_type or not Snacks.picker[picker_type] then
+    return vim.notify(string.format("Invalid picker type: %s", tostring(picker_type)), vim.log.levels.ERROR)
   end
 
-  -- Save the changes
-  vim.cmd("write")
-end -- Map the function to a key combination, e.g., <Leader>p
-vim.keymap.set("n", "<Leader>tf", function()
-  Utils.toggle_fribidi_processing()
-end, { noremap = true, silent = true })
+  Snacks.picker[picker_type]({
+    layout = {
+      preview = false,
+      layout = {
+        backdrop = false,
+        width = 0.5,
+        min_width = 80,
+        height = 0.4,
+        min_height = 3,
+        box = "vertical",
+        border = "rounded",
+        title = "{title}",
+        title_pos = "center",
+        { win = "input", height = 1, border = "bottom" },
+        { win = "list", border = "none" },
+        { win = "preview", title = "{preview}", height = 0.4, border = "top" },
+      },
+    },
+  })
+end
+
+Utils.items_select = function(items, opts, on_choice)
+  assert(type(on_choice) == "function", "on_choice must be a function")
+  opts = opts or {}
+
+  ---@type snacks.picker.finder.Item[]
+  local finder_items = {}
+  for idx, item in ipairs(items) do
+    local text = (opts.format_item or tostring)(item)
+    table.insert(finder_items, {
+      formatted = text,
+      text = idx .. " " .. text,
+      item = item,
+      idx = idx,
+    })
+  end
+
+  local title = opts.prompt or "Select"
+  title = title:gsub("^%s*", ""):gsub("[%s:]*$", "")
+  local completed = false
+
+  ---@type snacks.picker.finder.Item[]
+  return Snacks.picker.pick({
+    source = "select",
+    items = finder_items,
+    format = Snacks.picker.format.ui_select(opts.kind, #items),
+    title = title,
+    layout = {
+      preview = nil,
+      layout = {
+        backdrop = false,
+        width = 0.5,
+        min_width = 80,
+        height = 0.4,
+        min_height = 3,
+        box = "vertical",
+        border = "rounded",
+        title = "{title}",
+        title_pos = "center",
+        { win = "input", height = 1, border = "bottom" },
+        { win = "list", border = "none" },
+      },
+    },
+    actions = {
+      confirm = function(picker, item)
+        if completed then
+          return
+        end
+        completed = true
+        picker:close()
+        vim.schedule(function()
+          on_choice(item and item.item, item and item.idx)
+        end)
+      end,
+    },
+    on_close = function()
+      if completed then
+        return
+      end
+      completed = true
+      vim.schedule(on_choice)
+    end,
+  })
+end
+
+Utils.close_all_buffers = function()
+  for _, e in ipairs(require("bufferline").get_elements().elements) do
+    vim.schedule(function()
+      vim.cmd("bd " .. e.id)
+    end)
+  end
+end
 
 -- Initialize
 local function init()

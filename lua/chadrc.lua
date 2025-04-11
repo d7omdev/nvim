@@ -19,7 +19,10 @@ local options = {
 
 if options.base46.transparency then
   options.base46.hl_override = {
-    TbBufOn = { bg = "#1E2122" },
+    TbBufOn = {
+      bg = "#1E2122",
+      italic = true,
+    },
     TbBufOnClose = { fg = "#CA6169", bg = "#2D3031" },
   }
 end
@@ -49,7 +52,7 @@ options.ui = {
       "diagnostics",
       "live_server",
       "lsp",
-      "copilot",
+      -- "copilot",
       "macro",
       "updates",
       "cwd",
@@ -165,7 +168,7 @@ options.ui = {
   },
 
   tabufline = {
-    enabled = true,
+    enabled = false,
     lazyload = true,
     order = { "treeOffset", "buffers", "tabs", "btns" },
     modules = nil,

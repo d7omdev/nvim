@@ -6,6 +6,7 @@ end
 return {
   {
     "echasnovski/mini.pick",
+    enabled = false,
     dependencies = {
       { "echasnovski/mini.extra", opts = {} },
       { "echasnovski/mini.visits", opts = {} },
