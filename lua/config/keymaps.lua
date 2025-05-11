@@ -255,12 +255,12 @@ local keymaps = {
       Utils.vertical_picker("keymaps")
     end,
   },
-  {
-    N,
-    "<Leader>cL",
-    require("lsp_lines").toggle,
-    opts("Toggle LSP Lines"),
-  },
+  -- {
+  --   N,
+  --   "<Leader>cL",
+  --   require("lsp_lines").toggle,
+  --   opts("Toggle LSP Lines"),
+  -- },
   {
     N,
     "<leader>R",
@@ -272,6 +272,41 @@ local keymaps = {
     "<leader>Rt",
     "<cmd>OverseerToggle<CR>",
     opts("Overseer Toggle"),
+  },
+  {
+    N,
+    "<C-/>",
+    "gcc",
+    opts("Comment line", { remap = true }),
+  },
+  {
+    N,
+    "Q",
+    "q",
+    opts("Record macro"),
+  },
+  {
+    N,
+    "q",
+    "<Nop>",
+    opts("Disable default macro key"),
+  },
+  {
+    N_V,
+    "<C-_>",
+    "gcc",
+    opts("Comment selection", { remap = true }),
+  },
+  {
+    I,
+    "<C-_>",
+    "<Esc>:normal gcc<CR>a",
+    opts("Comment line and return to insert mode"),
+  },
+  {
+    N,
+    "<C-/>",
+    "<Nop>",
   },
 }
 

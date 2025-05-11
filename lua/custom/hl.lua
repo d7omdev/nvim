@@ -6,8 +6,15 @@ local M = {}
 M.is_transparent = isTransparent
 local hl = vim.api.nvim_set_hl
 
--- hl(0, "TelescopeBorder", { fg = "#242728", bg = "#242728" })
--- hl(0, "SnacksPickerInputBorder", { fg = "#242728", bg = "#242728" })
+if not isTransparent then
+  hl(0, "TelescopeBorder", { fg = "#242728", bg = "#242728" })
+  hl(0, "SnacksPickerBorder", { fg = "#1E2122", bg = "#1E2122" })
+  hl(0, "SnacksPickerInputBorder", { fg = "#242728", bg = "#242728" })
+else
+  hl(0, "SnacksPickerBorder", { fg = "#1E2122", bg = "None" })
+  hl(0, "AvantePromptInput", { fg = "#ffffff", bg = "#1E2122" })
+  hl(0, "AvantePromptInputBorder", { fg = "#2D3031", bg = "#1E2122" })
+end
 
 hl(0, "St_HtmlServer", { fg = Colors.teal, bg = "NONE" })
 
@@ -44,59 +51,12 @@ local highlight_maps = {
     ["BlinkCmpDocCursorLine"] = "PmenuSel",
   },
 
-  -- FzfLua mappings to Telescope highlights
-  fzf = {
-    ["FzfLuaNormal"] = "TelescopeNormal",
-    ["FzfLuaBorder"] = "TelescopeBorder",
-    ["FzfLuaTitle"] = "TelescopePromptTitle",
-    ["FzfLuaBackdrop"] = "TelescopePromptNormal",
-    ["FzfLuaPreviewNormal"] = "TelescopePreviewNormal",
-    ["FzfLuaPreviewBorder"] = "TelescopePreviewBorder",
-    ["FzfLuaPreviewTitle"] = "TelescopePreviewTitle",
-    ["FzfLuaCursor"] = "TelescopeSelectionCaret",
-    ["FzfLuaCursorLine"] = "TelescopeSelection",
-    ["FzfLuaCursorLineNr"] = "TelescopeResultsLineNr",
-    ["FzfLuaSearch"] = "TelescopeMatching",
-    ["FzfLuaScrollBorderEmpty"] = "TelescopeBorder",
-    ["FzfLuaScrollBorderFull"] = "TelescopeBorder",
-    ["FzfLuaScrollFloatEmpty"] = "TelescopePromptNormal",
-    ["FzfLuaScrollFloatFull"] = "TelescopePromptNormal",
-    ["FzfLuaHelpNormal"] = "TelescopeNormal",
-    ["FzfLuaHelpBorder"] = "TelescopeBorder",
-    ["FzfLuaHeaderBind"] = "luaNumber",
-    ["FzfLuaPathColNr"] = "luaNumber",
-    ["FzfLuaPathLineNr"] = "TelescopeResultsLineNr",
-    ["FzfLuaBufName"] = "TelescopeResultsIdentifier",
-    ["FzfLuaBufId"] = "TelescopeResultsIdentifier",
-    ["FzfLuaBufNr"] = "TelescopeResultsIdentifier",
-    ["FzfLuaBufLineNr"] = "TelescopeResultsLineNr",
-    ["FzfLuaTabTitle"] = "TelescopeMultiSelection",
-    ["FzfLuaTabMarker"] = "TelescopeMultiIcon",
-    ["FzfLuaDirIcon"] = "TelescopePreviewDirectory",
-    ["FzfLuaDirPart"] = "TelescopeResultsComment",
-    ["FzfLuaFilePart"] = "TelescopePreviewNormal",
-    ["FzfLuaLiveSym"] = "TelescopeMatching",
-    ["FzfLuaFzfNormal"] = "TelescopeNormal",
-    ["FzfLuaFzfCursorLine"] = "TelescopeSelection",
-    ["FzfLuaFzfMatch"] = "TelescopeMatching",
-    ["FzfLuaFzfBorder"] = "TelescopeBorder",
-    ["FzfLuaFzfScrollbar"] = "TelescopeBorder",
-    ["FzfLuaFzfSeparator"] = "TelescopeResultsComment",
-    ["FzfLuaFzfGutter"] = "TelescopeNormal",
-    ["FzfLuaFzfHeader"] = "TelescopeResultsComment",
-    ["FzfLuaFzfInfo"] = "Error",
-    ["FzfLuaFzfPointer"] = "TelescopeSelection",
-    ["FzfLuaFzfMarker"] = "TelescopeSelection",
-    ["FzfLuaFzfSpinner"] = "TelescopeSelectionCaret",
-    ["FzfLuaFzfPrompt"] = "TelescopePromptNormal",
-    ["FzfLuaFzfQuery"] = "TelescopeMatching",
-  },
   -- SnacksPicker mappings to Telescope highlights
   snacksPicker = {
     ["SnacksPickerBorder"] = "TelescopeBorder",
     ["SnacksPickerInput"] = "TelescopePromptNormal",
-    -- ["SnacksPickerInputBorder"] = "TelescopePromptBorder",
-    -- ["SnacksPickerBoxBorder"] = "TelescopeBorder",
+    ["SnacksPickerInputBorder"] = "TelescopePromptBorder",
+    ["SnacksPickerBoxBorder"] = "TelescopeBorder",
     ["SnacksPickerTitle"] = "TelescopePromptTitle",
     ["SnacksPickerBoxTitle"] = "TelescopePromptTitle",
     ["SnacksPickerList"] = "TelescopePromptNormal",
@@ -172,6 +132,7 @@ function M.setup_highlights()
     local cmp_hl = string.format("CmpItemKind%s", kind)
     vim.cmd(string.format("hi! link %s %s", blink_hl, cmp_hl))
   end
+  vim.api.nvim_set_hl(0, "@keyword.repeat", { fg = colors.yellow, italic = true, bold = true })
 end
 
 -- ========================

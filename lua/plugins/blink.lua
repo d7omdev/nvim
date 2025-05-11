@@ -50,7 +50,7 @@ return {
         enabled = true,
       },
     },
-    signature = { enabled = false, window = { border = "single" } },
+    signature = { enabled = true, window = { border = "single" } },
     -- sources = {
     --   providers = {
     --     ecolog = { name = "ecolog", module = "ecolog.integrations.cmp.blink_cmp" },

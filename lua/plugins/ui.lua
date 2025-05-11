@@ -31,6 +31,19 @@ return {
           buffer_selected = {
             bg = "#1E2122",
           },
+          duplicate_selected = {
+            bg = "#1E2122",
+            bold = true,
+          },
+          duplicate_visible = {
+            bg = "#1E2122",
+            bold = false,
+            italic = false,
+          },
+          duplicate = {
+            bold = false,
+            italic = false,
+          },
           close_button_selected = {
             fg = "#CA6169",
             bg = "#2D3031",
@@ -94,14 +107,18 @@ return {
             return s
           end,
           custom_areas = {
-            right = function() -- Adjust to 'left' or 'right' based on your layout
+            right = function()
               local toggle_theme = {
                 text = btn(g.toggle_theme_icon, "ThemeToggleBtn", "Toggle_theme"),
               }
               local close_all_bufs = {
                 text = btn(" 󰅖 ", "CloseAllBufsBtn", "CloseAllBufs"),
               }
-              return { toggle_theme, close_all_bufs }
+              if vim.bo.filetype == "snacks_dashboard" then
+                return { toggle_theme, close_all_bufs }
+              else
+                return {}
+              end
             end,
           },
         },
@@ -122,29 +139,13 @@ return {
     end,
   },
   {
-    "mistricky/codesnap.nvim",
-    event = "BufRead",
-    build = "make build_generator",
-    keys = {
-      { "<leader>cs", "", mode = "x", desc = "+Code Snap" },
-      { "<leader>csc", "<cmd>CodeSnap<cr>", mode = "x", desc = "Save selected code snapshot into clipboard" },
-      { "<leader>css", "<cmd>CodeSnapSave<cr>", mode = "x", desc = "Save selected code snapshot in ~/Pictures" },
-    },
-    opts = {
-      save_path = "~/Pictures/CodeSnap/",
-      has_breadcrumbs = true,
-      bg_theme = "grape",
-      code_font_family = "JetBrainsMono Nerd Font",
-      watermark = "",
-    },
-  },
-  {
     "rachartier/tiny-inline-diagnostic.nvim",
     event = "LspAttach",
-    enabled = false,
+    enabled = true,
     priority = 1000, -- needs to be loaded in first
     config = function()
       require("tiny-inline-diagnostic").setup({
+        preset = "simple",
         options = {
           show_source = true,
           use_icons_from_diagnostic = true,
@@ -202,6 +203,7 @@ return {
   {
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     event = "LspAttach",
+    enabled = false,
     config = function()
       vim.diagnostic.config({ virtual_lines = { only_current_line = true } })
       vim.api.nvim_create_autocmd("FileType", {

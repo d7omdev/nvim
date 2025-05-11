@@ -10,6 +10,9 @@ return {
         ["vim.lsp.util.stylize_markdown"] = true,
         ["cmp.entry.get_documentation"] = true,
       },
+      signature = {
+        enabled = false,
+      },
     },
     routes = {
       {
@@ -29,6 +32,15 @@ return {
           event = "msg_show",
           any = {
             { find = "Agent service not initialized" },
+          },
+        },
+        opts = { skip = true },
+      },
+      {
+        filter = {
+          event = "notify",
+          any = {
+            { find = "No information available" },
           },
         },
         opts = { skip = true },

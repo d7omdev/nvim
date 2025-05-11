@@ -178,20 +178,6 @@ return {
     "echasnovski/mini.diff",
     event = "VeryLazy",
     version = "*",
-    config = function()
-      require("mini.diff").setup({
-        -- Options for how hunks are visualized
-        view = {
-          -- Visualization style. Possible values are 'sign' and 'number'.
-          -- Default: 'number' if line numbers are enabled, 'sign' otherwise.
-          style = vim.go.number and "number" or "sign",
-          -- Signs used for hunks with 'sign' view
-          signs = { add = "▒", change = "▒", delete = "▒" },
-          -- Priority of used visualization extmarks
-          priority = 199,
-        },
-      })
-    end,
   },
   {
     "barrett-ruth/live-server.nvim",

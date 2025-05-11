@@ -5,6 +5,7 @@ local opts = {}
 -- Terminal Configuration
 -- ===============================
 opts.terminal = {
+  enabled = false,
   win = {
     wo = {
       winbar = "",

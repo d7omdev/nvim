@@ -36,4 +36,27 @@ vim.diagnostic.config({
 
 vim.cmd([[tnoremap <C-A-_> pwd\|wl-copy<CR><C-\><C-n>:cd <C-r>+<CR>]])
 
+opt.fillchars = {
+  diff = "╱",
+}
+
+opt.diffopt = {
+  "internal",
+  "filler",
+  "closeoff",
+  "context:12",
+  "algorithm:histogram",
+  "linematch:200",
+  "indent-heuristic",
+}
+
+vim.opt_local.conceallevel = 2
+opt.fillchars:append({ eob = " " })
+
 vim.loader.enable()
+
+-- Scss syntax highlighting in Vue files
+vim.cmd([[
+  autocmd FileType vue syntax include @scss syntax/scss.vim
+  autocmd FileType vue syntax region vueStyle matchgroup=vueTag start=/<style\s*lang="scss"\s*scoped\s*>/ end=/<\/style>/ contains=@scss keepend
+]])

@@ -1,5 +1,6 @@
 return {
-  "epwalsh/obsidian.nvim",
+  "obsidian-nvim/obsidian.nvim",
+  version = "*",
   lazy = false,
   opts = {
     -- A list of workspace names, paths, and configuration overrides.

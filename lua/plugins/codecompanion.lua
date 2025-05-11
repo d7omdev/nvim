@@ -51,7 +51,7 @@ return {
               },
             },
             {
-              role = "system",
+              role = "user",
               content = function(context)
                 -- Get diagnostics for the current line
                 local diagnostics = require("codecompanion.helpers.actions").get_diagnostics(

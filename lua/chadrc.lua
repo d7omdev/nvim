@@ -13,7 +13,10 @@ local options = {
     changed_themes = {},
     transparency = true,
     theme_toggle = { "gruvchad", "catppuccin" },
-    hl_override = {},
+    hl_override = {
+      ["@keyword.repeat"] = { italic = true, bold = true },
+      ["Keyword"] = { italic = true, bold = true },
+    },
   },
 }
 
@@ -24,6 +27,13 @@ if options.base46.transparency then
       italic = true,
     },
     TbBufOnClose = { fg = "#CA6169", bg = "#2D3031" },
+    ["@keyword.function"] = { italic = true, bold = true },
+    ["@keyword.directive"] = { italic = true, bold = true },
+    ["@keyword.exception"] = { italic = true, bold = true },
+    ["@keyword.conditional"] = { italic = true, bold = true },
+    ["@keyword.conditional.ternary"] = { italic = true, bold = true },
+    ["@keyword.repeat"] = { italic = true, bold = true },
+    ["@keyword.operator"] = { italic = true, bold = true },
   }
 end
 
