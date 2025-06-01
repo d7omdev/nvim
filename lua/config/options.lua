@@ -60,3 +60,8 @@ vim.cmd([[
   autocmd FileType vue syntax include @scss syntax/scss.vim
   autocmd FileType vue syntax region vueStyle matchgroup=vueTag start=/<style\s*lang="scss"\s*scoped\s*>/ end=/<\/style>/ contains=@scss keepend
 ]])
+
+vim.opt.conceallevel = 2
+
+opt.exrc = true
+opt.secure = true

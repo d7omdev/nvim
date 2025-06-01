@@ -38,14 +38,19 @@ return {
               docs = {
                 description = [[https://github.com/mhersson/mpls
 
-Markdown Preview Language Server (MPLS) is a language server that provides
-live preview of markdown files in your browser while you edit them in your favorite editor.
-              ]],
+  Markdown Preview Language Server (MPLS) is a language server that provides
+  live preview of markdown files in your browser while you edit them in your favorite editor.
+                ]],
               },
             }
           end
 
           lspconfig.mpls.setup(opts)
+
+          -- Kill MPLS on detach
+          opts.on_exit = function()
+            vim.fn.jobstart("pkill -f mpls", { detach = true })
+          end
         end,
       },
     },

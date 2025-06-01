@@ -198,4 +198,21 @@ return {
       require("overseer").setup()
     end,
   },
+  {
+    "fnune/recall.nvim",
+    config = function()
+      require("recall").setup({
+        sign = "",
+        sign_highlight = "@comment.note",
+        snacks = {
+          mappings = {
+            unmark_selected_entry = {
+              normal = "d",
+              insert = "",
+            },
+          },
+        },
+      })
+    end,
+  },
 }

@@ -4,12 +4,11 @@ local autocmd = vim.api.nvim_create_autocmd
 autocmd("BufWritePost", {
   pattern = { "*.tsx", "*.vue" },
   callback = function()
-    local clients = vim.lsp.get_clients()
-    for _, client in ipairs(clients) do
-      if client.name == "tailwindcss" then
-        local lsp = require("tailwind-tools.lsp")
-        lsp.sort_classes(true)
-        break
+    local clients = vim.lsp.get_clients({ name = "tailwindcss" })
+    if #clients > 0 then
+      local ok, lsp = pcall(require, "tailwind-tools.lsp")
+      if ok and lsp.sort_classes then
+        pcall(lsp.sort_classes, true)
       end
     end
   end,

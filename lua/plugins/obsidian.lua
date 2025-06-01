@@ -37,6 +37,7 @@ return {
     completion = {
       -- Set to false to disable completion.
       nvim_cmp = false,
+      blink = true,
       -- Trigger completion at 2 chars.
       min_chars = 2,
     },
@@ -177,7 +178,7 @@ return {
 
     picker = {
       -- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', or 'mini.pick'.
-      name = "fzf-lua",
+      name = "snacks.pick",
       -- Optional, configure key mappings for the picker. These are the defaults.
       -- Not all pickers support all mappings.
       mappings = {

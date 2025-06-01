@@ -1,4 +1,5 @@
 local lspconfig = require("lspconfig")
+local configs = require("lspconfig.configs")
 
 -- Set default LSP config options
 local default = lspconfig.util.default_config
@@ -43,6 +44,15 @@ lspconfig.gdscript.setup({
   end,
 })
 
+lspconfig.qmlls.setup({
+  cmd = { "qmlls6" },
+  filetypes = { "qmljs", "qml" },
+  root_dir = function(fname)
+    return vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
+  end,
+  single_file_support = true,
+})
+
 return {
   {
     "neovim/nvim-lspconfig",
@@ -60,11 +70,17 @@ return {
           enabled = false,
         },
         vtsls = {
-          -- enabled = vim.fn.filereadable("src/App.vue") == 1 or vim.fn.filereadable("nuxt.config.ts") == 1,
-          enabled = false,
+          enabled = vim.fn.filereadable("src/App.vue") == 1 or vim.fn.filereadable("nuxt.config.ts") == 1,
         },
         eslint = {
           enabled = false,
+        },
+        volar = {
+          init_options = {
+            vue = {
+              hybridMode = true,
+            },
+          },
         },
       },
       setup = {

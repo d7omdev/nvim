@@ -2,16 +2,14 @@ return {
   {
     "luckasRanarison/tailwind-tools.nvim",
     event = "BufRead",
-    enabled = function()
-      return not vim.tbl_contains({ "AvanteInput", "minifiles", "snacks_dashboard", "blade" }, vim.bo.filetype)
-        and vim.bo.buftype ~= "prompt"
-        and vim.b.completion ~= false
-    end,
+    -- enabled = function()
+    --   return not vim.tbl_contains({ "AvanteInput", "minifiles", "snacks_dashboard", "blade" }, vim.bo.filetype)
+    --     and vim.bo.buftype ~= "prompt"
+    --     and vim.b.completion ~= false
+    -- end,
+    enabled = false,
     name = "tailwind-tools",
     build = ":UpdateRemotePlugins",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-    },
     ft = { "typescriptreact", "astro", "vue" },
     opts = {
       server = {

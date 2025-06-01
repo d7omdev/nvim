@@ -22,6 +22,7 @@ return {
     "catppuccin/nvim",
     event = "BufRead",
   },
+  { "tiagovla/scope.nvim", config = true },
   {
     "akinsho/bufferline.nvim",
     enabled = true,
@@ -115,9 +116,9 @@ return {
                 text = btn(" 󰅖 ", "CloseAllBufsBtn", "CloseAllBufs"),
               }
               if vim.bo.filetype == "snacks_dashboard" then
-                return { toggle_theme, close_all_bufs }
-              else
                 return {}
+              else
+                return { toggle_theme, close_all_bufs }
               end
             end,
           },
@@ -134,7 +135,7 @@ return {
         line_opacity = 0.2,
         set_cursorline = false,
         set_number = false,
-        ignore_filetypes = { "NvimTree", "TelescopePrompt", "dashboard", "minifiles" },
+        ignore = { "NvimTree", "TelescopePrompt", "dashboard", "minifiles" },
       })
     end,
   },

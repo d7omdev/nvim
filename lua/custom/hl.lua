@@ -12,8 +12,9 @@ if not isTransparent then
   hl(0, "SnacksPickerInputBorder", { fg = "#242728", bg = "#242728" })
 else
   hl(0, "SnacksPickerBorder", { fg = "#1E2122", bg = "None" })
-  hl(0, "AvantePromptInput", { fg = "#ffffff", bg = "#1E2122" })
+  hl(0, "AvantePromptInput", { fg = Colors.white, bg = "#1E2122" })
   hl(0, "AvantePromptInputBorder", { fg = "#2D3031", bg = "#1E2122" })
+  hl(0, "TinyInlineDiagnosticVirtualTextArrow", { fg = Colors.white, bg = "NONE" })
 end
 
 hl(0, "St_HtmlServer", { fg = Colors.teal, bg = "NONE" })

@@ -14,6 +14,9 @@ return {
   -- LSP
   {
     "pmizio/typescript-tools.nvim",
+    enabled = function()
+      return not (vim.fn.filereadable("src/App.vue") == 1 or vim.fn.filereadable("nuxt.config.ts") == 1)
+    end,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "neovim/nvim-lspconfig",
@@ -23,7 +26,6 @@ return {
       "typescriptreact",
       "javascript",
       "javascriptreact",
-      "vue",
     },
     config = function()
       local api = require("typescript-tools.api")
@@ -34,7 +36,6 @@ return {
           "javascriptreact",
           "typescript",
           "typescriptreact",
-          "vue",
         },
         on_attach = function(client, bufNr)
           map("n", "gD", "<cmd>TSToolsGoToSourceDefinition<CR>", {
@@ -90,9 +91,9 @@ return {
         },
         settings = {
           -- For Vue support
-          tsserver_plugins = {
-            "@vue/typescript-plugin",
-          },
+          -- tsserver_plugins = {
+          --   "@vue/typescript-plugin",
+          -- },
           -- Enable all code actions
           expose_as_code_action = "all",
           complete_function_calls = true,

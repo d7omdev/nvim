@@ -230,7 +230,7 @@ local keymaps = {
   { { N, T }, "<A-t>", "<cmd>Lspsaga term_toggle<CR>", opts("Toggle terminal") },
   {
     N,
-    "<leader>mp",
+    "<leader>Mp",
     function()
       if vim.bo.filetype == "markdown" then
         vim.fn.system("xdg-open http://localhost:8989")
@@ -307,6 +307,60 @@ local keymaps = {
     N,
     "<C-/>",
     "<Nop>",
+  },
+  {
+    N,
+    "<leader>sm",
+    require("recall.snacks").pick,
+    opts("Search Marks"),
+  },
+  {
+    N,
+    "<S-m>",
+    "<cmd>RecallToggle<CR>",
+    opts("Recall Toggle"),
+  },
+  {
+    N,
+    "<leader>mr",
+    "<cmd>RecallUnmark<CR>",
+    opts("Recall Unmark"),
+  },
+  {
+    N,
+    "<leader>ma",
+    "<cmd>RecallMark<CR>",
+    opts("Recall Mark"),
+  },
+  {
+    N,
+    "]'",
+    "<cmd>RecallNext<CR>",
+    opts("Recall Next"),
+  },
+  {
+    N,
+    "['",
+    "<cmd>RecallPrevious<CR>",
+    opts("Recall Prev"),
+  },
+  {
+    N,
+    "mX",
+    "<cmd>RecallClear<CR>",
+    opts("Recall Clear"),
+  },
+  {
+    N,
+    "]m",
+    function()
+      local inst = require("grug-far").get_instance()
+      if inst then
+        inst:goto_next_match({ wrap = true })
+        inst:open_location()
+      end
+    end,
+    opts("Grug-far next match"),
   },
 }
 
