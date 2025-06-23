@@ -65,3 +65,5 @@ vim.opt.conceallevel = 2
 
 opt.exrc = true
 opt.secure = true
+
+vim.g.suda_smart_edit = 1

@@ -10,7 +10,7 @@ return {
     enabled = false,
     name = "tailwind-tools",
     build = ":UpdateRemotePlugins",
-    ft = { "typescriptreact", "astro", "vue" },
+    ft = { "typescriptreact", "javascriptreact", "astro", "vue" },
     opts = {
       server = {
         override = true, -- setup the server from the plugin if true

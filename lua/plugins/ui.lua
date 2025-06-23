@@ -26,145 +26,22 @@ return {
   {
     "akinsho/bufferline.nvim",
     enabled = true,
-    config = function()
-      require("bufferline").setup({
-        highlights = {
-          buffer_selected = {
-            bg = "#1E2122",
-          },
-          duplicate_selected = {
-            bg = "#1E2122",
-            bold = true,
-          },
-          duplicate_visible = {
-            bg = "#1E2122",
-            bold = false,
-            italic = false,
-          },
-          duplicate = {
-            bold = false,
-            italic = false,
-          },
-          close_button_selected = {
-            fg = "#CA6169",
-            bg = "#2D3031",
-          },
-          separator_selected = {
-            fg = "#1E2122",
-            bg = "#1E2122",
-          },
-          modified_selected = {
-            bg = "#2D3031",
-          },
-          indicator_selected = {
-            bg = "#1E2122",
-          },
-          diagnostic = {
-            bg = "#1E2122",
-          },
-          diagnostic_selected = {
-            bg = "#1E2122",
-          },
-          hint_selected = {
-            bg = "#1E2122",
-          },
-          hint_diagnostic_selected = {
-            bg = "#1E2122",
-          },
-          info_selected = {
-            bg = "#1E2122",
-          },
-          info_diagnostic_selected = {
-            bg = "#1E2122",
-          },
-          warning_selected = {
-            bg = "#1E2122",
-          },
-          warning_diagnostic_selected = {
-            bg = "#1E2122",
-          },
-          error_selected = {
-            bg = "#1E2122",
-          },
-          error_diagnostic_selected = {
-            bg = "#1E2122",
-          },
-          pick_selected = {
-            bg = "#1E2122",
-          },
-        },
-
-        options = {
-          separator_style = { "", "" },
-          buffer_close_icon = " ",
-          modified_icon = " ",
-          diagnostics = "nvim_lsp", -- Enable LSP diagnostics
-          diagnostics_indicator = function(_, _, diagnostics_dict, _)
-            local s = ""
-            for e, n in pairs(diagnostics_dict) do
-              local sym = e == "error" and " " or (e == "warning" and " " or "󱩎 ")
-              s = s .. sym .. n .. " "
-            end
-            return s
-          end,
-          custom_areas = {
-            right = function()
-              local toggle_theme = {
-                text = btn(g.toggle_theme_icon, "ThemeToggleBtn", "Toggle_theme"),
-              }
-              local close_all_bufs = {
-                text = btn(" 󰅖 ", "CloseAllBufsBtn", "CloseAllBufs"),
-              }
-              if vim.bo.filetype == "snacks_dashboard" then
-                return {}
-              else
-                return { toggle_theme, close_all_bufs }
-              end
-            end,
-          },
-        },
-      })
-    end,
+    config = require("plugins.config.bufferline"),
   },
   {
     "mvllow/modes.nvim",
     event = "BufRead",
     enabled = true,
-    config = function()
-      require("modes").setup({
-        line_opacity = 0.2,
-        set_cursorline = false,
-        set_number = false,
-        ignore = { "NvimTree", "TelescopePrompt", "dashboard", "minifiles" },
-      })
-    end,
+    config = require("plugins.config.modes"),
   },
   {
     "rachartier/tiny-inline-diagnostic.nvim",
     event = "LspAttach",
     enabled = true,
     priority = 1000, -- needs to be loaded in first
-    config = function()
-      require("tiny-inline-diagnostic").setup({
-        preset = "simple",
-        options = {
-          show_source = true,
-          use_icons_from_diagnostic = true,
-          show_all_diags_on_cursorline = true,
-        },
-      })
-    end,
+    config = require("plugins.config.tiny-inline-diagnostic"),
   },
-  -- {
-  --   "Bekaboo/dropbar.nvim",
-  --   event = "BufRead",
-  --   config = function()
-  --     local dropbar_api = require("dropbar.api")
-  --     vim.keymap.set("n", "<Leader>;", dropbar_api.pick, { desc = "Pick symbols in winbar" })
-  --     vim.keymap.set("n", "[;", dropbar_api.goto_context_start, { desc = "Go to start of current context" })
-  --     vim.keymap.set("n", "];", dropbar_api.select_next_context, { desc = "Select next context" })
-  --   end,
-  -- },
+
   {
     "rachartier/tiny-glimmer.nvim",
     branch = "main",

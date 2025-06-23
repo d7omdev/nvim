@@ -12,7 +12,6 @@ return {
     "lambdalisue/vim-suda",
     event = "VeryLazy",
     config = function()
-      vim.g.suda_smart_edit = 1
       -- Expand 'ss' into 'SudaWrite' in the command line
       vim.cmd([[cab ss SudaWrite<CR>]])
     end,
@@ -88,24 +87,6 @@ return {
       },
     },
     version = "*",
-  },
-  {
-    "smoka7/multicursors.nvim",
-    enabled = false,
-    event = "BufRead",
-    dependencies = {
-      "smoka7/hydra.nvim",
-    },
-    opts = {},
-    cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
-    keys = {
-      {
-        mode = { "v", "n" },
-        "<Leader>m",
-        "<cmd>MCstart<cr>",
-        desc = "Multi cursors",
-      },
-    },
   },
   {
     "Aasim-A/scrollEOF.nvim",
