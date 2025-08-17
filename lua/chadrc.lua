@@ -2,6 +2,7 @@ local utils = require("nvchad.stl.utils")
 local sep_icons = utils.separators
 local separators = sep_icons["default"]
 local sep_l = separators["left"]
+local sep_r = separators["right"]
 
 local lazy_status = require("lazy.status")
 
@@ -70,6 +71,31 @@ options.ui = {
     },
 
     modules = {
+
+      file = function()
+        local x = utils.file()
+        local path = vim.api.nvim_buf_get_name(utils.stbufnr())
+
+        -- Extract parent and child (only last two segments)
+        local parent, child = path:match("([^\\/]+)/([^\\/]+)$")
+        local grandparent = path:match("([^\\/]+)/[^\\/]+/[^\\/]+$")
+
+        local display_name
+        if grandparent then
+          display_name = parent .. "/" .. child
+        else
+          display_name = child or path:match("[^\\/]+$") or path
+        end
+
+        return "%#St_file# "
+          .. x[1]
+          .. " "
+          .. display_name
+          .. (options.ui.statusline.theme == "default" and " " or "")
+          .. "%#St_file_sep#"
+          .. sep_r
+      end,
+
       lsp = function()
         if not rawget(vim, "lsp") then
           return ""
