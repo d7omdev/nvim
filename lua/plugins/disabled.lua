@@ -5,5 +5,5 @@ return {
   },
   -- Disabling these plugins if nvchad ui is used
   { "nvim-lualine/lualine.nvim", enabled = false },
-  { "echasnovski/mini.icons", enabled = false },
+  { "nvim-mini/mini.icons", enabled = false },
 }

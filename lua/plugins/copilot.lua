@@ -2,6 +2,8 @@ return {
   "zbirenbaum/copilot.lua",
   cmd = "Copilot",
   build = ":Copilot auth",
+  event = "InsertEnter",
+  dependencies = { "copilotlsp-nvim/copilot-lsp" },
   config = function()
     require("copilot").setup({
       should_attach = function(_, bufname)

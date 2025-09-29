@@ -1,5 +1,6 @@
 return {
   "saghen/blink.cmp",
+  dependencies = { "giuxtaposition/blink-cmp-copilot" },
   opts_extend = {
     "sources.completion.enabled_providers",
     "sources.compat",
@@ -62,7 +63,7 @@ return {
     --   default = { "lsp", "path", "snippets", "buffer" },
     -- },
     sources = {
-      default = { "snippets", "lsp", "path", "buffer" },
+      default = { "snippets", "lsp", "path", "buffer", "copilot" },
       providers = {
         snippets = {
           min_keyword_length = 1,
@@ -82,6 +83,12 @@ return {
         buffer = {
           min_keyword_length = 1,
           score_offset = 1,
+        },
+        copilot = {
+          name = "copilot",
+          module = "blink-cmp-copilot",
+          score_offset = 100,
+          async = true,
         },
       },
     },
@@ -103,6 +110,16 @@ return {
       keymap = {
         ["<Down>"] = { "select_next", "fallback" },
         ["<Up>"] = { "select_prev", "fallback" },
+        ["<Tab>"] = {
+          "snippet_forward",
+          function() -- sidekick next edit suggestion
+            return require("sidekick").nes_jump_or_apply()
+          end,
+          function() -- if you are using Neovim's native inline completions
+            return vim.lsp.inline_completion.get()
+          end,
+          "fallback",
+        },
       },
       completion = {
         menu = {

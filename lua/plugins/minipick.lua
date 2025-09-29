@@ -5,12 +5,12 @@ end
 
 return {
   {
-    "echasnovski/mini.pick",
+    "nvim-mini/mini.pick",
     enabled = false,
     dependencies = {
-      { "echasnovski/mini.extra", opts = {} },
-      { "echasnovski/mini.visits", opts = {} },
-      { "echasnovski/mini.fuzzy", opts = {} },
+      { "nvim-mini/mini.extra", opts = {} },
+      { "nvim-mini/mini.visits", opts = {} },
+      { "nvim-mini/mini.fuzzy", opts = {} },
     },
     cmd = "Pick",
     config = function()
@@ -168,7 +168,7 @@ return {
         return MiniPick.registry[chosen_picker_name]()
       end
 
-      -- thanks to https://github.com/echasnovski/mini.nvim/discussions/609#
+      -- thanks to https://github.com/nvim-mini/mini.nvim/discussions/609#
       local function create_frecency_picker(opts)
         opts = opts or {}
         local directory = opts.directory or nil -- nil means current directory
