@@ -69,6 +69,19 @@ autocmd("FileType", {
   end,
 })
 
+-- Listen for opencode events
+autocmd("User", {
+  pattern = "OpencodeEvent",
+  callback = function(args)
+    -- See the available event types and their properties
+    vim.notify(vim.inspect(args.data))
+    -- Do something interesting, like show a notification when opencode finishes responding
+    if args.data.type == "session.idle" then
+      vim.notify("opencode finished responding")
+    end
+  end,
+})
+
 autocmd("User", {
   pattern = "BlinkCmpMenuOpen",
   callback = function()
