@@ -1,6 +1,10 @@
 return {
   "saghen/blink.cmp",
-  dependencies = { "giuxtaposition/blink-cmp-copilot" },
+  dependencies = {
+    {
+      "rafamadriz/friendly-snippets",
+    },
+  },
   opts_extend = {
     "sources.completion.enabled_providers",
     "sources.compat",
@@ -52,23 +56,9 @@ return {
       },
     },
     signature = { enabled = true, window = { border = "single" } },
-    -- sources = {
-    --   providers = {
-    --     ecolog = { name = "ecolog", module = "ecolog.integrations.cmp.blink_cmp" },
-    --     codecompanion = {
-    --       name = "CodeCompanion",
-    --       module = "codecompanion.providers.completion.blink",
-    --     },
-    --   },
-    --   default = { "lsp", "path", "snippets", "buffer" },
-    -- },
     sources = {
-      default = { "snippets", "lsp", "path", "buffer", "copilot" },
+      default = { "snippets", "lsp", "path", "buffer" },
       providers = {
-        snippets = {
-          min_keyword_length = 1,
-          score_offset = 4,
-        },
         lsp = {
           min_keyword_length = 0,
           score_offset = 3,
@@ -84,12 +74,12 @@ return {
           min_keyword_length = 1,
           score_offset = 1,
         },
-        copilot = {
-          name = "copilot",
-          module = "blink-cmp-copilot",
-          score_offset = 100,
-          async = true,
-        },
+        -- copilot = {
+        --   name = "copilot",
+        --   module = "blink-cmp-copilot",
+        --   score_offset = 100,
+        --   async = true,
+        -- },
       },
     },
     cmdline = {
@@ -110,16 +100,6 @@ return {
       keymap = {
         ["<Down>"] = { "select_next", "fallback" },
         ["<Up>"] = { "select_prev", "fallback" },
-        ["<Tab>"] = {
-          "snippet_forward",
-          function() -- sidekick next edit suggestion
-            return require("sidekick").nes_jump_or_apply()
-          end,
-          function() -- if you are using Neovim's native inline completions
-            return vim.lsp.inline_completion.get()
-          end,
-          "fallback",
-        },
       },
       completion = {
         menu = {
@@ -166,6 +146,7 @@ return {
     keymap = {
       preset = "enter",
       ["<C-y>"] = { "select_and_accept" },
+      ["<Esc>"] = { "hide", "fallback" },
     },
   },
 }

@@ -1,25 +1,20 @@
 return {
   {
     "yetone/avante.nvim",
-    lazy = true,
-    event = "BufRead",
+    enabled = false,
     build = "make",
-
+    event = "BufReadPre",
     opts = {
-      provider = "copilot",
+      provider = "claude",
+      claude = {},
       hints = { enabled = false },
       file_selector = {
         provider = "snacks",
       },
     },
-
-    dependencies = {
-      {
-        "MeanderingProgrammer/render-markdown.nvim",
-        lazy = true,
-        ft = { "Avante" },
-      },
-    },
+    config = function(_, opts)
+      require("avante").setup(opts)
+    end,
   },
   {
     "stevearc/dressing.nvim",
@@ -32,10 +27,9 @@ return {
   {
     "saghen/blink.compat",
     lazy = true,
-    opts = {},
     config = function()
-      -- monkeypatch cmp.ConfirmBehavior for Avante
-      require("cmp").ConfirmBehavior = {
+      local cmp = require("cmp")
+      cmp.ConfirmBehavior = {
         Insert = "insert",
         Replace = "replace",
       }

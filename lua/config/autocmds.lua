@@ -82,16 +82,49 @@ autocmd("User", {
   end,
 })
 
-autocmd("User", {
-  pattern = "BlinkCmpMenuOpen",
-  callback = function()
-    vim.b.copilot_suggestion_hidden = true
-  end,
-})
+-- Auto-fix and format on save for ESLint
+-- local eslint_fix = vim.api.nvim_create_augroup("EslintFixOnSave", { clear = true })
 
-autocmd("User", {
-  pattern = "BlinkCmpMenuClose",
-  callback = function()
-    vim.b.copilot_suggestion_hidden = false
+-- autocmd("BufWritePre", {
+--   group = eslint_fix,
+--   pattern = { "*.js", "*.jsx", "*.ts", "*.tsx", "*.vue" },
+--   callback = function()
+--     local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+--     for _, client in ipairs(clients) do
+--       if client.name == "eslint" then
+--         -- Run ESLint code actions before saving
+--         vim.cmd("EslintFixAll")
+--         vim.lsp.buf.format({ bufnr = 0, async = false })
+--         break
+--       end
+--     end
+--   end,
+-- })
+
+autocmd("BufWritePost", {
+  pattern = { "*.ts", "*.tsx", "*.js", "*.jsx" },
+  callback = function(args)
+    local filepath = vim.fn.fnameescape(args.file)
+
+    vim.fn.jobstart({ "bun", "run", "eslint", "--fix", filepath, "--quiet" }, {
+      stdout_buffered = true,
+      stderr_buffered = true,
+      on_stdout = function(_, data)
+        if data and #data > 1 then
+          vim.notify(table.concat(data, "\n"), vim.log.levels.INFO, { title = "ESLint" })
+        end
+      end,
+      on_stderr = function(_, data)
+        if data and #data > 1 then
+          vim.notify(table.concat(data, "\n"), vim.log.levels.ERROR, { title = "ESLint Error" })
+        end
+      end,
+      on_exit = function()
+        -- silently reload buffer if file was modified externally
+        if vim.fn.getbufinfo(args.buf)[1].loaded == 1 then
+          vim.cmd("checktime " .. args.buf)
+        end
+      end,
+    })
   end,
 })

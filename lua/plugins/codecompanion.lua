@@ -1,18 +1,33 @@
 return {
   "olimorris/codecompanion.nvim",
-  -- version = "11.28.x",
+  version = "v17.33.0",
   event = "VeryLazy",
   config = function()
     require("codecompanion").setup({
+      adapters = {
+        acp = {
+          claude_code = function()
+            return require("codecompanion.adapters").extend("claude_code", {
+              env = {
+                CLAUDE_CODE_OAUTH_TOKEN = vim.fn.system("pass show claude_code_key"):gsub("%s+", ""),
+              },
+            })
+          end,
+        },
+      },
       display = {
         diff = {
           provider = "mini_diff",
         },
       },
       strategies = {
+        cmd = {
+          adapter = "claude_code",
+        },
         chat = {
+          adapter = "claude_code",
           roles = {
-            llm = "  Copilot ",
+            llm = "  Claude ",
             user = " D7OM",
           },
           keymaps = {
@@ -90,7 +105,7 @@ return {
       }, function(input)
         -- If input is not empty, execute CodeCompanion command
         if input and input ~= "" then
-          vim.cmd("'<,'>CodeCompanion /buffer " .. input)
+          vim.cmd("'<,'>CodeCompanion inline " .. input)
         end
       end)
     end, { noremap = true, silent = true, desc = "CC Inline with Prompt" })

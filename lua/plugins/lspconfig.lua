@@ -44,14 +44,14 @@ lspconfig.gdscript.setup({
   end,
 })
 
-lspconfig.qmlls.setup({
-  cmd = { "qmlls6" },
-  filetypes = { "qmljs", "qml" },
-  root_dir = function(fname)
-    return vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
-  end,
-  single_file_support = true,
-})
+-- lspconfig.qmlls.setup({
+--   cmd = { "qmlls6" },
+--   filetypes = { "qmljs", "qml" },
+--   root_dir = function(fname)
+--     return vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
+--   end,
+--   single_file_support = true,
+-- })
 
 return {
   {
@@ -62,7 +62,7 @@ return {
       },
       inlay_hints = {
         enabled = true,
-        exclude = { "typescript", "typescriptreact", "javascript", "javascriptreact", "vue", "lua" },
+        exclude = { "typescriptreact", "javascript", "javascriptreact", "vue", "lua" },
       },
       codelens = { enabled = false },
       servers = {
@@ -74,6 +74,9 @@ return {
         },
         eslint = {
           enabled = false,
+          settings = {
+            format = { enable = true },
+          },
         },
         volar = {
           init_options = {
@@ -106,10 +109,15 @@ return {
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
-    opts = function()
-      local Keys = require("lazyvim.plugins.lsp.keymaps").get()
-      vim.list_extend(Keys, { { "K", false } })
-    end,
+    opts = {
+      servers = {
+        ["*"] = {
+          keys = {
+            { "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", has = "definition" },
+          },
+        },
+      },
+    },
   },
 
   -- LSPSaga Configuration

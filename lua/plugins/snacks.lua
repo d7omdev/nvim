@@ -27,6 +27,15 @@ opts.image = { enabled = true, doc = {
 opts.profiler = { enabled = true }
 
 -- ===============================
+-- Explorer Configuration
+-- ===============================
+
+---@class snacks.explorer.Config
+opts.explorer = {
+  enabled = false,
+}
+
+-- ===============================
 -- Picker Configuration
 -- ===============================
 ---@class snacks.picker.Config
@@ -164,7 +173,19 @@ opts.quickfile = { enabled = true }
 -- ===============================
 -- Statuscolumn Configuration
 -- ===============================
-opts.statuscolumn = { enabled = true }
+opts.statuscolumn = {
+  enabled = true, -- Make sure this is true
+  left = { "mark", "sign" }, -- git signs, diagnostics, etc.
+  right = { "fold", "git" },
+  folds = {
+    open = false,
+    git_hl = false,
+  },
+  git = {
+    patterns = { "GitSign", "MiniDiffSign" },
+  },
+  refresh = 50,
+}
 
 -- ===============================
 -- Words Configuration
@@ -227,9 +248,23 @@ local keys = {
 }
 
 return {
-  "folke/snacks.nvim",
-  priority = 1000,
-  lazy = false,
-  opts = opts,
-  keys = keys,
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = opts,
+    keys = keys,
+  },
+  {
+    "folke/snacks.nvim",
+    opts = {
+      explorer = { enabled = false },
+    },
+    keys = {
+      { "<leader>fe", false },
+      { "<leader>fE", false },
+      { "<leader>E", false },
+      { "<leader>e", false },
+    },
+  },
 }

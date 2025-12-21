@@ -3,14 +3,17 @@ return {
   cmd = "Copilot",
   build = ":Copilot auth",
   event = "InsertEnter",
-  dependencies = { "copilotlsp-nvim/copilot-lsp" },
+  enabled = false,
   config = function()
     require("copilot").setup({
+      filetypes = {
+        ["opencode"] = false,
+        ["grug-far"] = false,
+      },
       should_attach = function(_, bufname)
         if string.match(bufname, "env") then
           return false
         end
-
         return true
       end,
       suggestion = {
@@ -19,9 +22,6 @@ return {
           accept = "<Tab>",
           accept_word = "<C-L>",
           accept_line = "<C-CR>",
-          next = "<C-]>",
-          prev = "<C-[>",
-          dismiss = "<ESC>",
         },
       },
       filetypes = {

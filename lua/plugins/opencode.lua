@@ -1,55 +1,69 @@
 return {
   "sudo-tee/opencode.nvim",
   config = function()
-    vim.g.opencode_opts = {
-      -- Your configuration, if any — see `lua/opencode/config.lua`
-    }
     vim.opt.autoread = true
 
     -- Default configuration with all available options
+    -- -- Default configuration with all available options
     require("opencode").setup({
-      preferred_picker = nil, -- 'telescope', 'fzf', 'mini.pick', 'snacks', if nil, it will use the best available picker. Note mini.pick does not support multiple selections
-      preferred_completion = nil, -- 'blink', 'nvim-cmp','vim_complete' if nil, it will use the best available completion
+      preferred_picker = "snacks", -- 'telescope', 'fzf', 'mini.pick', 'snacks', if nil, it will use the best available picker. Note mini.pick does not support multiple selections
+      preferred_completion = "blink", -- 'blink', 'nvim-cmp','vim_complete' if nil, it will use the best available completion
       default_global_keymaps = true, -- If false, disables all default global keymaps
       default_mode = "build", -- 'build' or 'plan' or any custom configured. @see [OpenCode Agents](https://opencode.ai/docs/modes/)
+      keymap_prefix = "<leader>o", -- Default keymap prefix for global keymaps change to your preferred prefix and it will be applied to all keymaps starting with <leader>o
       keymap = {
-        global = {
-          toggle = "<leader>og", -- Open opencode. Close if opened
-          open_input = "<leader>oi", -- Opens and focuses on input window on insert mode
-          open_input_new_session = "<leader>oI", -- Opens and focuses on input window on insert mode. Creates a new session
-          open_output = "<leader>oo", -- Opens and focuses on output window
-          toggle_focus = "<leader>ot", -- Toggle focus between opencode and last window
-          close = "<leader>oq", -- Close UI windows
-          select_session = "<leader>os", -- Select and load a opencode session
-          configure_provider = "<leader>op", -- Quick provider and model switch from predefined list
-          diff_open = "<leader>od", -- Opens a diff tab of a modified file since the last opencode prompt
-          diff_next = "<leader>o]", -- Navigate to next file diff
-          diff_prev = "<leader>o[", -- Navigate to previous file diff
-          diff_close = "<leader>oc", -- Close diff view tab and return to normal editing
-          diff_revert_all_last_prompt = "<leader>ora", -- Revert all file changes since the last opencode prompt
-          diff_revert_this_last_prompt = "<leader>ort", -- Revert current file changes since the last opencode prompt
-          diff_revert_all = "<leader>orA", -- Revert all file changes since the last opencode session
-          diff_revert_this = "<leader>orT", -- Revert current file changes since the last opencode session
-          swap_position = "<leader>ox", -- Swap Opencode pane left/right
+        editor = {
+          ["<leader>Og"] = { "toggle" }, -- Open opencode. Close if opened
+          ["<leader>Oi"] = { "open_input" }, -- Opens and focuses on input window on insert mode
+          ["<leader>OI"] = { "open_input_new_session" }, -- Opens and focuses on input window on insert mode. Creates a new session
+          ["<leader>Oo"] = { "open_output" }, -- Opens and focuses on output window
+          ["<leader>Ot"] = { "toggle_focus" }, -- Toggle focus between opencode and last window
+          ["<leader>Oq"] = { "close" }, -- Close UI windows
+          ["<leader>Os"] = { "select_session" }, -- Select and load a opencode session
+          ["<leader>Op"] = { "configure_provider" }, -- Quick provider and model switch from predefined list
+          ["<leader>Od"] = { "diff_open" }, -- Opens a diff tab of a modified file since the last opencode prompt
+          ["<leader>O]"] = { "diff_next" }, -- Navigate to next file diff
+          ["<leader>O["] = { "diff_prev" }, -- Navigate to previous file diff
+          ["<leader>Oc"] = { "diff_close" }, -- Close diff view tab and return to normal editing
+          ["<leader>Ora"] = { "diff_revert_all_last_prompt" }, -- Revert all file changes since the last opencode prompt
+          ["<leader>Ort"] = { "diff_revert_this_last_prompt" }, -- Revert current file changes since the last opencode prompt
+          ["<leader>OrA"] = { "diff_revert_all" }, -- Revert all file changes since the last opencode session
+          ["<leader>OrT"] = { "diff_revert_this" }, -- Revert current file changes since the last opencode session
+          ["<leader>Orr"] = { "diff_restore_snapshot_file" }, -- Restore a file to a restore point
+          ["<leader>OrR"] = { "diff_restore_snapshot_all" }, -- Restore all files to a restore point
+          ["<leader>Ox"] = { "swap_position" }, -- Swap Opencode pane left/right
+          ["<leader>Opa"] = { "permission_accept" }, -- Accept permission request once
+          ["<leader>OpA"] = { "permission_accept_all" }, -- Accept all (for current tool)
+          ["<leader>Opd"] = { "permission_deny" }, -- Deny permission request once
         },
-        window = {
-          submit = "<cr>", -- Submit prompt (normal mode)
-          submit_insert = "<cr>", -- Submit prompt (insert mode)
-          close = "<esc>", -- Close UI windows
-          stop = "<C-c>", -- Stop opencode while it is running
-          next_message = "]]", -- Navigate to next message in the conversation
-          prev_message = "[[", -- Navigate to previous message in the conversation
-          mention = "@", -- Insert mention (file/agent)
-          mention_file = "~", -- Pick a file and add to context. See File Mentions section
-          slash_commands = "/", -- Pick a command to run in the input window
-          toggle_pane = "<tab>", -- Toggle between input and output panes
-          prev_prompt_history = "<up>", -- Navigate to previous prompt in history
-          next_prompt_history = "<down>", -- Navigate to next prompt in history
-          switch_mode = "<M-m>", -- Switch between modes (build/plan)
-          focus_input = "<C-i>", -- Focus on input window and enter insert mode at the end of the input from the output window
-          select_child_session = "<leader>oS", -- Select and load a child session
-          debug_message = "<leader>oD", -- Open raw message in new buffer for debugging
-          debug_output = "<leader>oO", -- Open raw output in new buffer for debugging
+        input_window = {
+          ["<cr>"] = { "submit_input_prompt", mode = { "n", "i" } }, -- Submit prompt (normal mode and insert mode)
+          ["<esc>"] = { "close" }, -- Close UI windows
+          ["<C-c>"] = { "stop" }, -- Stop opencode while it is running
+          ["~"] = { "mention_file", mode = "i" }, -- Pick a file and add to context. See File Mentions section
+          ["@"] = { "mention", mode = "i" }, -- Insert mention (file/agent)
+          ["/"] = { "slash_commands", mode = "i" }, -- Pick a command to run in the input window
+          ["<tab>"] = { "toggle_pane", mode = { "n", "i" } }, -- Toggle between input and output panes
+          ["<up>"] = { "prev_prompt_history", mode = { "n", "i" } }, -- Navigate to previous prompt in history
+          ["<down>"] = { "next_prompt_history", mode = { "n", "i" } }, -- Navigate to next prompt in history
+          ["<M-m>"] = { "switch_mode" }, -- Switch between modes (build/plan)
+        },
+        output_window = {
+          ["<esc>"] = { "close" }, -- Close UI windows
+          ["<C-c>"] = { "stop" }, -- Stop opencode while it is running
+          ["]]"] = { "next_message" }, -- Navigate to next message in the conversation
+          ["[["] = { "prev_message" }, -- Navigate to previous message in the conversation
+          ["<tab>"] = { "toggle_pane", mode = { "n", "i" } }, -- Toggle between input and output panes
+          ["<C-i>"] = { "focus_input" }, -- Focus on input window and enter insert mode at the end of the input from the output window
+          ["<leader>oS"] = { "select_child_session" }, -- Select and load a child session
+          ["<leader>oD"] = { "debug_message" }, -- Open raw message in new buffer for debugging
+          ["<leader>oO"] = { "debug_output" }, -- Open raw output in new buffer for debugging
+          ["<leader>ods"] = { "debug_session" }, -- Open raw session in new buffer for debugging
+        },
+        permission = {
+          accept = "a", -- Accept permission request once (only available when there is a pending permission request)
+          accept_all = "A", -- Accept all (for current tool) permission request once (only available when there is a pending permission request)
+          deny = "d", -- Deny permission request once (only available when there is a pending permission request)
         },
       },
       ui = {
@@ -78,7 +92,7 @@ return {
         completion = {
           file_sources = {
             enabled = true,
-            preferred_cli_tool = "fd", -- 'fd','fdfind','rg','git' if nil, it will use the best available tool
+            preferred_cli_tool = "rg", -- 'fd','fdfind','rg','git' if nil, it will use the best available tool
             ignore_patterns = {
               "^%.git/",
               "^%.svn/",
@@ -137,10 +151,11 @@ return {
     {
       "MeanderingProgrammer/render-markdown.nvim",
       opts = {
+        enabled = false,
         anti_conceal = { enabled = false },
-        file_types = { "markdown", "opencode_output" },
+        file_types = { "opencode_output" },
       },
-      ft = { "markdown", "Avante", "copilot-chat", "opencode_output" },
+      ft = { "Avante", "copilot-chat", "opencode_output" },
     },
     -- Optional, for file mentions and commands completion, pick only one
     "saghen/blink.cmp",

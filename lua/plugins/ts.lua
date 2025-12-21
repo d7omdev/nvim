@@ -1,5 +1,5 @@
 local map = vim.keymap.set
--- this file will hold ts stuff
+
 return {
   {
     "davidosomething/format-ts-errors.nvim",
@@ -11,7 +11,7 @@ return {
       })
     end,
   },
-  -- LSP
+
   {
     "pmizio/typescript-tools.nvim",
     enabled = function()
@@ -20,81 +20,36 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "neovim/nvim-lspconfig",
+      "davidosomething/format-ts-errors.nvim",
     },
-    ft = {
-      "typescript",
-      "typescriptreact",
-      "javascript",
-      "javascriptreact",
-    },
+    ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
     config = function()
       local api = require("typescript-tools.api")
 
       require("typescript-tools").setup({
-        filetypes = {
-          "javascript",
-          "javascriptreact",
-          "typescript",
-          "typescriptreact",
-        },
-        on_attach = function(client, bufNr)
-          map("n", "gD", "<cmd>TSToolsGoToSourceDefinition<CR>", {
-            desc = "Go to source definition",
-            silent = true,
-            buffer = bufNr,
-          })
-          -- TSToolsFileReferences
-          map("n", "gR", "<cmd>TSToolsFileReferences<CR>", {
-            desc = "File References",
-            silent = true,
-            buffer = bufNr,
-          })
-          map(
-            { "n", "v" },
-            "<leader>co",
-            "<cmd>TSToolsOrganizeImports<CR>",
-            { desc = "Imports Organize", silent = true, buffer = bufNr }
-          )
-          map(
-            { "n", "v" },
-            "<leader>cS",
-            "<cmd>TSToolsSortImports<CR>",
-            { desc = "Imports Sort", silent = true, buffer = bufNr }
-          )
-          map({ "n", "v" }, "<leader>cr", "<cmd>TSToolsRemoveUnusedImports<CR>", {
-            desc = "Imports remove unused",
-            silent = true,
-            buffer = bufNr,
-          })
-          map({ "n", "v" }, "<leader>cM", "<cmd>TSToolsAddMissingImports<CR>", {
-            desc = "Add missing imports",
-            silent = true,
-            buffer = bufNr,
-          })
-          map(
-            { "n", "v" },
-            "<leader>rF",
-            "<cmd>TSToolsRenameFile<CR>",
-            { desc = "Rename File", silent = true, buffer = bufNr }
-          )
-          -- TSToolsFixAll
-          map({ "n", "v" }, "<leader>cD", "<cmd>TSToolsFixAll<CR>", {
-            desc = "Fix all diagnostics",
-            silent = true,
-            buffer = bufNr,
-          })
-        end,
+
         handlers = {
-          ["textDocument/publishDiagnostics"] = api.filter_diagnostics({
-            80001, -- Ignore this might be converted to a ES export
-          }),
+          ["textDocument/publishDiagnostics"] = function(_, result, ctx, config)
+            if not result.diagnostics then
+              return
+            end
+            local formatter_map = require("format-ts-errors")
+            local idx = 1
+            while idx <= #result.diagnostics do
+              local entry = result.diagnostics[idx]
+              local formatter = formatter_map[entry.code]
+              entry.message = formatter and formatter(entry.message) or entry.message
+              if entry.code == 80001 then
+                table.remove(result.diagnostics, idx)
+              else
+                idx = idx + 1
+              end
+            end
+            vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
+          end,
         },
+
         settings = {
-          -- For Vue support
-          -- tsserver_plugins = {
-          --   "@vue/typescript-plugin",
-          -- },
-          -- Enable all code actions
           expose_as_code_action = "all",
           complete_function_calls = true,
           jsx_close_tag = {
@@ -103,6 +58,24 @@ return {
           },
         },
       })
+      map("n", "gd", "<cmd>TSToolsGoToSourceDefinition<CR>", { desc = "Go to source definition", buffer = bufNr })
+      map("n", "gR", "<cmd>TSToolsFileReferences<CR>", { desc = "File References", buffer = bufNr })
+      map({ "n", "v" }, "<leader>co", "<cmd>TSToolsOrganizeImports<CR>", { desc = "Organize Imports", buffer = bufNr })
+      map({ "n", "v" }, "<leader>cS", "<cmd>TSToolsSortImports<CR>", { desc = "Sort Imports", buffer = bufNr })
+      map(
+        { "n", "v" },
+        "<leader>cr",
+        "<cmd>TSToolsRemoveUnusedImports<CR>",
+        { desc = "Remove Unused Imports", buffer = bufNr }
+      )
+      map(
+        { "n", "v" },
+        "<leader>cM",
+        "<cmd>TSToolsAddMissingImports<CR>",
+        { desc = "Add Missing Imports", buffer = bufNr }
+      )
+      map({ "n", "v" }, "<leader>rF", "<cmd>TSToolsRenameFile<CR>", { desc = "Rename File", buffer = bufNr })
+      map({ "n", "v" }, "<leader>cD", "<cmd>TSToolsFixAll<CR>", { desc = "Fix All Diagnostics", buffer = bufNr })
     end,
   },
 }
