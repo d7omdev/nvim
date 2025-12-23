@@ -93,4 +93,10 @@ return {
       require("lsp_lines").setup()
     end,
   },
+  {
+    "folke/drop.nvim",
+    opts = {
+      filetypes = { "dashboard", "alpha", "ministarter", "snacks_dashboard" },
+    },
+  },
 }
