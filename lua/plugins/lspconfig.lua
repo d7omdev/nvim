@@ -62,7 +62,7 @@ return {
       },
       inlay_hints = {
         enabled = true,
-        exclude = { "typescriptreact", "javascript", "javascriptreact", "vue", "lua" },
+        -- exclude = { "typescriptreact", "javascript", "javascriptreact", "vue", "lua" },
       },
       codelens = { enabled = false },
       servers = {

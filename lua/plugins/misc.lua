@@ -197,4 +197,15 @@ return {
     "esmuellert/vscode-diff.nvim",
     dependencies = { "MunifTanjim/nui.nvim" },
   },
+  {
+    "chrisgrieser/nvim-lsp-endhints",
+    event = "LspAttach",
+    opts = {}, -- required, even if empty
+  },
+  {
+    "chriswritescode-dev/consolelog.nvim",
+    config = function()
+      require("consolelog").setup()
+    end,
+  },
 }

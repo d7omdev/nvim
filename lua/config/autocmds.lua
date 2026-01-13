@@ -106,7 +106,7 @@ autocmd("BufWritePost", {
   callback = function(args)
     local filepath = vim.fn.fnameescape(args.file)
 
-    vim.fn.jobstart({ "bun", "run", "eslint", "--fix", filepath, "--quiet" }, {
+    vim.fn.jobstart({ "bun", "run", "eslint", "--fix", filepath }, {
       stdout_buffered = true,
       stderr_buffered = true,
       on_stdout = function(_, data)
