@@ -4,7 +4,7 @@
 local opt = vim.opt
 
 vim.g.lazygit_config = true
-vim.g.node_host_prog = "$HOME/.bun/bin/neovim-node-host"
+vim.g.node_host_prog = vim.fn.expand("$HOME") .. "/.bun/bin/neovim-node-host"
 
 opt.laststatus = 3
 
@@ -27,10 +27,16 @@ vim.cmd([[cab Wq wq]])
 
 vim.diagnostic.config({
   virtual_text = false,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
   float = {
     border = "rounded",
     max_width = 60,
     max_height = 10,
+    focusable = false,
+    source = "always",
   },
 })
 
@@ -55,11 +61,25 @@ opt.fillchars:append({ eob = " " })
 
 vim.loader.enable()
 
--- Scss syntax highlighting in Vue files
-vim.cmd([[
-  autocmd FileType vue syntax include @scss syntax/scss.vim
-  autocmd FileType vue syntax region vueStyle matchgroup=vueTag start=/<style\s*lang="scss"\s*scoped\s*>/ end=/<\/style>/ contains=@scss keepend
-]])
+-- Performance optimizations
+opt.updatetime = 200 -- Faster completion and diagnostics
+opt.timeoutlen = 300 -- Faster which-key popup
+opt.redrawtime = 1500 -- Time in ms for redrawing display
+opt.ttimeoutlen = 10 -- Faster key sequence completion
+opt.lazyredraw = false -- Don't use lazyredraw (can cause issues with some plugins)
+
+-- Better search performance
+opt.inccommand = "split" -- Show preview of substitutions
+
+-- Scss syntax highlighting in Vue files (moved to autocmd for lazy loading)
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "vue",
+  once = true,
+  callback = function()
+    vim.cmd([[syntax include @scss syntax/scss.vim]])
+    vim.cmd([[syntax region vueStyle matchgroup=vueTag start=/<style\s*lang="scss"\s*scoped\s*>/ end=/<\/style>/ contains=@scss keepend]])
+  end,
+})
 
 vim.opt.conceallevel = 2
 

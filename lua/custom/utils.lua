@@ -1,32 +1,41 @@
-_G.Utils = {}
+local M = {}
 
 -- UI-related functions
-function Utils.is_transparent_theme()
-  return require("nvconfig").base46.transparency
+function M.is_transparent_theme()
+  local ok, nvconfig = pcall(require, "nvconfig")
+  if not ok then
+    return false
+  end
+  return nvconfig.base46.transparency
 end
 
-function _G.ToggleLspStatus()
+function M.toggle_lsp_status()
   vim.g.lsp_status_expanded = not (vim.g.lsp_status_expanded or false)
-  -- Force statusline update
   vim.cmd("redrawstatus")
 end
 
-function _G.StartLiveServer()
-  vim.cmd("LiveServerStart")
-  vim.g.live_server_active = true
-  -- Force statusline update
-  vim.cmd("redrawstatus")
+function M.start_live_server()
+  local ok = pcall(vim.cmd, "LiveServerStart")
+  if ok then
+    vim.g.live_server_active = true
+    vim.cmd("redrawstatus")
+  else
+    vim.notify("Failed to start live server", vim.log.levels.ERROR)
+  end
 end
 
-function _G.StopLiveServer()
-  vim.cmd("LiveServerStop")
-  vim.g.live_server_active = false
-  -- Force statusline update
-  vim.cmd("redrawstatus")
+function M.stop_live_server()
+  local ok = pcall(vim.cmd, "LiveServerStop")
+  if ok then
+    vim.g.live_server_active = false
+    vim.cmd("redrawstatus")
+  else
+    vim.notify("Failed to stop live server", vim.log.levels.ERROR)
+  end
 end
 
 -- HTML/markup functions
-function Utils.wrap_with_tag()
+function M.wrap_with_tag()
   -- Save the current visual selection
   vim.cmd('normal! "xy')
   local selected_text = vim.fn.getreg("x")
@@ -73,7 +82,7 @@ function Utils.wrap_with_tag()
   local menu_items = vim.tbl_extend("force", common_tags, { "Custom..." })
 
   -- Show selection menu
-  Utils.items_select(menu_items, {
+  M.items_select(menu_items, {
     prompt = "Select HTML tag:",
     format_item = function(item)
       return item
@@ -85,7 +94,6 @@ function Utils.wrap_with_tag()
 
     local tag
     if choice == "Custom..." then
-      -- Prompt for custom tag if user selects "Custom..."
       tag = vim.fn.input("Enter custom HTML tag: ")
     else
       tag = choice
@@ -95,70 +103,48 @@ function Utils.wrap_with_tag()
       return
     end
 
-    -- Extract the tag name for closing tag
     local tag_name = string.match(tag, "^([%w-]+)") or tag
-
-    -- Create wrapped text with the selected/custom tag
     local wrapped_text = "<" .. tag .. ">" .. selected_text .. "</" .. tag_name .. ">"
 
-    -- Replace the selection with the wrapped text
     vim.fn.setreg("x", wrapped_text)
     vim.cmd('normal! gv"xp')
 
-    -- Report success
     vim.api.nvim_echo({ { string.format("Wrapped with <%s>", tag), "Normal" } }, false, {})
   end)
 end
 
 -- Web/URL functions
-function Utils.open_github_repo()
+function M.open_github_repo()
   local line = vim.api.nvim_get_current_line()
 
-  -- Match text inside quotes on the current line
   local repo = line:match('".-"') or line:match("'.-'")
   if not repo then
     vim.notify("No valid repo found on this line.", vim.log.levels.ERROR)
     return
   end
 
-  -- Remove the quotes from the matched text
   repo = repo:sub(2, -2)
 
-  -- Ensure it's in the format user/repo
   if not repo:match("^[%w._-]+/[%w._-]+$") then
     vim.notify("Invalid GitHub repo format.", vim.log.levels.ERROR)
     return
   end
 
-  -- Construct the GitHub URL
   local url = "https://github.com/" .. repo
   vim.notify("Opening: " .. url, vim.log.levels.INFO)
 
-  -- Open the URL in the default browser
   vim.fn.jobstart({ "xdg-open", url }, { detach = true })
 end
 
--- Setup commands
-local function setup_commands()
-  vim.api.nvim_create_user_command(
-    "WrapWithTag",
-    Utils.wrap_with_tag,
-    { range = true, desc = "Wrap visual selection with HTML tag" }
-  )
-
-  vim.api.nvim_create_user_command(
-    "OpenGitHubRepo",
-    Utils.open_github_repo,
-    { desc = "Open GitHub repository from cursor position" }
-  )
-end
-
-Utils.vertical_picker = function(picker_type)
-  if not picker_type or not Snacks.picker[picker_type] then
-    return vim.notify(string.format("Invalid picker type: %s", tostring(picker_type)), vim.log.levels.ERROR)
+-- Picker utilities
+function M.vertical_picker(picker_type)
+  local ok, snacks = pcall(require, "snacks")
+  if not ok or not snacks.picker or not snacks.picker[picker_type] then
+    vim.notify(string.format("Invalid picker type: %s", tostring(picker_type)), vim.log.levels.ERROR)
+    return
   end
 
-  Snacks.picker[picker_type]({
+  snacks.picker[picker_type]({
     layout = {
       layout = {
         backdrop = false,
@@ -181,12 +167,14 @@ Utils.vertical_picker = function(picker_type)
   })
 end
 
-Utils.select = function(picker_type)
-  if not picker_type or not Snacks.picker[picker_type] then
-    return vim.notify(string.format("Invalid picker type: %s", tostring(picker_type)), vim.log.levels.ERROR)
+function M.select(picker_type)
+  local ok, snacks = pcall(require, "snacks")
+  if not ok or not snacks.picker or not snacks.picker[picker_type] then
+    vim.notify(string.format("Invalid picker type: %s", tostring(picker_type)), vim.log.levels.ERROR)
+    return
   end
 
-  Snacks.picker[picker_type]({
+  snacks.picker[picker_type]({
     layout = {
       preview = false,
       layout = {
@@ -207,9 +195,15 @@ Utils.select = function(picker_type)
   })
 end
 
-Utils.items_select = function(items, opts, on_choice)
+function M.items_select(items, opts, on_choice)
   assert(type(on_choice) == "function", "on_choice must be a function")
   opts = opts or {}
+
+  local ok, snacks = pcall(require, "snacks")
+  if not ok or not snacks.picker then
+    vim.notify("Snacks.nvim picker not available", vim.log.levels.ERROR)
+    return
+  end
 
   ---@type snacks.picker.finder.Item[]
   local finder_items = {}
@@ -227,11 +221,10 @@ Utils.items_select = function(items, opts, on_choice)
   title = title:gsub("^%s*", ""):gsub("[%s:]*$", "")
   local completed = false
 
-  ---@type snacks.picker.finder.Item[]
-  return Snacks.picker.pick({
+  return snacks.picker.pick({
     source = "select",
     items = finder_items,
-    format = Snacks.picker.format.ui_select(opts.kind, #items),
+    format = snacks.picker.format.ui_select(opts.kind, #items),
     title = title,
     layout = {
       preview = nil,
@@ -271,19 +264,37 @@ Utils.items_select = function(items, opts, on_choice)
   })
 end
 
-Utils.close_all_buffers = function()
-  for _, e in ipairs(require("bufferline").get_elements().elements) do
+function M.close_all_buffers()
+  local ok, bufferline = pcall(require, "bufferline")
+  if not ok then
+    vim.notify("Bufferline not available", vim.log.levels.ERROR)
+    return
+  end
+
+  for _, e in ipairs(bufferline.get_elements().elements) do
     vim.schedule(function()
       vim.cmd("bd " .. e.id)
     end)
   end
 end
 
--- Initialize
-local function init()
-  setup_commands()
-end
+-- Setup user commands
+vim.api.nvim_create_user_command(
+  "WrapWithTag",
+  M.wrap_with_tag,
+  { range = true, desc = "Wrap visual selection with HTML tag" }
+)
 
-init()
+vim.api.nvim_create_user_command(
+  "OpenGitHubRepo",
+  M.open_github_repo,
+  { desc = "Open GitHub repository from cursor position" }
+)
 
-return Utils
+-- Backward compatibility: export to global namespace
+_G.Utils = M
+_G.ToggleLspStatus = M.toggle_lsp_status
+_G.StartLiveServer = M.start_live_server
+_G.StopLiveServer = M.stop_live_server
+
+return M

@@ -1,7 +1,13 @@
 return {
   {
     "aserowy/tmux.nvim",
-    event = "VeryLazy",
+    lazy = true,
+    keys = {
+      { "<C-h>", "<cmd>lua require('tmux').move_left()<cr>", desc = "Move to left tmux pane" },
+      { "<C-j>", "<cmd>lua require('tmux').move_bottom()<cr>", desc = "Move to bottom tmux pane" },
+      { "<C-k>", "<cmd>lua require('tmux').move_top()<cr>", desc = "Move to top tmux pane" },
+      { "<C-l>", "<cmd>lua require('tmux').move_right()<cr>", desc = "Move to right tmux pane" },
+    },
     config = function()
       return require("tmux").setup({ copy_sync = {
         enable = false,
@@ -10,7 +16,7 @@ return {
   },
   {
     "lambdalisue/vim-suda",
-    event = "VeryLazy",
+    cmd = { "SudaRead", "SudaWrite" },
     config = function()
       -- Expand 'ss' into 'SudaWrite' in the command line
       vim.cmd([[cab ss SudaWrite<CR>]])
@@ -35,7 +41,7 @@ return {
 
   {
     "bbjornstad/pretty-fold.nvim",
-    event = "BufRead",
+    event = "BufReadPost", -- Delay slightly for better startup
     config = function()
       require("pretty-fold").setup({
         keep_indentation = true,
@@ -162,14 +168,13 @@ return {
   },
   {
     "barrett-ruth/live-server.nvim",
-    event = "VeryLazy",
     build = "bun add -g live-server",
     cmd = { "LiveServerStart", "LiveServerStop" },
     config = true,
   },
   {
     "stevearc/overseer.nvim",
-    event = "VeryLazy",
+    cmd = { "OverseerRun", "OverseerRunCmd", "OverseerToggle", "OverseerOpen" },
     config = function()
       require("overseer").setup()
     end,

@@ -1,3 +1,6 @@
+-- Load custom utilities
+local Utils = require("custom.utils")
+
 -- Helper function for keymap options
 local function opts(desc, extra)
   local default = { noremap = true, silent = true, desc = desc }

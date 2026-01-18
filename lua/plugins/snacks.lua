@@ -252,19 +252,14 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
-    opts = opts,
-    keys = keys,
-  },
-  {
-    "folke/snacks.nvim",
-    opts = {
+    opts = vim.tbl_deep_extend("force", opts, {
       explorer = { enabled = false },
-    },
-    keys = {
+    }),
+    keys = vim.list_extend(keys, {
       { "<leader>fe", false },
       { "<leader>fE", false },
       { "<leader>E", false },
       { "<leader>e", false },
-    },
+    }),
   },
 }

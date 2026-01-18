@@ -58,24 +58,24 @@ return {
           },
         },
       })
-      map("n", "gd", "<cmd>TSToolsGoToSourceDefinition<CR>", { desc = "Go to source definition", buffer = bufNr })
-      map("n", "gR", "<cmd>TSToolsFileReferences<CR>", { desc = "File References", buffer = bufNr })
-      map({ "n", "v" }, "<leader>co", "<cmd>TSToolsOrganizeImports<CR>", { desc = "Organize Imports", buffer = bufNr })
-      map({ "n", "v" }, "<leader>cS", "<cmd>TSToolsSortImports<CR>", { desc = "Sort Imports", buffer = bufNr })
+      map("n", "gd", "<cmd>TSToolsGoToSourceDefinition<CR>", { desc = "Go to source definition" })
+      map("n", "gR", "<cmd>TSToolsFileReferences<CR>", { desc = "File References" })
+      map({ "n", "v" }, "<leader>co", "<cmd>TSToolsOrganizeImports<CR>", { desc = "Organize Imports" })
+      map({ "n", "v" }, "<leader>cS", "<cmd>TSToolsSortImports<CR>", { desc = "Sort Imports" })
       map(
         { "n", "v" },
         "<leader>cr",
         "<cmd>TSToolsRemoveUnusedImports<CR>",
-        { desc = "Remove Unused Imports", buffer = bufNr }
+        { desc = "Remove Unused Imports" }
       )
       map(
         { "n", "v" },
         "<leader>cM",
         "<cmd>TSToolsAddMissingImports<CR>",
-        { desc = "Add Missing Imports", buffer = bufNr }
+        { desc = "Add Missing Importsorts" }
       )
-      map({ "n", "v" }, "<leader>rF", "<cmd>TSToolsRenameFile<CR>", { desc = "Rename File", buffer = bufNr })
-      map({ "n", "v" }, "<leader>cD", "<cmd>TSToolsFixAll<CR>", { desc = "Fix All Diagnostics", buffer = bufNr })
+      map({ "n", "v" }, "<leader>rF", "<cmd>TSToolsRenameFile<CR>", { desc = "Rename File" })
+      map({ "n", "v" }, "<leader>cD", "<cmd>TSToolsFixAll<CR>", { desc = "Fix All Diagnostics" })
     end,
   },
 }

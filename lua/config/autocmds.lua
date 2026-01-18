@@ -38,11 +38,24 @@ if gdproject then
   vim.fn.serverstart("./godothost")
 end
 
--- Auto save buffer on leave
-autocmd("BufLeave", {
+-- Auto save buffer on leave (optimized with debounce)
+local save_timer = nil
+autocmd({ "BufLeave", "FocusLost" }, {
   pattern = "*",
   callback = function()
-    vim.cmd("silent! wa")
+    -- Skip auto-save for special buffers
+    if vim.bo.buftype ~= "" or vim.bo.readonly or not vim.bo.modifiable then
+      return
+    end
+    
+    -- Debounce saves
+    if save_timer then
+      vim.fn.timer_stop(save_timer)
+    end
+    save_timer = vim.fn.timer_start(200, function()
+      vim.cmd("silent! update")
+      save_timer = nil
+    end)
   end,
 })
 
@@ -82,49 +95,5 @@ autocmd("User", {
   end,
 })
 
--- Auto-fix and format on save for ESLint
--- local eslint_fix = vim.api.nvim_create_augroup("EslintFixOnSave", { clear = true })
-
--- autocmd("BufWritePre", {
---   group = eslint_fix,
---   pattern = { "*.js", "*.jsx", "*.ts", "*.tsx", "*.vue" },
---   callback = function()
---     local clients = vim.lsp.get_active_clients({ bufnr = 0 })
---     for _, client in ipairs(clients) do
---       if client.name == "eslint" then
---         -- Run ESLint code actions before saving
---         vim.cmd("EslintFixAll")
---         vim.lsp.buf.format({ bufnr = 0, async = false })
---         break
---       end
---     end
---   end,
--- })
-
-autocmd("BufWritePost", {
-  pattern = { "*.ts", "*.tsx", "*.js", "*.jsx" },
-  callback = function(args)
-    local filepath = vim.fn.fnameescape(args.file)
-
-    vim.fn.jobstart({ "bun", "run", "eslint", "--fix", filepath }, {
-      stdout_buffered = true,
-      stderr_buffered = true,
-      on_stdout = function(_, data)
-        if data and #data > 1 then
-          vim.notify(table.concat(data, "\n"), vim.log.levels.INFO, { title = "ESLint" })
-        end
-      end,
-      on_stderr = function(_, data)
-        if data and #data > 1 then
-          vim.notify(table.concat(data, "\n"), vim.log.levels.ERROR, { title = "ESLint Error" })
-        end
-      end,
-      on_exit = function()
-        -- silently reload buffer if file was modified externally
-        if vim.fn.getbufinfo(args.buf)[1].loaded == 1 then
-          vim.cmd("checktime " .. args.buf)
-        end
-      end,
-    })
-  end,
-})
+-- ESLint auto-fix on save (optimized - now handled by conform.nvim in lspconfig.lua)
+-- This autocmd is disabled in favor of LSP-based formatting for better performance
