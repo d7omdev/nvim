@@ -56,7 +56,6 @@ opt.diffopt = {
   "indent-heuristic",
 }
 
-vim.opt_local.conceallevel = 2
 opt.fillchars:append({ eob = " " })
 
 vim.loader.enable()
@@ -71,7 +70,7 @@ opt.lazyredraw = false -- Don't use lazyredraw (can cause issues with some plugi
 -- Better search performance
 opt.inccommand = "split" -- Show preview of substitutions
 
--- Scss syntax highlighting in Vue files (moved to autocmd for lazy loading)
+-- Scss syntax highlighting in Vue files (lazy loaded)
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "vue",
   once = true,
@@ -80,8 +79,6 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.cmd([[syntax region vueStyle matchgroup=vueTag start=/<style\s*lang="scss"\s*scoped\s*>/ end=/<\/style>/ contains=@scss keepend]])
   end,
 })
-
-vim.opt.conceallevel = 2
 
 opt.exrc = true
 opt.secure = true

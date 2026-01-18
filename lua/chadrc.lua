@@ -14,10 +14,7 @@ local options = {
     changed_themes = {},
     transparency = true,
     theme_toggle = { "gruvchad", "catppuccin" },
-    hl_override = {
-      ["@keyword.repeat"] = { italic = true, bold = true },
-      ["Keyword"] = { italic = true, bold = true },
-    },
+    hl_override = {},
   },
 }
 
@@ -35,6 +32,7 @@ if options.base46.transparency then
     ["@keyword.conditional.ternary"] = { italic = true, bold = true },
     ["@keyword.repeat"] = { italic = true, bold = true },
     ["@keyword.operator"] = { italic = true, bold = true },
+    ["Keyword"] = { italic = true, bold = true },
   }
 end
 
@@ -63,7 +61,6 @@ options.ui = {
       "diagnostics",
       "live_server",
       "lsp",
-      -- "copilot",
       "macro",
       "updates",
       "cwd",
@@ -165,10 +162,6 @@ options.ui = {
       macro = function()
         local macro_reg = vim.fn.reg_recording()
         return macro_reg ~= "" and ("%#St_macro_recording# " .. macro_reg .. " ") or ""
-      end,
-
-      copilot = function()
-        return " " .. require("copilot_status").status_string() .. " "
       end,
 
       updates = function()

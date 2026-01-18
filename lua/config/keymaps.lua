@@ -97,9 +97,13 @@ local keymaps = {
     opts("Next error"),
   },
 
-  -- Obsidian
-  { N, "<leader>On", ":execute 'ObsidianNew ' . input('Enter a name: ')<CR>", opts("New note") },
-  { N, "<leader>Os", "<cmd>ObsidianQuickSwitch<CR>", opts("Quick switch") },
+  -- Obsidian (keymaps defined in plugin config for lazy loading)
+  {
+    N,
+    "<leader>On",
+    ":execute 'ObsidianNew ' . input('Enter a name: ')<CR>",
+    opts("New note"),
+  },
   {
     N,
     "<leader>Of",
@@ -108,13 +112,12 @@ local keymaps = {
     end,
     opts("Follow link"),
   },
-  { N, "<leader>Ob", "<cmd>ObsidianBacklinks<CR>", opts("Backlinks") },
-  { N, "<leader>Od", "<cmd>ObsidianDailies<CR>", opts("Dailies") },
-  { N, "<leader>Ot", "<cmd>ObsidianTemplate<CR>", opts("Insert template") },
-  { N, "<leader>sO", "<cmd>ObsidianSearch<CR>", opts("Search notes") },
-  { N, "<leader>Or", ":execute 'ObsidianRename ' . input('Enter new name: ')<CR>", opts("Rename note") },
-  { N, "<leader>Oc", "<cmd>ObsidianToggleCheckbox<CR>", opts("Toggle checkbox") },
-  { N, "<leader>OT", "<cmd>ObsidianTags<CR>", opts("Search tags") },
+  {
+    N,
+    "<leader>Or",
+    ":execute 'ObsidianRename ' . input('Enter new name: ')<CR>",
+    opts("Rename note"),
+  },
 
   -- Sessions
   {
@@ -148,38 +151,6 @@ local keymaps = {
   { N, "<leader>ttc", "<cmd>TailwindConcealToggle<CR>", opts("Tailwind Conceal Toggle") },
 
   -- Buffers
-  -- {
-  --   N,
-  --   "]b",
-  --   function()
-  --     require("custom.buffers").next_buffer_in_tab()
-  --   end,
-  --   opts("Next buffer in tab"),
-  -- },
-  -- {
-  --   N,
-  --   "[b",
-  --   function()
-  --     require("custom.buffers").prev_buffer_in_tab()
-  --   end,
-  --   opts("Previous buffer in tab"),
-  -- },
-  -- {
-  --   N,
-  --   "[B",
-  --   function()
-  --     require("nvchad.tabufline").move_buf(-1)
-  --   end,
-  --   opts("Move buffer left"),
-  -- },
-  -- {
-  --   N,
-  --   "]B",
-  --   function()
-  --     require("nvchad.tabufline").move_buf(1)
-  --   end,
-  --   opts("Move buffer right"),
-  -- },
   { N, "<leader>bd", "<cmd>lua Snacks.bufdelete()<CR>", opts("Delete buffer") },
 
   -- Treewalker
@@ -257,13 +228,8 @@ local keymaps = {
     function()
       Utils.vertical_picker("keymaps")
     end,
+    opts("Search keymaps"),
   },
-  -- {
-  --   N,
-  --   "<Leader>cL",
-  --   require("lsp_lines").toggle,
-  --   opts("Toggle LSP Lines"),
-  -- },
   {
     N,
     "<leader>R",
@@ -305,11 +271,6 @@ local keymaps = {
     "<C-_>",
     "<Esc>:normal gcc<CR>a",
     opts("Comment line and return to insert mode"),
-  },
-  {
-    N,
-    "<C-/>",
-    "<Nop>",
   },
   {
     N,

@@ -1,5 +1,6 @@
 return {
   "sudo-tee/opencode.nvim",
+  event = "BufRead",
   config = function()
     vim.opt.autoread = true
 
@@ -75,10 +76,6 @@ return {
         display_context_size = true, -- Display context size in the footer
         display_cost = true, -- Display cost in the footer
         window_highlight = "Normal:OpencodeBackground,FloatBorder:OpencodeBorder", -- Highlight group for the opencode window
-        icons = {
-          preset = "emoji", -- 'emoji' | 'text'. Choose UI icon style (default: 'emoji')
-          overrides = {}, -- Optional per-key overrides, see section below
-        },
         output = {
           tools = {
             show_output = true, -- Show tools output [diffs, cmd output, etc.] (default: true)

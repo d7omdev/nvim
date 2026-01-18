@@ -1,7 +1,29 @@
 return {
   "obsidian-nvim/obsidian.nvim",
   version = "*",
-  lazy = false,
+  cmd = {
+    "ObsidianNew",
+    "ObsidianQuickSwitch",
+    "ObsidianBacklinks",
+    "ObsidianDailies",
+    "ObsidianTemplate",
+    "ObsidianSearch",
+    "ObsidianRename",
+    "ObsidianToggleCheckbox",
+    "ObsidianTags",
+    "ObsidianFollowLink",
+  },
+  keys = {
+    { "<leader>On", "<cmd>ObsidianNew<CR>", desc = "New note" },
+    { "<leader>Os", "<cmd>ObsidianQuickSwitch<CR>", desc = "Quick switch" },
+    { "<leader>Ob", "<cmd>ObsidianBacklinks<CR>", desc = "Backlinks" },
+    { "<leader>Od", "<cmd>ObsidianDailies<CR>", desc = "Dailies" },
+    { "<leader>Ot", "<cmd>ObsidianTemplate<CR>", desc = "Insert template" },
+    { "<leader>sO", "<cmd>ObsidianSearch<CR>", desc = "Search notes" },
+    { "<leader>Or", "<cmd>ObsidianRename<CR>", desc = "Rename note" },
+    { "<leader>Oc", "<cmd>ObsidianToggleCheckbox<CR>", desc = "Toggle checkbox" },
+    { "<leader>OT", "<cmd>ObsidianTags<CR>", desc = "Search tags" },
+  },
   opts = {
     -- A list of workspace names, paths, and configuration overrides.
     -- If you use the Obsidian app, the 'path' of a workspace should generally be
@@ -42,26 +64,6 @@ return {
       min_chars = 2,
     },
 
-    -- Optional, configure key mappings. These are the defaults. If you don't want to set any keymappings this
-    -- way then set 'mappings = {}'.
-    -- mappings = {
-    --   -- Overrides the 'gf' mapping to work on markdown/wiki links within your vault.
-    --
-    --   ["gf"] = {
-    --     action = function()
-    --       return require("obsidian").util.gf_passthrough()
-    --     end,
-    --     opts = { noremap = false, expr = true, buffer = true },
-    --   },
-    --
-    --   -- Smart action depending on context, either follow link or toggle checkbox.
-    --   ["<cr>"] = {
-    --     action = function()
-    --       return require("obsidian").util.smart_action()
-    --     end,
-    --     opts = { buffer = true, expr = true },
-    --   },
-    -- },
 
     -- Where to put new notes. Valid options are
     --  * "current_dir" - put new notes in same directory as the current buffer.
@@ -235,20 +237,6 @@ return {
       enable = true, -- set to false to disable all additional syntax features
       update_debounce = 200, -- update delay after a text change (in milliseconds)
       max_file_length = 5000, -- disable UI features for files with more than this many lines
-      -- Define how various check-boxes are displayed
-      -- checkboxes = {
-      --   -- NOTE: the 'char' value has to be a single character, and the highlight groups are defined below.
-      --   [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
-      --   ["x"] = { char = "", hl_group = "ObsidianDone" },
-      --   [">"] = { char = "", hl_group = "ObsidianRightArrow" },
-      --   ["~"] = { char = "󰰱", hl_group = "ObsidianTilde" },
-      --   ["!"] = { char = "", hl_group = "ObsidianImportant" },
-      --   -- Replace the above with this if you don't have a patched font:
-      --   -- [" "] = { char = "☐", hl_group = "ObsidianTodo" },
-      --   -- ["x"] = { char = "✔", hl_group = "ObsidianDone" },
-      --
-      --   -- You can also add more custom ones...
-      -- },
       -- Use bullet marks for non-checkbox lists.
       bullets = { char = "•", hl_group = "ObsidianBullet" },
       external_link_icon = { char = "", hl_group = "ObsidianExtLinkIcon" },

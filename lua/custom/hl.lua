@@ -1,6 +1,6 @@
 local colors = dofile(vim.g.base46_cache .. "colors")
 local isTransparent = require("custom.utils").is_transparent_theme()
-_G.Colors = dofile(vim.g.base46_cache .. "colors")
+_G.Colors = colors
 
 local M = {}
 M.is_transparent = isTransparent

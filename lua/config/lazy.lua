@@ -31,27 +31,23 @@ require("lazy").setup({
     border = "single",
   },
   defaults = {
-    lazy = true, -- Enable lazy loading by default for better startup performance
-    version = false, -- always use the latest git commit
-    -- version = "*", -- try installing the latest stable version for plugins that support semver
+    lazy = true,
+    version = false,
   },
   checker = { 
-    enabled = true, -- automatically check for plugin updates
-    frequency = 86400, -- check once per day (in seconds)
-    notify = false, -- don't notify on every check
+    enabled = false,
+    frequency = 86400,
+    notify = false,
   },
   change_detection = {
-    enabled = true,
-    notify = false, -- don't notify on config changes
+    enabled = false,
+    notify = false,
   },
   performance = {
     rtp = {
       -- disable some rtp plugins
       disabled_plugins = {
         "gzip",
-        -- "matchit",
-        -- "matchparen",
-        -- "netrwPlugin",
         "tarPlugin",
         "tohtml",
         "tutor",

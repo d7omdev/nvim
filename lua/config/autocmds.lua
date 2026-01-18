@@ -86,14 +86,9 @@ autocmd("FileType", {
 autocmd("User", {
   pattern = "OpencodeEvent",
   callback = function(args)
-    -- See the available event types and their properties
-    vim.notify(vim.inspect(args.data))
-    -- Do something interesting, like show a notification when opencode finishes responding
-    if args.data.type == "session.idle" then
-      vim.notify("opencode finished responding")
+    if args.data and args.data.type == "session.idle" then
+      vim.notify("Opencode finished responding")
     end
   end,
 })
 
--- ESLint auto-fix on save (optimized - now handled by conform.nvim in lspconfig.lua)
--- This autocmd is disabled in favor of LSP-based formatting for better performance

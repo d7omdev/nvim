@@ -44,15 +44,6 @@ lspconfig.gdscript.setup({
   end,
 })
 
--- lspconfig.qmlls.setup({
---   cmd = { "qmlls6" },
---   filetypes = { "qmljs", "qml" },
---   root_dir = function(fname)
---     return vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
---   end,
---   single_file_support = true,
--- })
-
 return {
   {
     "neovim/nvim-lspconfig",
@@ -106,19 +97,6 @@ return {
     },
   },
 
-  {
-    "neovim/nvim-lspconfig",
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      servers = {
-        ["*"] = {
-          keys = {
-            { "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", has = "definition" },
-          },
-        },
-      },
-    },
-  },
 
   -- LSPSaga Configuration
   {
