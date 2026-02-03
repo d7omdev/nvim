@@ -53,7 +53,7 @@ return {
     end, { desc = "NeoCodeium: Accept line" })
 
     -- Cycle to next suggestion
-    vim.keymap.set("i", "<C-]>", function()
+    vim.keymap.set("i", "<M-]>", function()
       require("neocodeium").cycle_or_complete()
     end, { desc = "NeoCodeium: Next suggestion" })
 

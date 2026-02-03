@@ -1,22 +1,3 @@
-local g = vim.g
-
-g.toggle_theme_icon = "   "
-
-local txt = function(str, hl)
-  str = str or ""
-  local a = "%#Tb" .. hl .. "#" .. str
-  return a
-end
-
-local btn = function(str, hl, func, arg)
-  str = hl and txt(str, hl) or str
-  arg = arg or ""
-  return "%" .. arg .. "@Tb" .. func .. "@" .. str .. "%X"
-end
-
-vim.cmd("function! TbToggle_theme(a,b,c,d) \n lua require('base46').toggle_theme() \n endfunction")
-vim.cmd("function! TbCloseAllBufs(a,b,c,d) \n lua Utils.close_all_buffers() \n endfunction")
-
 return {
   {
     "catppuccin/nvim",
@@ -39,7 +20,14 @@ return {
     event = "LspAttach",
     enabled = true,
     priority = 1000, -- needs to be loaded in first
-    config = require("plugins.config.tiny-inline-diagnostic"),
+    opts = {
+      preset = "simple",
+      options = {
+        show_source = true,
+        use_icons_from_diagnostic = true,
+        show_all_diags_on_cursorline = true,
+      },
+    },
   },
 
   {
