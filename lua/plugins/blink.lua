@@ -147,6 +147,8 @@ return {
       preset = "enter",
       ["<C-y>"] = { "select_and_accept" },
       ["<Esc>"] = { "hide", "fallback" },
+      ["<Tab>"] = {}, -- Disable Tab, handled by NeoCodeium
+      ["<S-Tab>"] = {}, -- Disable Shift-Tab too
     },
   },
 }

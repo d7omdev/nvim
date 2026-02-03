@@ -1,6 +1,7 @@
 -- Load custom utilities
 local Utils = require("custom.utils")
 
+-- For Hyprland: Add to hyprland.conf: input { kb_options = caps:escape }
 -- Helper function for keymap options
 local function opts(desc, extra)
   local default = { noremap = true, silent = true, desc = desc }
@@ -28,7 +29,7 @@ local keymaps = {
   -- ===================
   -- General Keymaps
   -- ===================
-  { I, "<Tab>", "<C-V><Tab>", opts("Insert tab") },
+  -- { I, "<Tab>", "<C-V><Tab>", opts("Insert tab") },
   { N, "<C-A-k>", "yy[P", opts("Duplicate line up") },
   { N, "<C-A-j>", "yy]p", opts("Duplicate line down") },
   { V, "<C-A-k>", "yP", opts("Duplicate selection up") },
@@ -325,6 +326,16 @@ local keymaps = {
       end
     end,
     opts("Grug-far next match"),
+  },
+
+  -- Claude inline edit
+  {
+    V,
+    "<leader>i",
+    function()
+      require("custom.claude-inline").edit_selection()
+    end,
+    opts("Claude inline edit"),
   },
 }
 

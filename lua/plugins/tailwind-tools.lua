@@ -2,12 +2,13 @@ return {
   {
     "luckasRanarison/tailwind-tools.nvim",
     event = "BufRead",
-    enabled = true,
+    enabled = false,
     name = "tailwind-tools",
     build = ":UpdateRemotePlugins",
     ft = { "typescriptreact", "javascriptreact", "astro", "vue" },
     opts = {
       server = {
+
         override = true, -- setup the server from the plugin if true
         settings = {}, -- shortcut for `settings.tailwindCSS`
       },
