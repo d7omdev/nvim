@@ -110,7 +110,7 @@ local keymaps = {
   { N, "q", "<Nop>", opts("Disable default macro key") },
 
   -- Command mode
-  { I, "::", "<Esc>:", opts("Enter command mode in insert mode") },
+  -- { I, "::", "<Esc>:", opts("Enter command mode in insert mode") },
 
   -- ===========================================================================
   -- LSP & DIAGNOSTICS
@@ -146,7 +146,33 @@ local keymaps = {
   -- ===========================================================================
 
   { N, "<leader>bd", "<cmd>lua Snacks.bufdelete()<CR>", opts("Delete buffer") },
-  { N, "<C-p>", "<cmd>BufferLinePick<CR>", opts("Bufferline picker") },
+  {
+    N,
+    "<C-p>",
+    function()
+      require("snacks").picker.buffers({
+        layout = {
+          preview = false,
+          layout = {
+            backdrop = false,
+            row = 1,
+            width = 0.4,
+            min_width = 50,
+            height = 0.3,
+            min_height = 4,
+            border = "single",
+            box = "vertical",
+            title = " Buffers ",
+            title_pos = "center",
+            { win = "input", height = 1, border = "bottom" },
+            { win = "list", border = "none" },
+          },
+        },
+      })
+    end,
+    opts("Open buffer picker"),
+  },
+  { N, "<M-p>", "<cmd>BufferLinePick<CR>", opts("Bufferline letter picker") },
   { N, "<Tab><Tab>", "<cmd>tabnext<CR>", opts("Switch Tab") },
 
   -- ===========================================================================
@@ -162,18 +188,6 @@ local keymaps = {
   { N, "<C-/>", "gcc", opts("Comment line", { remap = true }) },
   { N_V, "<C-_>", "gcc", opts("Comment selection", { remap = true }) },
   { I, "<C-_>", "<Esc>:normal gcc<CR>a", opts("Comment line and return to insert mode") },
-
-  -- ===========================================================================
-  -- MARKS & RECALL
-  -- ===========================================================================
-
-  { N, "<leader>sm", require("recall.snacks").pick, opts("Search Marks") },
-  { N, "<S-m>", "<cmd>RecallToggle<CR>", opts("Recall Toggle") },
-  { N, "<leader>mr", "<cmd>RecallUnmark<CR>", opts("Recall Unmark") },
-  { N, "<leader>ma", "<cmd>RecallMark<CR>", opts("Recall Mark") },
-  { N, "]'", "<cmd>RecallNext<CR>", opts("Recall Next") },
-  { N, "['", "<cmd>RecallPrevious<CR>", opts("Recall Prev") },
-  { N, "mX", "<cmd>RecallClear<CR>", opts("Recall Clear") },
 
   -- ===========================================================================
   -- SEARCH & REPLACE
@@ -249,6 +263,19 @@ local keymaps = {
   { N, "<leader>gp", Utils.open_github_repo, opts("Open Github repo") },
   { N, "<leader>Mp", markdown_preview, opts("Markdown preview") },
   { V, "<leader>cW", Utils.wrap_with_tag, opts("Wrap selection with tag") },
+
+  -- ===========================================================================
+  -- MARKS
+  -- ===========================================================================
+
+  {
+    N,
+    "<leader>sm",
+    function()
+      require("snacks").picker.marks()
+    end,
+    opts("Search marks"),
+  },
 
   -- ===========================================================================
   -- AI TOOLS

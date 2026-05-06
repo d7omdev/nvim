@@ -180,37 +180,67 @@ return {
     end,
   },
   {
-    "folke/todo-comments.nvim",
-    event = "BufReadPost",
-    "fnune/recall.nvim",
+    "mohseenrm/marko.nvim",
+    priority = 1000,
+    lazy = false,
+    keys = {
+      {
+        "dm",
+        function()
+          local line = vim.api.nvim_win_get_cursor(0)[1]
+          local deleted = {}
+          for i = 65, 90 do
+            local mark = string.char(i)
+            local pos = vim.api.nvim_get_mark(mark, {})
+            if pos[1] == line then
+              vim.api.nvim_del_mark(mark)
+              table.insert(deleted, mark)
+            end
+          end
+          if #deleted > 0 then
+            vim.notify(
+              "Deleted mark(s): " .. table.concat(deleted, ", "),
+              vim.log.levels.INFO,
+              { title = "marko.nvim" }
+            )
+          else
+            vim.notify("No mark on current line", vim.log.levels.WARN, { title = "marko.nvim" })
+          end
+        end,
+        desc = "Marko: delete mark under cursor",
+      },
+      { "<leader>mi", "<cmd>MarkoInfo<cr>", desc = "Marko: info" },
+      { "<leader>ml", "<cmd>MarkoList<cr>", desc = "Marko: list" },
+      { "<leader>mc", "<cmd>MarkoClean<cr>", desc = "Marko: clean" },
+      { "<leader>ms", "<cmd>MarkoSave<cr>", desc = "Marko: save" },
+    },
     config = function()
-      require("recall").setup({
-        sign = "",
-        sign_highlight = "@comment.note",
-        snacks = {
-          mappings = {
-            unmark_selected_entry = {
-              normal = "d",
-              insert = "",
-            },
-          },
-        },
-      })
+      require("marko").setup()
     end,
   },
   {
     "esmuellert/vscode-diff.nvim",
     dependencies = { "MunifTanjim/nui.nvim" },
   },
-  {
-    "chrisgrieser/nvim-lsp-endhints",
-    event = "LspAttach",
-    opts = {}, -- required, even if empty
-  },
+  -- {
+  --   "chrisgrieser/nvim-lsp-endhints",
+  --   event = "LspAttach",
+  --   config = function()
+  --     require("lsp-endhints").setup()
+  --   end,
+  -- },
   {
     "chriswritescode-dev/consolelog.nvim",
     config = function()
       require("consolelog").setup()
+    end,
+  },
+  {
+    "Wansmer/symbol-usage.nvim",
+    enabled = false,
+    event = "BufReadPre",
+    config = function()
+      require("symbol-usage").setup()
     end,
   },
 }

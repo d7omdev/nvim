@@ -4,6 +4,8 @@ return {
     opts = {
       ensure_installed = {
         "bash",
+        "php",
+        "phpdoc",
         "css",
         "html",
         "javascript",

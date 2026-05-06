@@ -1,6 +1,7 @@
 return {
   {
     "OXY2DEV/markview.nvim",
+    enabled = true,
     event = "BufRead",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
@@ -8,7 +9,7 @@ return {
     },
     opts = {
       preview = {
-        filetypes = { "codecompanion", "markdown" },
+        filetypes = { "markdown" },
         ignore_buftypes = {},
       },
     },

@@ -1,5 +1,11 @@
 local autocmd = vim.api.nvim_create_autocmd
 
+vim.filetype.add({
+  pattern = {
+    [".*%.blade%.php"] = "blade",
+  },
+})
+
 -- Automatically sort classes in a .tsx file on save
 autocmd("BufWritePost", {
   pattern = { "*.tsx", "*.vue" },
@@ -10,19 +16,6 @@ autocmd("BufWritePost", {
       if ok and lsp.sort_classes then
         pcall(lsp.sort_classes, true)
       end
-    end
-  end,
-})
-
-local group = vim.api.nvim_create_augroup("CodeCompanionHooks", {})
-
-autocmd({ "User" }, {
-  pattern = "CodeCompanionInline*",
-  group = group,
-  callback = function(request)
-    if request.match == "CodeCompanionInlineFinished" then
-      -- Format the buffer after the inline request has completed
-      require("conform").format({ bufnr = request.buf })
     end
   end,
 })
@@ -79,6 +72,16 @@ autocmd("FileType", {
   pattern = "hyprlang",
   callback = function()
     vim.bo.commentstring = "# %s"
+  end,
+})
+
+-- PHP: override gR with grep-based references (LSP gR unreliable in PHP)
+autocmd("FileType", {
+  pattern = { "php", "blade" },
+  callback = function(args)
+    vim.keymap.set("n", "gR", function()
+      require("custom.utils").php_goto_references()
+    end, { buffer = args.buf, silent = true, desc = "PHP: Grep references" })
   end,
 })
 

@@ -1,11 +1,7 @@
-local lspconfig = require("lspconfig")
-local configs = require("lspconfig.configs")
-
--- Set default LSP config options
-local default = lspconfig.util.default_config
-default.flags = vim.tbl_deep_extend("force", default.flags or {}, {
-  debounce_text_changes = 300, -- milliseconds
-})
+-- ============================================
+-- LSP Configuration using vim.lsp.config (Nvim 0.11+)
+-- Configs are loaded from lsp/ folder
+-- ============================================
 
 -- TS diagnostic handler function (reused by multiple servers)
 local function setup_ts_diagnostics(_, result, ctx, _)
@@ -30,95 +26,83 @@ local function setup_ts_diagnostics(_, result, ctx, _)
   vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx)
 end
 
--- Configure GDScript (Godot) LSP
-lspconfig.gdscript.setup({
-  cmd = { "nc", "localhost", "6005" },
-  filetypes = { "gd", "gdscript", "gdscript3" },
-  root_dir = lspconfig.util.root_pattern("project.godot"),
-  on_attach = function(_, bufNr)
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, {
-      desc = "Go to definition",
-      silent = true,
-      buffer = bufNr,
-    })
-  end,
-})
-
 return {
   {
     "neovim/nvim-lspconfig",
-    opts = {
-      diagnostics = {
+    opts = function(_, opts)
+      local ts = require("lsp.typescript")
+      opts.diagnostics = vim.tbl_deep_extend("force", opts.diagnostics or {}, {
         virtual_text = false,
-      },
-      inlay_hints = {
+      })
+      opts.inlay_hints = vim.tbl_deep_extend("force", opts.inlay_hints or {}, {
         enabled = true,
-        -- exclude = { "typescriptreact", "javascript", "javascriptreact", "vue", "lua" },
-      },
-      codelens = { enabled = false },
-      servers = {
-        ts_ls = {
-          enabled = false,
-        },
-        vtsls = {
-          enabled = vim.fn.filereadable("src/App.vue") == 1 or vim.fn.filereadable("nuxt.config.ts") == 1,
-        },
-        eslint = {
-          enabled = false,
-          settings = {
-            format = { enable = true },
-          },
-        },
-        volar = {
-          init_options = {
-            vue = {
-              hybridMode = true,
-            },
-          },
-        },
-        cssls = {
-          settings = {
-            css = {
-              validate = true,
-              lint = {
-                unknownAtRules = "ignore",
-              },
-            },
-            scss = {
-              validate = true,
-              lint = {
-                unknownAtRules = "ignore",
-              },
-            },
-            less = {
-              validate = true,
-              lint = {
-                unknownAtRules = "ignore",
-              },
-            },
-          },
-        },
-      },
-      setup = {
+      })
+      opts.codelens = vim.tbl_deep_extend("force", opts.codelens or {}, { enabled = false })
+
+      opts.servers = vim.tbl_deep_extend("force", opts.servers or {}, {
+        ts_ls = ts.ts_ls,
+        vtsls = ts.vtsls,
+        eslint = ts.eslint,
+        volar = ts.volar,
+        cssls = require("lsp.css").cssls,
+        qmlls = require("lsp.qml"),
+        intelephense = require("lsp.php").intelephense,
+        laravel_ls = require("lsp.laravel_ls").laravel_ls,
+      })
+
+      opts.setup = vim.tbl_deep_extend("force", opts.setup or {}, {
         ["typescript-tools"] = function(_, opts)
-          LazyVim.lsp.on_attach(function()
-            opts.handlers = {
-              ["textDocument/publishDiagnostics"] = setup_ts_diagnostics,
-            }
-          end)
+          opts.handlers = opts.handlers or {}
+          opts.handlers["textDocument/publishDiagnostics"] = setup_ts_diagnostics
         end,
 
         vtsls = function(_, opts)
-          LazyVim.lsp.on_attach(function()
-            opts.handlers = {
-              ["textDocument/publishDiagnostics"] = setup_ts_diagnostics,
-            }
-          end)
+          opts.handlers = opts.handlers or {}
+          opts.handlers["textDocument/publishDiagnostics"] = setup_ts_diagnostics
         end,
-      },
-    },
-  },
 
+        -- GDScript custom keymaps
+        gdscript = function(_, opts)
+          vim.api.nvim_create_autocmd("LspAttach", {
+            callback = function(args)
+              local client = vim.lsp.get_client_by_id(args.data.client_id)
+              if client and client.name == "gdscript" then
+                vim.keymap.set("n", "gd", vim.lsp.buf.definition, {
+                  desc = "Go to definition",
+                  silent = true,
+                  buffer = args.buf,
+                })
+              end
+            end,
+          })
+        end,
+
+        -- QML custom setup
+        qmlls = function(_, opts)
+          vim.api.nvim_create_autocmd("LspAttach", {
+            callback = function(args)
+              local client = vim.lsp.get_client_by_id(args.data.client_id)
+              if client and client.name == "qmlls" then
+                -- Explicitly set go-to-definition keymap
+                vim.keymap.set("n", "gd", vim.lsp.buf.definition, {
+                  desc = "Go to definition",
+                  silent = true,
+                  buffer = args.buf,
+                })
+
+                -- Additional QML-specific keymaps
+                vim.keymap.set("n", "K", vim.lsp.buf.hover, {
+                  desc = "Hover documentation",
+                  silent = true,
+                  buffer = args.buf,
+                })
+              end
+            end,
+          })
+        end,
+      })
+    end,
+  },
 
   -- LSPSaga Configuration
   {
@@ -137,11 +121,47 @@ return {
         },
         hover = {
           max_width = 0.6,
+          max_height = 0.8,
         },
       })
+
+      -- Inject "Fix with Agentic AI" into lspsaga's code action picker.
+      -- Patched here (eager) so it's always active before any LspAttach fires.
+      local act = require("lspsaga.codeaction")
+      local orig_send_request = act.send_request
+      act.send_request = function(self, main_buf, options, callback)
+        orig_send_request(self, main_buf, options, function(tuples, enriched_ctx)
+          local cursor_line = vim.api.nvim_win_get_cursor(0)[1] - 1
+          local diags = vim.diagnostic.get(main_buf, { lnum = cursor_line })
+
+          if #diags > 0 then
+            table.insert(tuples, {
+              "agentic",
+              {
+                title = "  Fix with Agentic AI",
+                kind = "quickfix",
+                action = function()
+                  local SessionRegistry = require("agentic.session_registry")
+                  SessionRegistry.get_session_for_tab_page(nil, function(session)
+                    session:add_current_line_diagnostics_to_context()
+                    session:_handle_input_submit(
+                      "Fix the diagnostic error(s) shown in the diagnostics context."
+                        .. " Analyze the error carefully and make the minimal necessary changes to resolve it."
+                    )
+                    session.widget:show({ focus_prompt = false })
+                  end)
+                end,
+              },
+            })
+          end
+
+          callback(tuples, enriched_ctx)
+        end)
+      end
     end,
   },
 
+  -- Formatting configuration
   {
     "stevearc/conform.nvim",
     optional = true,
@@ -167,6 +187,9 @@ return {
         opts.formatters_by_ft[ft] = opts.formatters_by_ft[ft] or {}
         table.insert(opts.formatters_by_ft[ft], "prettierd")
       end
+
+      opts.formatters_by_ft["php"] = { first = { "pint", "php_cs_fixer" } }
+      opts.formatters_by_ft["blade"] = { "blade-formatter" }
 
       opts.formatters.prettierd = {
         condition = function(self, ctx)

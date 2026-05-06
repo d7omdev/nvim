@@ -4,6 +4,7 @@
 local opt = vim.opt
 
 vim.g.lazygit_config = true
+vim.g.lazyvim_php_lsp = "intelephense"
 vim.g.node_host_prog = vim.fn.expand("$HOME") .. "/.bun/bin/neovim-node-host"
 
 opt.laststatus = 3

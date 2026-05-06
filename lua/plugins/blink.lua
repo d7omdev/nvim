@@ -57,14 +57,27 @@ return {
     },
     signature = { enabled = true, window = { border = "single" } },
     sources = {
-      default = { "snippets", "lsp", "path", "buffer" },
+      default = { "snippets", "lsp", "path", "buffer", "laravel" },
       providers = {
+        laravel = {
+          name = "laravel",
+          module = "custom.laravel_blink",
+          score_offset = 5,
+        },
         lsp = {
           min_keyword_length = 0,
           score_offset = 3,
           name = "LSP",
           module = "blink.cmp.sources.lsp",
           fallbacks = {},
+          -- Allow completions inside strings (needed for config(), route(), view())
+          override = {
+            get_trigger_characters = function(self)
+              local chars = self:get_trigger_characters()
+              vim.list_extend(chars, { "'", '"', "." })
+              return chars
+            end,
+          },
         },
         path = {
           min_keyword_length = 0,

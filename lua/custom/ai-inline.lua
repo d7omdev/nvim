@@ -29,7 +29,7 @@ Do not ask to execute commands.]],
     { label = "Claude", provider = "claude", model = nil },
     { label = "Codex", provider = "codex", model = nil },
   },
-  state_file = vim.fn.stdpath("state") .. "/claude-inline.json",
+  state_file = vim.fn.stdpath("state") .. "/ai-inline.json",
 }
 local state = {
   active = false,
@@ -427,7 +427,11 @@ Return only modified code.
 Output format:
 <<<CODE>>>
 <modified code here>
-<<<END_CODE>>>]],
+<<<END_CODE>>>
+
+DONT add the <<<>>> Blockes or ``` ONLY the modified code.
+
+]],
     prefix,
     prompt,
     context.filename,

@@ -224,7 +224,7 @@ function M.items_select(items, opts, on_choice)
   return snacks.picker.pick({
     source = "select",
     items = finder_items,
-    format = snacks.picker.format.ui_select(opts.kind, #items),
+    format = snacks.picker.format.ui_select({ kind = opts.kind, format_item = opts.format_item }),
     title = title,
     layout = {
       preview = nil,
@@ -296,5 +296,31 @@ _G.Utils = M
 _G.ToggleLspStatus = M.toggle_lsp_status
 _G.StartLiveServer = M.start_live_server
 _G.StopLiveServer = M.stop_live_server
+
+-- PHP grep-based goto file references (find where current file is required/used)
+function M.php_goto_references()
+  local filepath = vim.fn.expand("%:p")
+  if filepath == "" then
+    vim.notify("No file in current buffer", vim.log.levels.WARN)
+    return
+  end
+
+  -- Relative path without extension, with backslashes for PHP namespace imports
+  -- Modules/News/App/Models/News.php -> Modules\News\App\Models\News
+  local classname = vim.fn.expand("%:t:r")
+  local relpath = vim.fn.expand("%:.:r"):gsub("/", "\\\\")
+  -- Match both: full namespace import AND same-dir static/method usage (News::)
+  local pattern = relpath .. "|" .. classname .. "::"
+
+  require("snacks").picker.grep({
+    search = pattern,
+    regex = true,
+    glob = "*.php",
+    title = "File refs: " .. classname,
+    live = false,
+  })
+end
+
+-- Claculate the difrense between 2 numbers
 
 return M
