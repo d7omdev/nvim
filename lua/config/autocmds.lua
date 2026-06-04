@@ -85,6 +85,9 @@ autocmd("FileType", {
   end,
 })
 
+-- typeof hint: virtual line under `typeof X` with up-arrow + resolved type
+require("custom.typeof-hint").setup()
+
 -- Listen for opencode events
 autocmd("User", {
   pattern = "OpencodeEvent",

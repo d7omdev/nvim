@@ -323,4 +323,53 @@ end
 
 -- Claculate the difrense between 2 numbers
 
+-- Copy selection (or current line) for AI prompting.
+-- Includes full path, relative path, line range, filetype, numbered lines.
+function M.copy_for_ai()
+  local mode = vim.fn.mode()
+  local s, e
+  if mode == "v" or mode == "V" or mode == "\22" then
+    s = vim.fn.line("v")
+    e = vim.fn.line(".")
+    local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+    vim.api.nvim_feedkeys(esc, "nx", false)
+  else
+    s = vim.fn.line(".")
+    e = s
+  end
+  if s > e then
+    s, e = e, s
+  end
+
+  local lines = vim.api.nvim_buf_get_lines(0, s - 1, e, false)
+  local full = vim.fn.expand("%:p")
+  local rel = vim.fn.fnamemodify(full, ":.")
+  local ft = vim.bo.filetype ~= "" and vim.bo.filetype or ""
+  local total = vim.api.nvim_buf_line_count(0)
+  local cwd = vim.fn.getcwd()
+
+  local width = #tostring(e)
+  local numbered = {}
+  for i, l in ipairs(lines) do
+    numbered[i] = string.format("%" .. width .. "d  %s", s + i - 1, l)
+  end
+
+  local header = string.format(
+    "File: %s\nFull path: %s\nCWD: %s\nLines: %d-%d of %d\nFiletype: %s\n",
+    rel,
+    full,
+    cwd,
+    s,
+    e,
+    total,
+    ft
+  )
+  local body = string.format("```%s\n%s\n```", ft, table.concat(numbered, "\n"))
+  local text = header .. "\n" .. body
+
+  vim.fn.setreg("+", text)
+  vim.fn.setreg('"', text)
+  vim.notify(string.format("Copied L%d-%d (%d lines) for AI", s, e, #lines), vim.log.levels.INFO)
+end
+
 return M

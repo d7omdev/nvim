@@ -282,6 +282,7 @@ local keymaps = {
   -- ===========================================================================
 
   { V, "<leader>i", require("custom.ai-inline").edit_selection, opts("Claude inline edit") },
+  { N_V, "<leader>Y", Utils.copy_for_ai, opts("Copy for AI (path + numbered lines)") },
 }
 
 -- ============================================================================
