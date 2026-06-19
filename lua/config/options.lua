@@ -7,6 +7,19 @@ vim.g.lazygit_config = true
 vim.g.lazyvim_php_lsp = "intelephense"
 vim.g.node_host_prog = vim.fn.expand("$HOME") .. "/.bun/bin/neovim-node-host"
 
+-- Disable unused language-host providers (silences checkhealth warnings)
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
+
+-- tmux masks the real terminal (TERM_PROGRAM=tmux), so snacks.image can't auto-detect
+-- kitty/ghostty graphics support. The terminal's own env vars survive into tmux, so bridge
+-- them to snacks' SNACKS_<TERM> override hook to force-enable the correct protocol.
+if vim.env.KITTY_WINDOW_ID then
+  vim.env.SNACKS_KITTY = "1"
+elseif vim.env.GHOSTTY_RESOURCES_DIR or vim.env.GHOSTTY_BIN_DIR then
+  vim.env.SNACKS_GHOSTTY = "1"
+end
+
 opt.laststatus = 3
 
 opt.clipboard = "unnamedplus"

@@ -17,9 +17,14 @@ opts.terminal = {
 -- Image Configuration
 -- ===============================
 ---@class snacks.image.Config
-opts.image = { enabled = true, doc = {
-  inline = false,
-} }
+opts.image = {
+  enabled = true,
+  doc = {
+    inline = false,
+  },
+  -- LaTeX math needs tectonic/pdflatex (not installed); disable to drop the requirement.
+  math = { enabled = false },
+}
 
 -- ===============================
 -- Profiler Configuration
