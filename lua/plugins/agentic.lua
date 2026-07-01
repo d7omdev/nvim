@@ -4,7 +4,7 @@ return {
     { "hakonharnes/img-clip.nvim", opts = {} },
   },
   opts = {
-    provider = "pi-acp",
+    provider = "claude-agent-acp",
     diff_preview = {
       enabled = true,
       layout = "inline",

@@ -1,28 +1,17 @@
 return {
   "obsidian-nvim/obsidian.nvim",
   version = "*",
-  cmd = {
-    "ObsidianNew",
-    "ObsidianQuickSwitch",
-    "ObsidianBacklinks",
-    "ObsidianDailies",
-    "ObsidianTemplate",
-    "ObsidianSearch",
-    "ObsidianRename",
-    "ObsidianToggleCheckbox",
-    "ObsidianTags",
-    "ObsidianFollowLink",
-  },
+  cmd = { "Obsidian" },
   keys = {
-    { "<leader>On", "<cmd>ObsidianNew<CR>", desc = "New note" },
-    { "<leader>Os", "<cmd>ObsidianQuickSwitch<CR>", desc = "Quick switch" },
-    { "<leader>Ob", "<cmd>ObsidianBacklinks<CR>", desc = "Backlinks" },
-    { "<leader>Od", "<cmd>ObsidianDailies<CR>", desc = "Dailies" },
-    { "<leader>Ot", "<cmd>ObsidianTemplate<CR>", desc = "Insert template" },
-    { "<leader>sO", "<cmd>ObsidianSearch<CR>", desc = "Search notes" },
-    { "<leader>Or", "<cmd>ObsidianRename<CR>", desc = "Rename note" },
-    { "<leader>Oc", "<cmd>ObsidianToggleCheckbox<CR>", desc = "Toggle checkbox" },
-    { "<leader>OT", "<cmd>ObsidianTags<CR>", desc = "Search tags" },
+    { "<leader>On", "<cmd>Obsidian new<CR>", desc = "New note" },
+    { "<leader>Os", "<cmd>Obsidian quick-switch<CR>", desc = "Quick switch" },
+    { "<leader>Ob", "<cmd>Obsidian backlinks<CR>", desc = "Backlinks" },
+    { "<leader>Od", "<cmd>Obsidian dailies<CR>", desc = "Dailies" },
+    { "<leader>Ot", "<cmd>Obsidian template<CR>", desc = "Insert template" },
+    { "<leader>sO", "<cmd>Obsidian search<CR>", desc = "Search notes" },
+    { "<leader>Or", "<cmd>Obsidian rename<CR>", desc = "Rename note" },
+    { "<leader>Oc", "<cmd>Obsidian toggle-checkbox<CR>", desc = "Toggle checkbox" },
+    { "<leader>OT", "<cmd>Obsidian tags<CR>", desc = "Search tags" },
   },
   opts = {
     -- A list of workspace names, paths, and configuration overrides.
@@ -41,6 +30,7 @@ return {
     -- Optional, set the log level for obsidian.nvim. This is an integer corresponding to one of the log
     -- levels defined by "vim.log.levels.*".
     log_level = vim.log.levels.INFO,
+    legacy_commands = false,
 
     daily_notes = {
       -- Optional, if you keep daily notes in a separate directory.
@@ -55,15 +45,10 @@ return {
       template = nil,
     },
 
-    -- Optional, completion of wiki links, local markdown links, and tags using nvim-cmp.
+    -- Completion is now provided via the built-in obsidian-ls LSP server.
     completion = {
-      -- Set to false to disable completion.
-      nvim_cmp = false,
-      blink = true,
-      -- Trigger completion at 2 chars.
       min_chars = 2,
     },
-
 
     -- Where to put new notes. Valid options are
     --  * "current_dir" - put new notes in same directory as the current buffer.
@@ -103,23 +88,10 @@ return {
       return path:with_suffix(".md")
     end,
 
-    -- Optional, customize how wiki links are formatted. You can set this to one of:
-    --  * "use_alias_only", e.g. '[[Foo Bar]]'
-    --  * "prepend_note_id", e.g. '[[foo-bar|Foo Bar]]'
-    --  * "prepend_note_path", e.g. '[[foo-bar.md|Foo Bar]]'
-    --  * "use_path_only", e.g. '[[foo-bar.md]]'
-    -- Or you can set it to a function that takes a table of options and returns a string, like this:
-    wiki_link_func = function(opts)
-      return require("obsidian.util").wiki_link_id_prefix(opts)
-    end,
-
-    -- Optional, customize how markdown links are formatted.
-    markdown_link_func = function(opts)
-      return require("obsidian.util").markdown_link(opts)
-    end,
-
-    -- Either 'wiki' or 'markdown'.
-    preferred_link_style = "wiki",
+    -- Link style: "wiki" or "markdown".
+    link = {
+      style = "wiki",
+    },
 
     -- Optional, customize the default name or prefix when pasting images via `:ObsidianPasteImg`.
     ---@return string
@@ -128,30 +100,24 @@ return {
       return string.format("%s-", os.time())
     end,
 
-    -- Optional, boolean or a function that takes a filename and returns a boolean.
-    -- `true` indicates that you don't want obsidian.nvim to manage frontmatter.
-    disable_frontmatter = false,
-
-    -- Optional, alternatively you can customize the frontmatter data.
-    ---@return table
-    note_frontmatter_func = function(note)
-      -- Add the title of the note as an alias.
-      if note.title then
-        note:add_alias(note.title)
-      end
-
-      local out = { id = note.id, aliases = note.aliases, tags = note.tags }
-
-      -- `note.metadata` contains any manually added fields in the frontmatter.
-      -- So here we just make sure those fields are kept in the frontmatter.
-      if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
-        for k, v in pairs(note.metadata) do
-          out[k] = v
+    frontmatter = {
+      enabled = true,
+      func = function(note)
+        if note.title then
+          note:add_alias(note.title)
         end
-      end
 
-      return out
-    end,
+        local out = { id = note.id, aliases = note.aliases, tags = note.tags }
+
+        if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
+          for k, v in pairs(note.metadata) do
+            out[k] = v
+          end
+        end
+
+        return out
+      end,
+    },
 
     -- Optional, for templates (see below).
     templates = {
@@ -161,15 +127,6 @@ return {
       -- A map for custom variables, the key should be the variable and the value a function
       substitutions = {},
     },
-
-    -- Optional, by default when you use `:ObsidianFollowLink` on a link to an external
-    -- URL it will be ignored but you can customize this behavior here.
-    ---@param url string
-    follow_url_func = function(url)
-      -- Open the URL in the default web browser.
-      vim.fn.jobstart({ "open", url }) -- Mac OS
-      -- vim.fn.jobstart({"xdg-open", url})  -- linux
-    end,
 
     -- Optional, set to true if you use the Obsidian Advanced URI plugin.
     -- https://github.com/Vinzent03/obsidian-advanced-uri
@@ -189,14 +146,11 @@ return {
       },
     },
 
-    -- Optional, sort search results by "path", "modified", "accessed", or "created".
-    -- The recommend value is "modified" and `true` for `sort_reversed`, which means, for example,
-    -- that `:ObsidianQuickSwitch` will show the notes sorted by latest modified time
-    sort_by = "modified",
-    sort_reversed = true,
-
-    -- Set the maximum number of lines to read from notes on disk when performing certain searches.
-    search_max_lines = 1000,
+    search = {
+      sort_by = "modified",
+      sort_reversed = true,
+      max_lines = 1000,
+    },
 
     -- Optional, determines how certain commands open notes. The valid options are:
     -- 1. "current" (the default) - to always open in the current window
@@ -267,7 +221,7 @@ return {
       -- The default folder to place images in via `:ObsidianPasteImg`.
       -- If this is a relative path it will be interpreted as relative to the vault root.
       -- You can always override this per image by passing a full path to the command instead of just a filename.
-      img_folder = "assets/imgs", -- This is the default
+      folder = "assets/imgs",
       -- A function that determines the text to insert in the note when pasting an image.
       -- It takes two arguments, the `obsidian.Client` and an `obsidian.Path` to the image file.
       -- This is the default implementation.

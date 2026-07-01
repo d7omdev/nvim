@@ -11,7 +11,6 @@ return {
       })
     end,
   },
-
   {
     "pmizio/typescript-tools.nvim",
     enabled = function()
@@ -58,24 +57,30 @@ return {
           },
         },
       })
-      map("n", "gd", "<cmd>TSToolsGoToSourceDefinition<CR>", { desc = "Go to source definition" })
-      map("n", "gR", "<cmd>TSToolsFileReferences<CR>", { desc = "File References" })
-      map({ "n", "v" }, "<leader>co", "<cmd>TSToolsOrganizeImports<CR>", { desc = "Organize Imports" })
-      map({ "n", "v" }, "<leader>cS", "<cmd>TSToolsSortImports<CR>", { desc = "Sort Imports" })
-      map(
-        { "n", "v" },
-        "<leader>cr",
-        "<cmd>TSToolsRemoveUnusedImports<CR>",
-        { desc = "Remove Unused Imports" }
-      )
-      map(
-        { "n", "v" },
-        "<leader>cM",
-        "<cmd>TSToolsAddMissingImports<CR>",
-        { desc = "Add Missing Importsorts" }
-      )
-      map({ "n", "v" }, "<leader>rF", "<cmd>TSToolsRenameFile<CR>", { desc = "Rename File" })
-      map({ "n", "v" }, "<leader>cD", "<cmd>TSToolsFixAll<CR>", { desc = "Fix All Diagnostics" })
+      map("n", "gd", function()
+        api.go_to_source_definition(true)
+      end, { desc = "Go to source definition" })
+      map("n", "gR", function()
+        api.file_references(true)
+      end, { desc = "File References" })
+      map({ "n", "v" }, "<leader>co", function()
+        api.organize_imports()
+      end, { desc = "Organize Imports" })
+      map({ "n", "v" }, "<leader>cS", function()
+        api.sort_imports()
+      end, { desc = "Sort Imports" })
+      map({ "n", "v" }, "<leader>cr", function()
+        api.remove_unused_imports()
+      end, { desc = "Remove Unused Imports" })
+      map({ "n", "v" }, "<leader>cM", function()
+        api.add_missing_imports(true)
+      end, { desc = "Add Missing Imports" })
+      map({ "n", "v" }, "<leader>rF", function()
+        api.rename_file(true)
+      end, { desc = "Rename File" })
+      map({ "n", "v" }, "<leader>cD", function()
+        api.fix_all(true)
+      end, { desc = "Fix All Diagnostics" })
     end,
   },
 }

@@ -71,6 +71,12 @@ wk.add({
   { "<leader>E", group = "+Ecolog" },
 })
 
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts("Show hover doc", { buffer = args.buf }))
+  end,
+})
+
 -- ============================================================================
 -- Keymap Definitions
 -- ============================================================================
